@@ -7,7 +7,7 @@ EA-LSTM neural network for lake surface temperature
 
 ---------------
 
-Project Organization
+Project Organization 
 
 ------------
 
@@ -19,8 +19,12 @@ Pipeline to run
 
 -------------
 
-1. Install necessary dependencies from yml file (Anaconda must be installed for this), and activate conda environment
-`conda env create -f conda_env.yaml`
+1. Install necessary dependencies from yml file (Anaconda must be installed for this), and activate conda environment. Works best on Linux (confirmed on CentOS 7(Core) and Manjaro 20.1).
+`conda env create -f conda_env.yaml`  
 `conda activate conda_env`
+
+2. Pull data from USGS Sciencebase repository
+`cd src/data/`
+`Rscript pull_data.r`
 
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
