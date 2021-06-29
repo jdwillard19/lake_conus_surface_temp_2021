@@ -4,13 +4,18 @@ library(sbtools)
 # (Jared - Sept 2020) - pull all data needed for MTL paper from sciencebase
 # (note) - in the future should use queries if available instead of hard coding IDs
 #################################################################################
-cat("Enter ScienceBase username: ");
+cat("Enter ScienceBase username (leave blank if you don't have): ");
 un <- readLines("stdin",n=1);
 cat("Enter ScienceBase password: ");
 pas <- readLines("stdin",n=1);
 cat( "\n" )
 
-authenticate_sb(un,pas)
+if (un == '') {
+
+} else {
+	authenticate_sb(un,pas)
+}
+
 
 
 dest_dir = '../../data/raw/data_release/'
