@@ -20,8 +20,8 @@ if (un == '') {
 
 dest_dir = '../../data/raw/data_release/'
 
-
-item_file_download('60341c3ed34eb12031172aa6',overwrite_file=TRUE,dest_dir=dest_dir)
+verbose()
+item_file_download('60341c3ed34eb12031172aa6',overwrite_file=TRUE,dest_dir=dest_dir,verbose())
 
 
 # # model inputs 
