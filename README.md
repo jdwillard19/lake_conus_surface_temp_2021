@@ -28,11 +28,11 @@ Pipeline to run
 `Rscript pull_data.r`
 
 3. Run first preprocessing scripts with either HPC* or not (*high performance computing, recommended) (0 and 185550 are the starting and ending indices of the lakes to be processed as listed in ~/metadata/lake_metadata.csv)  
-&nbsp;&nbsp;* (no HPC)   
+* (no HPC)   
     + `cd src/data/`  
     + `python write_NLDAS_xy_pairs.py 0 185550`  
     + `python preprocess.py 0 185550` (run ONLY after previous job finished)  
-(HPC*)  
+* (HPC*)  
     + `cd src/hpc/`    
     + `python create_preprocess_jobs.py`  (create jobs)  
     + `cd /hpc/`  

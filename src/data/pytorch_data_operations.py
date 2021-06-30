@@ -60,10 +60,7 @@ def buildLakeDataForRNN_multilakemodel(lakenames, seq_length, n_features, \
         #alternative way to divide test/train just by 1/3rd 2/3rd
         # tst = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/test.npy"))
         # trn = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/train.npy"))
-        if os.path.exists(os.path.join(my_path, "../../data/processed/"+lakename+"/full.npy")):
-            full = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/full.npy"))
-        else:
-            full = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/full_obs.npy"))
+        full = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/obs.npy"))
 
 
 
@@ -371,16 +368,13 @@ def buildLakeDataForRNN_multilakemodel_conus(lakenames, seq_length, n_features, 
         # verbose = True
         my_path = os.path.abspath(os.path.dirname(__file__))
 
-        feat_mat_raw = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/features_ea_conus_021621.npy"))
-        feat_mat = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/processed_features_ea_conus_021621.npy"))
+        feat_mat_raw = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/features.npy"))
+        feat_mat = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/processed_features.npy"))
 
         # if removeElevation:
         #     feat_mat = np.delete(feat_mat,29,axis=1)
         #     feat_mat_raw = np.delete(feat_mat_raw,29,axis=1)
-        if not cold_filter:
-            trn = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/full.npy"))
-        else:
-            trn = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/full_061121_cold_lab_filtered.npy"))
+        trn = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/obs.npy"))
 
 
 
@@ -632,29 +626,16 @@ def buildLakeDataForRNN_manylakes_gauged(lakenames, seq_length, n_features, \
         print("preprocessing lake ",lake_ct,"/",len(lakenames),": ",lakename)
         feat_mat_raw = None
         feat_mat = None
-        if static_feats:
-            feat_mat_raw = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/features_ea_conus_021621.npy"))
-            feat_mat = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/processed_features_ea_conus_021621.npy"))
-        else:
-            feat_mat_raw = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/features.npy"))
-            feat_mat = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/processed_features.npy"))
+        feat_mat_raw = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/features.npy"))
+        feat_mat = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/processed_features.npy"))
 
         tst = []
         trn = []
 
-        #GET TRAIN/TEST HERE
-        #alternative way to divide test/train just by 1/3rd 2/3rd
-        if os.path.exists(os.path.join(my_path, "../../data/processed/"+lakename+"/full.npy")):
-            full = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/full.npy"))
-        else:
-            full = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/full_obs.npy"))
+        full = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/obs.npy"))
 
 
-        dates = []
-        if os.path.exists(os.path.join(my_path, "../../data/processed/"+lakename+"/dates.npy")):
-            dates = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/dates.npy"))
-        else:
-            dates = []
+        dates = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/dates.npy"))
 
         #post process train/test splits
         if postProcessSplits:
@@ -969,32 +950,16 @@ def buildLakeDataForRNN_manylakes_finetune2(lakename, data_dir, seq_length, n_fe
     verbose = False
     my_path = os.path.abspath(os.path.dirname(__file__))
 
-
-    feat_mat_raw = None
-    feat_mat = None
-    if static_feats:
-        feat_mat_raw = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/features_ea.npy"))
-        feat_mat = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/processed_features_ea.npy"))
-    else:
-        feat_mat_raw = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/features.npy"))
-        feat_mat = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/processed_features.npy"))
+    feat_mat_raw = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/features_ea.npy"))
+    feat_mat = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/processed_features_ea.npy"))
 
     tst = []
     trn = []
 
     #GET TRAIN/TEST HERE
     #alternative way to divide test/train just by 1/3rd 2/3rd
-    if os.path.exists(os.path.join(my_path, "../../data/processed/"+lakename+"/full.npy")):
-        full = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/full.npy"))
-    else:
-        full = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/full_obs.npy"))
-
-
-    dates = []
-    if os.path.exists(os.path.join(my_path, "../../data/processed/"+lakename+"/dates.npy")):
-        dates = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/dates.npy"))
-    else:
-        dates = []
+    full = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/obs.npy"))
+    dates = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/dates.npy"))
 
     #post process train/test splits
     if postProcessSplits:
@@ -1293,23 +1258,16 @@ def buildLakeDataForRNN_conus(lakename, data_dir, seq_length, n_features, \
     verbose = False
     my_path = os.path.abspath(os.path.dirname(__file__))
 
-    feat_mat_raw = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/features_ea_conus_021621.npy"))
-    feat_mat = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/processed_features_ea_conus_021621.npy"))
-    # if removeElevation:
-    #     feat_mat = np.delete(feat_mat,29,axis=1)
-    #     feat_mat_raw = np.delete(feat_mat_raw,29,axis=1)
+    feat_mat_raw = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/features.npy"))
+    feat_mat = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/processed_features.npy"))
     if feat_mat.shape[0] < seq_length:
         return (None,None)
-    full = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/full.npy"))
+    full = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/obs.npy"))
 
     trn = full
 
-    # if debug:
-    #     print("initial trn: ", trn)
-    #     print("observations: ",np.count_nonzero(~np.isnan(trn)))
     dates = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/dates.npy"))
 
-    #post process train/test splits
 
 
     np.random.seed(seed=randomSeed)
@@ -1482,8 +1440,8 @@ def buildLakeDataForRNN_conus_NoLabel(lakename, data_dir, seq_length, n_features
     verbose = False
     my_path = os.path.abspath(os.path.dirname(__file__))
 
-    feat_mat_raw = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/features_ea_conus_021621.npy"))
-    feat_mat = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/processed_features_ea_conus_021621.npy"))
+    feat_mat_raw = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/features.npy"))
+    feat_mat = np.load(os.path.join(my_path, "../../data/processed/"+lakename+"/processed_features.npy"))
 
     if feat_mat.shape[0] < seq_length:
         return (None,None)
