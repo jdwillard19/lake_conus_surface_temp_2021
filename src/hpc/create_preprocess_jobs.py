@@ -44,7 +44,7 @@ for i in range(len(start)):
     l = start[i]
     l2 = end[i]
 
-    header = "#!/bin/bash -l\n#SBATCH --time=23:59:00\n#SBATCH --ntasks=8\n#SBATCH --mem=20g\n#SBATCH --mail-type=ALL\n#SBATCH --mail-user=willa099@umn.edu\n#SBATCH --output=data_preprocess1_%s.out\n#SBATCH --error=data_preprocess1_%s.err\n\n#SBATCH -p small"%(i,i)
+    header = "#!/bin/bash -l\n#SBATCH --time=23:59:00\n#SBATCH --ntasks=8\n#SBATCH --mem=20g\n#SBATCH --mail-type=ALL\n#SBATCH --mail-user=willa099@umn.edu\n#SBATCH --output=data_preprocess2_%s.out\n#SBATCH --error=data_preprocess2_%s.err\n\n#SBATCH -p small"%(i,i)
     script = "source /home/kumarv/willa099/takeme_data.sh\n" #cd to directory with training script
     script2 = "python preprocess.py %s %s"%(l,l2)
     all= "\n".join([header,script,script2])
