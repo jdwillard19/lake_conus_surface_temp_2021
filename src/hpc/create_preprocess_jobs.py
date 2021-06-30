@@ -55,6 +55,6 @@ for i in range(len(start)):
 
 compile_job_path= '../../hpc/data_jobs2.sh'
 with open(compile_job_path, 'w') as output2:
-    output2.write(sbatch)
+    output2.write(sbatch2)
 
 print(ct, " jobs created, run this to submit: ", compile_job_path)
