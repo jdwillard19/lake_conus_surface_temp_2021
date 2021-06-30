@@ -1,17 +1,21 @@
 import xarray as xr
 import pandas as pd
-import feather
 import numpy as np
 import os
 import sys
 import re
 import math
 import shutil
-from scipy import interpolate
 import pdb
 import datetime
 
 
+###############################################################################3
+# june 2021 - Jared - this script creates weather data files per NLDAS cell for each 
+# weather driver. Two command line arguments indicate starting and ending index
+# for lakes to be processed as listed in the metadata file
+#
+###################################################################################
 
 #load metadata, get ids
 metadata = pd.read_csv("../../metadata/lake_metadata.csv")
@@ -20,37 +24,6 @@ metadata = pd.read_csv("../../metadata/lake_metadata.csv")
 site_ids = np.unique(metadata['site_id'].values)
 n_lakes = site_ids.shape[0]
 
-#load NLDAS data
-# lw_ds_path = "../../data/globus/NLDAS_DLWRFsfc_19790102-20210102_train_test.nc" #longwave
-# at_ds_path = "../../data/globus/NLDAS_TMP2m_19790102-20210102_train_test.nc" #airtemp
-# sw_ds_path = "../../data/globus/NLDAS_DSWRFsfc_19790102-20210102_train_test.nc" #shortwave
-# wsu_ds_path = "../../data/globus/NLDAS_UGRD10m_19790102-20210102_train_test.nc" #windspeed u
-# wsv_ds_path = "../../data/globus/NLDAS_VGRD10m_19790102-20210102_train_test.nc" #windspeed v
-# NLDAS_step[daily]_var[dlwrfsfc]_date[19790101.20201212].nc
-# NLDAS_step[daily]_var[dswrfsfc]_date[19790101.20201212].nc
-# NLDAS_step[daily]_var[tmp2m]_date[19790101.20201212].nc
-# NLDAS_step[daily]_var[ugrcd10m]_date[19790101.20201212].nc
-# NLDAS_step[daily]_var[vgrd10m]_date[19790101.20201212].nc
-# lw_ds_path = "../../data/globus/NLDAS_step[daily]_var[dlwrfsfc]_date[19790101.20210212].nc" #longwave
-# sw_ds_path = "../../data/globus/NLDAS_step[daily]_var[dswrfsfc]_date[19790101.20210212].nc" #shortwav
-# at_ds_path = "../../data/globus/NLDAS_step[daily]_var[tmp2m]_date[19790101.20210212].nc" #airtemp
-# wsu_ds_path = "../../data/globus/NLDAS_step[daily]_var[ugrd10m]_date[19790101.20210212].nc" #windspeed u
-# wsv_ds_path = "../../data/globus/NLDAS_step[daily]_var[vgrd10m]_date[19790101.20210212].nc"
-# print("loading sw nc file....")
-# sw_da = xr.open_dataset(sw_ds_path)['dswrfsfc']
-# print("sw file loaded")
-# print("loading lw nc file....")
-# lw_da = xr.open_dataset(lw_ds_path)['dlwrfsfc']
-# print("lw file loaded")
-# print("loading at nc file....")
-# at_da = xr.open_dataset(at_ds_path)['tmp2m']
-# print("at file loaded")
-# print("loading at wsu file....")
-# wsu_da = xr.open_dataset(wsu_ds_path)['ugrd10m']
-# print("wsu file loaded")
-# print("loading at nc file....")
-# wsv_da = xr.open_dataset(wsv_ds_path)['vgrd10m']
-# print("wsv file loaded")
 
 #load weather files
 base_path = '../../data/raw/data_release/'
@@ -115,7 +88,6 @@ for site_ct, site_id in enumerate(site_ids):
     assert ind.any()
 
     #select data 
-
     sw_vals = weather['dswrfsfc'][ind,:].values
     lw_vals = weather['dlwrfsfc'][ind,:].values
     at_vals = weather['tmp2m'][ind,:].values
@@ -124,9 +96,6 @@ for site_ct, site_id in enumerate(site_ids):
     if np.isnan(sw_vals).any():
         print("nan sw?")
         raise Exception("CANT CONTINUE") 
-        # skipped.append(name)
-        # continue
-        # raise Exception("CANT CONTINUE") 
     if np.isnan(lw_vals).any():
         print("nan lw?")
         raise Exception("CANT CONTINUE") 
@@ -149,5 +118,3 @@ for site_ct, site_id in enumerate(site_ids):
         print("x/y: ",w_id,":\nSW: ", sw_vals, "\nLW: ",lw_vals,"\nAT: ",at_vals,"\nWSU: ", wsu_vals, "\nWSV: ", wsv_vals)
 
 print("DATA COMPLETE")
-print("SKIPPED: ")
-print(repr(skipped))

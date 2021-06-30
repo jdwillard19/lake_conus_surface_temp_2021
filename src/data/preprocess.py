@@ -1,17 +1,19 @@
-import xarray as xr
 import pandas as pd
-import feather
 import numpy as np
 import os
 import sys
 import re
 import math
 import shutil
-from scipy import interpolate
 import pdb
 import datetime
 
-
+###############################################################################3
+# june 2021 - Jared - this script takes the previously created weather files per lake and
+# normalizes them for use in ML. Two command line arguments indicate starting and ending index
+# for lakes to be processed as listed in the metadata file
+#
+###################################################################################
 
 #load metadata, get command line arguments indicating indices of lakes you wish to preprocess, get ids
 metadata = pd.read_csv("../../metadata/lake_metadata.csv")
@@ -21,7 +23,6 @@ site_ids = metadata['site_id'].values[start:end]
 
 #load wst obs
 obs = pd.read_csv("../../data/raw/obs/lake_surface_temp_obs.csv")
-# obs = pd.read_feather("../../data/raw/obs/swt_obs_061121_coarse_lab_filter.feather").drop(['level_0','index','month'],axis=1)
 
 
 
@@ -38,15 +39,9 @@ std_feats = np.array([1.630222, 6.45012084, 9.8714776, 474.08400329,9.10455152, 
    
 n_features = mean_feats.shape[0]
 
-#load weather files
+#get dates
 base_path = '../../data/raw/data_release/'
 w1 = xr.open_dataset(base_path+'01_weather_N40-53_W98-126.nc4')
-w2 = xr.open_dataset(base_path+'02_weather_N24-40_W98-126.nc4')
-w3 = xr.open_dataset(base_path+'03_weather_N40-53_W82-98.nc4')
-w4 = xr.open_dataset(base_path+'04_weather_N24-40_W82-98.nc4')
-w5 = xr.open_dataset(base_path+'05_weather_N24-53_W67-82.nc4')
-
-
 dates = w1['time'].values
 
 
@@ -55,6 +50,10 @@ for site_ct, site_id in enumerate(site_ids):
     print(site_ct,"/",len(site_ids)," starting ", site_id)
 
     #get NLDAS coords
+    x_re
+    y_re = 
+    weather_str = metadata[metadata['site_id'] == site_id]['x'].values[0]
+    re.search(x_re,metadata[metadata['site_id'] == site_id]['weather_id'].values[0]).group(1)
     x = str(metadata[metadata['site_id'] == site_id]['x'].values[0])+".0"
     y = str(metadata[metadata['site_id'] == site_id]['y'].values[0])+".0"
 
