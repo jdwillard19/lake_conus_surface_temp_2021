@@ -11,6 +11,7 @@ import numpy as np
 
 
 sbatch = ""
+sbatch2 = ""
 ct = 0
 
 start = np.arange(0,186000,1000,dtype=np.int32)
@@ -47,7 +48,7 @@ for i in range(len(start)):
     script = "source /home/kumarv/willa099/takeme_data.sh\n" #cd to directory with training script
     script2 = "python preprocess.py %s %s"%(l,l2)
     all= "\n".join([header,script,script2])
-    sbatch = "\n".join(["sbatch job_data2_%s.sh"%(i),sbatch])
+    sbatch2 = "\n".join(["sbatch job_data2_%s.sh"%(i),sbatch2])
     with open('../../hpc/job_data2_{}.sh'.format(i), 'w') as output2:
         output2.write(all)
 
