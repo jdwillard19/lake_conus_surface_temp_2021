@@ -17,8 +17,8 @@ import datetime
 
 #load metadata, get command line arguments indicating indices of lakes you wish to preprocess, get ids
 metadata = pd.read_csv("../../metadata/lake_metadata.csv")
-start = sys.argv[1]
-end = sys.argv[2]
+start = int(sys.argv[1])
+end = int(sys.argv[2])
 site_ids = metadata['site_id'].values[start:end]
 
 #load wst obs
