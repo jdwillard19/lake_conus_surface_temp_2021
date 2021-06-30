@@ -32,8 +32,8 @@ for i in range(len(start)):
 
 
 compile_job_path= '../../hpc/data_jobs1.sh'
-with open(compile_job_path, 'w') as output2:
-    output2.write(sbatch)
+with open(compile_job_path, 'w') as output:
+    output.write(sbatch)
 
 print(ct, " jobs created, run this to submit: ", compile_job_path)
 
@@ -48,8 +48,8 @@ for i in range(len(start)):
     script2 = "python preprocess.py %s %s"%(l,l2)
     all= "\n".join([header,script,script2])
     sbatch = "\n".join(["sbatch job_data2_%s.sh"%(i),sbatch])
-    with open('../../hpc/job_data2_{}.sh'.format(i), 'w') as output:
-        output.write(all)
+    with open('../../hpc/job_data2_{}.sh'.format(i), 'w') as output2:
+        output2.write(all)
 
 
 compile_job_path= '../../hpc/data_jobs2.sh'
