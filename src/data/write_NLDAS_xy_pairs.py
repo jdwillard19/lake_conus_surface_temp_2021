@@ -147,7 +147,7 @@ for site_ct, site_id in enumerate(site_ids):
     np.save(feat_base_path+"WSU_"+w_id.decode(),wsu_vals)
     np.save(feat_base_path+"WSV_"+w_id.decode(),wsv_vals)
     if verbose:
-        print("x/y: ",w_id.encode(),":\nSW: ", sw_vals, "\nLW: ",lw_vals,"\nAT: ",at_vals,"\nWSU: ", wsu_vals, "\nWSV: ", wsv_vals)
+        print("x/y: ",w_id,":\nSW: ", sw_vals, "\nLW: ",lw_vals,"\nAT: ",at_vals,"\nWSU: ", wsu_vals, "\nWSV: ", wsv_vals)
 
 print("DATA COMPLETE")
 print("SKIPPED: ")
