@@ -82,7 +82,7 @@ for site_ct, site_id in enumerate(site_ids):
 
     #check if cell already processed
     pdb.set_trace()
-    if os.path.exists(feat_base_path+"WSV_"+w_id.decode()):
+    if os.path.exists(feat_base_path+"WSV_"+w_id.decode()+".npy"):
         print("ALREADY PROCESSED")
         continue
     #select weather file
