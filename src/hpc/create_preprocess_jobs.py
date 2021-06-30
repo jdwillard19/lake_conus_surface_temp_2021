@@ -36,7 +36,7 @@ with open(compile_job_path, 'w') as output:
     output.write(sbatch)
 
 print(ct, " jobs created, run this to submit: ", compile_job_path)
-
+ct = 0
 for i in range(len(start)):
     ct += 1
     #for each unique lake
