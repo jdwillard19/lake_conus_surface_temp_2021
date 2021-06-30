@@ -27,12 +27,15 @@ Pipeline to run
 `cd src/data/`
 `Rscript pull_data.r`
 
-3. Run preprocessing scripts with either HPC* or not (*high performance computing, recommended).  
-`cd src/data/`  
-(no HPC) `python write_NLDAS_xy_pairs.py 0 185550`  
-(HPC*) `cd src/hpc/`    
-      `python create_preprocess_jobs1.py`  (create jobs)  
-      `cd /hpc/`  
-      `source data_jobs1.sh` (submit jobs)  
+3. Run first preprocessing scripts with either HPC* or not (*high performance computing, recommended).  
+(no HPC) `cd src/data/`  
+         `python write_NLDAS_xy_pairs.py 0 185550`  
+(HPC*)   `cd src/hpc/`    
+         `python create_preprocess_jobs1.py`  (create jobs)  
+         `cd /hpc/`  
+         `source data_jobs1.sh` (submit jobs)  
+
+4. Run second preprocessing scripts with either HPC or not.  
+(no HPC)
 
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
