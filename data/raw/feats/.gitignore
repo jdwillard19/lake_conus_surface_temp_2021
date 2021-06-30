@@ -2,7 +2,3 @@
 *
 # Except this file
 !.gitignore
-!obs/
-!data_release/
-!feats/
-

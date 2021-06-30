@@ -23,7 +23,7 @@ Pipeline to run
 `conda env create -f conda_env.yaml`  
 `conda activate conda_env`
 
-2. Pull data from USGS Sciencebase repository
+2. Pull data from USGS Sciencebase repository (may take a while, ~10GB download)
 `cd src/data/`
 `Rscript pull_data.r`
 
