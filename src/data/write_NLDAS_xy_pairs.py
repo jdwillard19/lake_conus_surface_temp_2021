@@ -87,7 +87,7 @@ for site_ct, site_id in enumerate(site_ids):
     #select weather file
     weather = None
 
-    if (w1['instance_name']==w_id).any()
+    if (w1['instance_name']==w_id).any():
         if verbose:
             print("loading ",w1_fn)
         weather = w1
