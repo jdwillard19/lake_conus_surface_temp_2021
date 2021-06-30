@@ -31,12 +31,12 @@ for i in range(len(start)):
     # script2 = "python preprocess_conus_script_full40year.py %s %s"%(l,l2)
     # script3 = "python singleModel_customSparse.py %s"%(l)
     all= "\n".join([header,script,script2])
-    sbatch = "\n".join(["sbatch job_data_%s.sh"%(i),sbatch])
-    with open('./jobs/job_data_{}.sh'.format(i), 'w') as output:
+    sbatch = "\n".join(["sbatch job_data1_%s.sh"%(i),sbatch])
+    with open('../../hpc/job_data1_{}.sh'.format(i), 'w') as output:
         output.write(all)
 
 
-compile_job_path= './jobs/data_jobs1.sh'
+compile_job_path= '../../hpc/data_jobs1.sh'
 with open(compile_job_path, 'w') as output2:
     output2.write(sbatch)
 
