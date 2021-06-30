@@ -13,7 +13,6 @@ import numpy as np
 sbatch = ""
 ct = 0
 
-metadata = pd.read_feather("")
 start = np.arange(0,186000,1000,dtype=np.int32)
 # end = start[:] + 10000
 end = start[:] + 1000
