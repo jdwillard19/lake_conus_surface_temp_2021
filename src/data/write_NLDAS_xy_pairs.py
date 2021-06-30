@@ -86,33 +86,33 @@ for site_ct, site_id in enumerate(site_ids):
         continue
     #select weather file
     weather = None
-    if 40 < lon < 53 and -98 > lat > -126:
+
+    if (w1['instance_name']==w_id).any()
         if verbose:
             print("loading ",w1_fn)
         weather = w1
-    elif 24 < lon < 40 and -98 > lat > -126: 
+    elif (w2['instance_name']==w_id).any(): 
         weather = w2
         if verbose:
             print("loading ",w2_fn)
-    elif 40 < lon < 53 and -82 > lat > -98:
+    elif (w3['instance_name']==w_id).any():
         weather = w3
         if verbose:
             print("loading ",w3_fn)
-    elif 24 < lon < 40 and -82 > lat > -98:
+    elif (w4['instance_name']==w_id).any():
         weather = w4
         if verbose:
             print("loading ",w4_fn)
-    elif 24 < lon < 53 and -67 > lat > -82:
+    elif (w5['instance_name']==w_id).any():
         weather = w5
         if verbose:
             print("loading ",w5_fn)
     else:
-        print("invalid coords")
+        print("invalid instance name / weather_id")
         pdb.set_trace()
 
     #index by lat/lon
-    ind = weather['instance_name']==w_id
-    pdb.set_trace()
+    ind = (weather['instance_name']==w_id)
     assert ind.any()
 
     #select data 
