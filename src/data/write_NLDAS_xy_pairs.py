@@ -68,13 +68,11 @@ w5 = xr.open_dataset(base_path+w5_fn)
 
 start = int(sys.argv[1])
 end = int(sys.argv[2])
-# site_ids = np.flipud(site_ids)
 print("running site id's ",start,"->",end)
 site_ids = site_ids[start:end]
 skipped = []
 verbose = True
-# site_ids = ['nhdhr_139474232']
-for lake_ind, name in enumerate(site_ids):
+for site_id, name in enumerate(site_ids):
     print("(",lake_ind,"/",str(len(site_ids)),") ","writing... ", name)
 
 
