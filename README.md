@@ -27,10 +27,10 @@ Pipeline to run
 `cd src/data/`
 `Rscript pull_data.r`
 
-3. Run preprocessing scripts (HPC recommended*).
+3. Run preprocessing scripts with either HPC* or not (*high performance computing, recommended).  
 `cd src/data/`  
-(no HPC) `python write_NLDAS_xy_pairs.py [start_index] [end_index]`  
-(HPC) `cd src/hpc/`  
+(no HPC) `python write_NLDAS_xy_pairs.py 0 185550`  
+(HPC*) `cd src/hpc/`  
       `python create_preprocess_jobs1.py`  (create jobs)
       `cd /hpc/`
       `source data_jobs1.sh` (submit jobs)
