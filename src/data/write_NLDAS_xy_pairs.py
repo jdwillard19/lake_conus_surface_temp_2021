@@ -79,7 +79,6 @@ for site_ct, site_id in enumerate(site_ids):
     lon = metadata[metadata['site_id'] == site_id]['weather_lon_deg'].values[0]
     lat = metadata[metadata['site_id'] == site_id]['weather_lat_deg'].values[0]
     w_id = metadata[metadata['site_id'] == site_id]['weather_id'].values[0].encode()
-
     #check if cell already processed
     if os.path.exists(feat_base_path+"WSV_"+w_id.decode()+".npy"):
         print("ALREADY PROCESSED")
