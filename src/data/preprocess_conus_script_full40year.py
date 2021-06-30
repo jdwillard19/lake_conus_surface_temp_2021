@@ -13,15 +13,14 @@ import datetime
 
 
 
-#load metadata, get ids
-# metadata = pd.read_csv("../../metadata/surface_lake_metadata_conus.csv")
-metadata = pd.read_csv("../../metadata/surface_lake_metadata_file_full_conus_062321.csv")
-start = int(sys.argv[1])
-end = int(sys.argv[2])
-site_ids = np.unique(metadata['site_id'].values[start:end])
+#load metadata, get command line arguments indicating indices of lakes you wish to preprocess, get ids
+metadata = pd.read_csv("../../metadata/lake_metadata.csv")
+start = sys.argv[1]
+end = sys.argv[2]
+site_ids = metadata['site_id'].values[start:end]
 
 #load wst obs
-obs = pd.read_feather("../../data/raw/obs/surface_lake_temp_daily_062321.feather")
+obs = pd.read_csv("../../data/raw/obs/lake_surface_temp_obs.csv")
 # obs = pd.read_feather("../../data/raw/obs/swt_obs_061121_coarse_lab_filter.feather").drop(['level_0','index','month'],axis=1)
 
 
@@ -34,35 +33,22 @@ n_lakes = site_ids.shape[0]
 n_dyn_feats = 5 #AT,LW,SW,WSU,WSV
 n_stc_feats = 4 #AREA,LAT,LON,ELEV
 
-
+#pre-calculated statistics
 mean_feats = np.array([13.1700613, 41.67473611, -90.43172611, 397.97342139, 1.76944297e+02, 3.07248340e+02, 2.82968074e+02, 7.85104236e-01, 2.86081133e-01])
 std_feats = np.array([1.630222, 6.45012084, 9.8714776, 474.08400329,9.10455152, 7.54579132, 3.32533227, 1.62018831, 1.70615275])
    
-
-#add ftype and fcodes (REMOVED)
-# Ftypes = np.unique(metadata['FType'])
-# Fcodes = np.unique(metadata['FCode'])
-# ftype_arrs = [[1 if metadata.iloc[i]['FType']==int(j) else 0 for i in range(metadata.shape[0])] for j in Ftypes]
-# fcode_arrs = [[1 if metadata.iloc[i]['FCode']==int(j) else 0 for i in range(metadata.shape[0])] for j in Fcodes]
-# ftype_means = [np.mean(ftype_arr) for ftype_arr in ftype_arrs]
-# ftype_std = [np.std(ftype_arr) for ftype_arr in ftype_arrs]
-# fcode_means = [np.mean(fcode_arr) for fcode_arr in fcode_arrs]
-# fcode_std = [np.std(fcode_arr) for fcode_arr in fcode_arrs]
-
-# mean_feats = np.insert(mean_feats,0,fcode_means)
-# mean_feats = np.insert(mean_feats,0,ftype_means)
-# std_feats = np.insert(std_feats,0,fcode_std)
-# std_feats = np.insert(std_feats,0,ftype_std)
-
-
 n_features = mean_feats.shape[0]
 
-#load dates
-sw_ds_path = "../../data/globus/NLDAS_step[daily]_var[dswrfsfc]_date[19790101.20210212].nc" #shortwave
-print("loading sw nc file....")
-sw_da = xr.open_dataset(sw_ds_path)['dswrfsfc']
-print("sw file loaded")
-dates = sw_da['Time'].values
+#load weather files
+base_path = '../../data/raw/data_release/'
+w1 = xr.open_dataset(base_path+'01_weather_N40-53_W98-126.nc4')
+w2 = xr.open_dataset(base_path+'02_weather_N24-40_W98-126.nc4')
+w3 = xr.open_dataset(base_path+'03_weather_N40-53_W82-98.nc4')
+w4 = xr.open_dataset(base_path+'04_weather_N24-40_W82-98.nc4')
+w5 = xr.open_dataset(base_path+'05_weather_N24-53_W67-82.nc4')
+
+
+dates = w1['time'].values
 
 
 start = 0
