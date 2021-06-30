@@ -136,6 +136,10 @@ for site_ct, site_id in enumerate(site_ids):
     obs_path = "../../data/processed/"+site_id+"/obs"
     dates_path = "../../data/processed/"+site_id+"/dates"
 
+    #assert and save
+    assert np.isfinite(site_feats).all()
+    assert np.isfinite(feats_norm).all()
+    assert np.isfinite(dates).all()
 
     np.save(feat_path, site_feats)
     np.save(norm_feat_path, feats_norm)
