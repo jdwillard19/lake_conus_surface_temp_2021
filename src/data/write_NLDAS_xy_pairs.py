@@ -81,6 +81,7 @@ for site_ct, site_id in enumerate(site_ids):
     w_id = metadata[metadata['site_id'] == site_id]['weather_id'].values[0].encode()
 
     #check if cell already processed
+    pdb.set_trace()
     if os.path.exists(feat_base_path+"WSV_"+w_id.decode()):
         print("ALREADY PROCESSED")
         continue
