@@ -86,23 +86,23 @@ for site_ct, site_id in enumerate(site_ids):
         continue
     #select weather file
     weather = None
-    if 40 < lon < 53 and 98 < lat < 126:
+    if 40 < lon < 53 and -98 < lat < -126:
         if verbose:
             print("loading ",w1_fn)
         weather = w1
-    elif 24 < lon < 40 and 98 < lat < 126: 
+    elif 24 < lon < 40 and -98 < lat < -126: 
         weather = w2
         if verbose:
             print("loading ",w2_fn)
-    elif 40 < lon < 53 and 82 < lat < 98:
+    elif 40 < lon < 53 and -82 < lat < -98:
         weather = w3
         if verbose:
             print("loading ",w3_fn)
-    elif 24 < lon < 40 and 82 < lat < 98:
+    elif 24 < lon < 40 and -82 < lat < -98:
         weather = w4
         if verbose:
             print("loading ",w4_fn)
-    elif 24 < lon < 53 and 67 < lat < 82:
+    elif 24 < lon < 53 and -67 < lat < -82:
         weather = w5
         if verbose:
             print("loading ",w5_fn)
