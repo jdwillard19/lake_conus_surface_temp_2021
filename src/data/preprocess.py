@@ -84,11 +84,11 @@ for site_ct, site_id in enumerate(site_ids):
     elev = metadata[metadata['site_id']==site_id].elevation_m
 
     #get dynamic feats
-    sw = np.load(feat_base_path+"SW_"+str(x)+"x_"+str(y)+"y.npy")
-    lw = np.load(feat_base_path+"LW_"+str(x)+"x_"+str(y)+"y.npy")
-    at = np.load(feat_base_path+"AT_"+str(x)+"x_"+str(y)+"y.npy")
-    wsu = np.load(feat_base_path+"WSU_"+str(x)+"x_"+str(y)+"y.npy")
-    wsv = np.load(feat_base_path+"WSV_"+str(x)+"x_"+str(y)+"y.npy")
+    sw = np.load(feat_base_path+"SW_"+w_id.decode()+".npy")
+    lw = np.load(feat_base_path+"LW_"+w_id.decode()+".npy")
+    at = np.load(feat_base_path+"AT_"+w_id.decode()+".npy")
+    wsu = np.load(feat_base_path+"WSU_"+w_id.decode()+".npy")
+    wsv = np.load(feat_base_path+"WSV_"+w_id.decode()+".npy")
 
     #fill data
     site_feats[:,0] = area
