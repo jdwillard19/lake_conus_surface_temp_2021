@@ -71,7 +71,7 @@ end = int(sys.argv[2])
 print("running site id's ",start,"->",end)
 site_ids = site_ids[start:end]
 skipped = []
-verbose = True
+verbose = False
 for site_ct, site_id in enumerate(site_ids):
     print("(",site_ct,"/",str(len(site_ids)),") ","writing... ", site_id)
 
