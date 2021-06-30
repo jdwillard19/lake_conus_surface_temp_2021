@@ -112,7 +112,7 @@ for site_ct, site_id in enumerate(site_ids):
 
     #index by lat/lon
     ind = weather['instance_name']==w_id
-
+    pdb.set_trace()
     assert ind.any()
 
     #select data 

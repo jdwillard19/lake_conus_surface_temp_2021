@@ -4,7 +4,7 @@ import pandas as pd
 import pdb
 import numpy as np
 #######################################
-# Jan 2021 - Jared - preprocess jobs
+# June 2021 - Jared - preprocess jobs (may need to adapt to different HPC if you don't use slurm)
 #         `  
 #######################################
 
