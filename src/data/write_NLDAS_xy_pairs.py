@@ -72,8 +72,8 @@ print("running site id's ",start,"->",end)
 site_ids = site_ids[start:end]
 skipped = []
 verbose = True
-for site_id, name in enumerate(site_ids):
-    print("(",lake_ind,"/",str(len(site_ids)),") ","writing... ", name)
+for site_ct, site_id in enumerate(site_ids):
+    print("(",site_ct,"/",str(len(site_ids)),") ","writing... ", site_id)
 
 
     lon = metadata[metadata['site_id'] == site_id]['weather_lon_deg'].values[0]
@@ -147,7 +147,7 @@ for site_id, name in enumerate(site_ids):
     np.save(feat_base_path+"WSU_"+w_id.decode(),wsu_vals)
     np.save(feat_base_path+"WSV_"+w_id.decode(),wsv_vals)
     if verbose:
-        print("x/y: ",x,"/",y,":\nSW: ", sw_vals, "\nLW: ",lw_vals,"\nAT: ",at_vals,"\nWSU: ", wsu_vals, "\nWSV: ", wsv_vals)
+        print("x/y: ",w_id.encode(),":\nSW: ", sw_vals, "\nLW: ",lw_vals,"\nAT: ",at_vals,"\nWSU: ", wsu_vals, "\nWSV: ", wsv_vals)
 
 print("DATA COMPLETE")
 print("SKIPPED: ")
