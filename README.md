@@ -32,7 +32,7 @@ Pipeline to run
     + `cd src/data/`  
     + `python write_NLDAS_xy_pairs.py 0 185550`  
     + `python preprocess.py 0 185550` (run ONLY after previous job finished)  
-* (HPC*)  
+(HPC*)  
     + `cd src/hpc/`    
     + `python create_preprocess_jobs.py`  (create jobs)  
     + `cd /hpc/`  
