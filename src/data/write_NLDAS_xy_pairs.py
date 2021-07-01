@@ -48,7 +48,7 @@ verbose = True
 for site_ct, site_id in enumerate(site_ids):
     print("(",site_ct,"/",str(len(site_ids)),") ","writing... ", site_id)
 
-    site_id = 'nhdhr_134311540'
+    site_id = 'nhdhr_147891890'
     pdb.set_trace()
     lon = metadata[metadata['site_id'] == site_id]['weather_lon_deg'].values[0]
     lat = metadata[metadata['site_id'] == site_id]['weather_lat_deg'].values[0]
