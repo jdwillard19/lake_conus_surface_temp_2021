@@ -54,9 +54,9 @@ for site_ct, site_id in enumerate(site_ids):
     lat = metadata[metadata['site_id'] == site_id]['weather_lat_deg'].values[0]
     w_id = metadata[metadata['site_id'] == site_id]['weather_id'].values[0].encode()
     #check if cell already processed
-    if os.path.exists(feat_base_path+"LW_"+w_id.decode()+".npy") and os.path.exists(feat_base_path+"SW_"+w_id.decode()+".npy") and os.path.exists(feat_base_path+"WSV_"+w_id.decode()+".npy") and os.path.exists(feat_base_path+"WSU_"+w_id.decode()+".npy") and  os.path.exists(feat_base_path+"AT_"+w_id.decode()+".npy"):
-        print("ALREADY PROCESSED")
-        continue
+    # if os.path.exists(feat_base_path+"LW_"+w_id.decode()+".npy") and os.path.exists(feat_base_path+"SW_"+w_id.decode()+".npy") and os.path.exists(feat_base_path+"WSV_"+w_id.decode()+".npy") and os.path.exists(feat_base_path+"WSU_"+w_id.decode()+".npy") and  os.path.exists(feat_base_path+"AT_"+w_id.decode()+".npy"):
+    #     print("ALREADY PROCESSED")
+    #     continue
     #select weather file
     weather = None
 
