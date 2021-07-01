@@ -36,6 +36,22 @@ ct = 0
 #     with open('./jobs/job_{}_foldEA.sh'.format(l), 'w') as output:
 #         output.write(all)
 
+# for name in range(n_folds):
+#     ct += 1
+#     #for each unique lake
+#     print(name)
+#     l = name
+
+#     # if not os.path.exists("../../../models/single_lake_models/"+name+"/PGRNN_basic_normAll_pball"): 
+#     header = "#!/bin/bash -l\n#SBATCH --time=23:59:00\n#SBATCH --ntasks=8\n#SBATCH --mem=20g\n#SBATCH --mail-type=ALL\n#SBATCH --mail-user=willa099@umn.edu\n#SBATCH --output=XGB_hypertune_%s.out\n#SBATCH --error=XGB_hypertune_%s.err\n#SBATCH --gres=gpu:k40:2\n#SBATCH -p k40"%(l,l)
+#     script = "source /home/kumarv/willa099/takeme_hyperparam.sh\n" #cd to directory with training script
+#     script2 = "python xgb_hypertune.py "%(l)
+#     script3 = "python linear_model_error_est.py %s"%(l)
+#     all= "\n".join([header,script,script2,script3])
+#     sbatch = "\n".join(["sbatch job_%s_foldXGB.sh"%(l),sbatch])
+#     with open('./jobs/job_{}_foldXGB.sh'.format(l), 'w') as output:
+#         output.write(all)
+
 for name in range(n_folds):
     ct += 1
     #for each unique lake
@@ -44,14 +60,12 @@ for name in range(n_folds):
 
     # if not os.path.exists("../../../models/single_lake_models/"+name+"/PGRNN_basic_normAll_pball"): 
     header = "#!/bin/bash -l\n#SBATCH --time=23:59:00\n#SBATCH --ntasks=8\n#SBATCH --mem=20g\n#SBATCH --mail-type=ALL\n#SBATCH --mail-user=willa099@umn.edu\n#SBATCH --output=XGB_hypertune_%s.out\n#SBATCH --error=XGB_hypertune_%s.err\n#SBATCH --gres=gpu:k40:2\n#SBATCH -p k40"%(l,l)
-    script = "source /home/kumarv/willa099/takeme_evaluate.sh\n" #cd to directory with training script
-    script2 = "python xgb_error_est_lagless.py 5000 .025 "%(l)
-    script3 = "python linear_model_error_est.py %s"%(l)
-    all= "\n".join([header,script,script2,script3])
+    script = "source /home/kumarv/willa099/takeme_hyperparam.sh\n" #cd to directory with training script
+    script2 = "python xgb_hypertune.py "%(l)
+    all= "\n".join([header,script,script2])
     sbatch = "\n".join(["sbatch job_%s_foldXGB.sh"%(l),sbatch])
-    with open('./jobs/job_{}_foldXGB.sh'.format(l), 'w') as output:
+    with open('../../hpc/job_{}_foldXGB.sh'.format(l), 'w') as output:
         output.write(all)
-
 # for name in range(n_folds):
 #     ct += 1
 #     #for each unique lake
@@ -69,7 +83,8 @@ for name in range(n_folds):
 #         output.write(all)
 
 
-compile_job_path= './jobs/sbatch_script_err_est.sh'
+# compile_job_path= '../../hpc/sbatch_script_err_est.sh'
+compile_job_path= '../../hpc/sbatch_xgb_tune.sh'
 with open(compile_job_path, 'w') as output2:
     output2.write(sbatch)
 
