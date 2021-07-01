@@ -11,7 +11,7 @@ import xgboost as xgb
 from sklearn.model_selection import GridSearchCV, cross_val_score
 
 ##################################################################3
-# (Jan 2020 - Jared) - 
+# (July 2021 - Jared) - tune XGB Model for each fold
 ####################################################################3
 
 currentDT = datetime.datetime.now()
@@ -33,33 +33,11 @@ metadata = pd.read_csv("../../metadata/surface_lake_metadata_021521_wCluster.csv
 
 columns = ['Surface_Area','Latitude','Longitude', 
      'Elevation','ShortWave','LongWave','AirTemp','WindSpeedU','WindspeedV',
-     # 'ShortWave_t-4','LongWave_t-4','AirTemp_t-4','WindSpeedU_t-4','WindSpeedV_t-4',
-     # 'ShortWave_t-3','LongWave_t-3','AirTemp_t-3','WindSpeedU_t-3','WindSpeedV_t-3',
-     # 'ShortWave_t-2','LongWave_t-2','AirTemp_t-2','WindSpeedU_t-2','WindSpeedV_t-2',\
-     # 'ShortWave_t-1','LongWave_t-1','AirTemp_t-1','WindSpeedU_t-1','WindSpeedV_t-1',\
-     # 'ShortWave_t-14','LongWave_t-14','AirTemp_t-14','WindSpeedU_t-14','WindSpeedV_t-14',\
-     # 'ShortWave_t-30','LongWave_t-30','AirTemp_t-30','WindSpeedU_t-30','WindSpeedV_t-30',\
      'Surface_Temp']
-# X = np.array(c)
-# new_c = np.append(
-#                   np.append(
-#                             np.append(
-#                                       X[i,:],
-#                                       X[i-lookback:i,4:].flatten()),
-#                             X[i-14,4:])
-#                   ,X[i-30,4:])
-# train_df = pd.DataFrame(columns=columns)
+
 k = int(sys.argv[1])
 param_search = True
 
-# lookback = 4
-# farthest_lookback = 30
-#build training set
-# k = int(sys.argv[1])
-# save_file_path = '../../models/xgb_lagless_surface_temp_fold'+str(k)+"_03012021.joblib"
-
-# final_output_df = pd.DataFrame()
-# result_df = pd.DataFrame(columns=['site_id','temp_pred_xgb','temp_actual'])
 
 train_lakes = metadata[metadata['5fold_fold']!=k]['site_id'].values
 

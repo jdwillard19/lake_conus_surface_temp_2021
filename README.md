@@ -39,4 +39,4 @@ Pipeline to run
     + `source data_jobs1.sh` (submit jobs)  
     + `source data_jobs2.sh` (run ONLY after previous jobs have finished)  
 
-4.  
+4. Do hyperparameter tuning for EA-LSTM and XGB (Gradient Boosting)  
