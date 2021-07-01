@@ -50,7 +50,9 @@ feat_base_path = '../../data/raw/feats/'
 # loop to preprocess each site
 for site_ct, site_id in enumerate(site_ids):
     print(site_ct,"/",len(site_ids)," starting ", site_id)
-
+    if os.path.exists("../../data/processed/"+site_id+"/obs.npy")
+        print("already done")
+        continue
     #get weather_id
     w_id = metadata[metadata['site_id'] == site_id]['weather_id'].values[0].encode()
 
