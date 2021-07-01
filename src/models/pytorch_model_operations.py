@@ -2,6 +2,8 @@ import torch
 import torch.nn as nn
 from torch.nn.init import xavier_normal_
 
+#helper functions for Pytorch modeling
+
 def saveModel(model_state, optimizer_state, save_path):
     state = {'state_dict': model_state,
                     'optimizer': optimizer_state }
