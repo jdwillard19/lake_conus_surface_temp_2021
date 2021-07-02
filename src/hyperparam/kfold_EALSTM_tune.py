@@ -748,6 +748,6 @@ for hid_ct,n_hidden in enumerate(n_hid_arr):
     best_trnrmse_per_hid[hid_ct] = trn_rmse_per_ep.mean(axis=0)[opt_ind]
 
 print("best hid: ",n_hid_arr[int(np.argmin(best_tstrmse_per_hid))])
-print("best ep: ",best_ep_per_hid[int(np.argmin(best_tstrmse_per_hid))]*10)
+print("best ep: ",best_ep_per_hid[int(np.argmin(best_tstrmse_per_hid))])
 print("best tst_rmse: ",best_tstrmse_per_hid.min())
 print("best trn_rmse: ",best_trnrmse_per_hid[int(np.argmin(best_tstrmse_per_hid))])
