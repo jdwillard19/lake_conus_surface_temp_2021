@@ -27,7 +27,6 @@ for name in range(n_folds):
     print(name)
     l = name
 
-    # if not os.path.exists("../../../models/single_lake_models/"+name+"/PGRNN_basic_normAll_pball"): 
     header = "#!/bin/bash -l\n#SBATCH --time=23:59:00\n#SBATCH --ntasks=8\n#SBATCH --mem=20g\n#SBATCH --mail-type=ALL\n#SBATCH --mail-user=willa099@umn.edu\n#SBATCH --output=EALSTM_singlefold_%s.out\n#SBATCH --error=EALSTM_singlefold_%s.err\n#SBATCH --gres=gpu:k40:2\n#SBATCH -p k40"%(l,l)
     script = "source /home/kumarv/willa099/takeme_evaluate.sh\n" #cd to directory with training script
     script2 = "python EALSTM_error_estimation_and_output_single_fold.py %s"%(l)
@@ -37,7 +36,7 @@ for name in range(n_folds):
     with open('../../hpc/job_{}_foldEA.sh'.format(l), 'w') as output:
         output.write(all)
 
-compile_job_path= './jobs/sbatch_script_err_est_ea.sh'
+compile_job_path= '../../hpc/sbatch_script_err_est_ea.sh'
 with open(compile_job_path, 'w') as output2:
     output2.write(sbatch)
 
@@ -51,7 +50,6 @@ for name in folds_arr:
     print(name)
     l = name
 
-    # if not os.path.exists("../../../models/single_lake_models/"+name+"/PGRNN_basic_normAll_pball"): 
     header = "#!/bin/bash -l\n#SBATCH --time=23:59:00\n#SBATCH --ntasks=8\n#SBATCH --mem=20g\n#SBATCH --mail-type=ALL\n#SBATCH --mail-user=willa099@umn.edu\n#SBATCH --output=err_est_%s.out\n#SBATCH --error=err_est_%s.err\n#SBATCH --gres=gpu:k40:2\n#SBATCH -p k40"%(l,l)
     script = "source /home/kumarv/willa099/takeme_evaluate.sh\n" #cd to directory with training script
     script2 = "python xgb_error_est.py %s 5000 .025"%(l)
@@ -63,7 +61,7 @@ for name in folds_arr:
 
 
 
-compile_job_path= './jobs/sbatch_script_err_est_other.sh'
+compile_job_path= '../../hpc/sbatch_script_err_est_other.sh'
 with open(compile_job_path, 'w') as output4:
     output4.write(sbatch)
 
