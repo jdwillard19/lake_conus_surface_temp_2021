@@ -34,7 +34,8 @@ print(str(currentDT))
 
 #../../metadata/conus_source_metadata.csv
 ####################################################3
-# (Nov 2020 - Jared) source model script, takes lakename as required command line argument
+# (July 2021 - Jared) find best epoch and train rmse
+#   to train EALSTM using nested CV
 ###################################################33
 
 #enable/disable cuda 
@@ -47,11 +48,11 @@ torch.set_printoptions(precision=10)
 ### debug tools
 debug_train = False
 debug_end = False
-verbose = True
+verbose = False
 save = True
 test = False
 
-debug = True
+debug = False
 
 
 #####################3
@@ -79,12 +80,6 @@ n_eps = 10000
 if debug:       
     n_eps = 21
 
-# targ_ep = 0
-# targ_rmse = 1.46
-# ep_list16 = [] #list of epochs at which models were saved for * hidden units
-# ep_list32 = [] 
-# ep_list64 = [] 
-# ep_list128 = [] 
 
 #load metadata
 metadata = pd.read_csv("../../metadata/lake_metadata.csv")
@@ -101,19 +96,11 @@ if debug:
 ###########################
 first_save_epoch = 0
 epoch_since_best = 0
-yhat_batch_size = 1
-
-###############################
-# data preprocess
-##################################
-#create train and test sets
-
+yhat_batch_size = 1 #deprecated
 n_folds = 5
-# k = int(sys.argv[1])
-# trn_rmse_per_ep = np.empty((n_folds,int(n_eps/10)))
-# tst_rmse_per_ep = np.empty((n_folds,int(n_eps/10)))
-# tst_rmse_per_ep = []
-# n_hid_arr = np.array([32,64,128,256])
+
+
+#data structs to fill
 n_hid_arr = np.array([256])
 best_ep_per_hid = np.empty_like(n_hid_arr)
 best_tstrmse_per_hid = np.empty_like(n_hid_arr,dtype=np.float)
@@ -124,12 +111,12 @@ best_trnrmse_per_hid[:] = np.nan
 for hid_ct,n_hidden in enumerate(n_hid_arr):
     print("n hidden: ",n_hidden)
     n_hidden = int(n_hidden)
-    # trn_rmse_per_ep = np.empty((len(folds_arr),int(n_eps/10)))
     trn_rmse_per_ep = np.empty((1,int(n_eps/10)+2))
     trn_rmse_per_ep[:] = np.nan
-    # tst_rmse_per_ep = np.empty((len(folds_arr),int(n_eps/10)))
     tst_rmse_per_ep = np.empty((1,int(n_eps/10)+2))
     tst_rmse_per_ep[:] = np.nan
+
+    #iterate over inner folds
     for k_ct, k in enumerate(folds_arr):
         if k_ct > 0:
             continue
@@ -137,7 +124,6 @@ for hid_ct,n_hidden in enumerate(n_hid_arr):
         k = int(folds_arr[0])
         other_ks = np.delete(folds_arr,k)
         lakenames = metadata[np.isin(metadata['cluster_id'],other_ks)]['site_id'].values
-        # lakenames = metadata['site_id'].values
         test_lakenames = metadata[metadata['cluster_id']==k]['site_id'].values
         ep_arr = []   
 
@@ -193,27 +179,6 @@ for hid_ct,n_hidden in enumerate(n_hid_arr):
 
             def __len__(self):
                 return self.len
-
-        # class TotalModelOutputDataset(Dataset):
-        # #dataset for unsupervised input(in this case all the data)
-        #     def __init__(self, all_data, all_phys_data,all_dates):
-        #         #data of all model output, and corresponding unstandardized physical quantities
-        #         #needed to calculate physical loss
-        #         self.len = all_data.shape[0]
-        #         self.data = all_data[:,:,:-1].float()
-        #         self.label = all_data[:,:,-1].float() #DO NOT USE IN MODEL
-        #         self.phys = all_phys_data.float()
-        #         helper = np.vectorize(lambda x: date.toordinal(pd.Timestamp(x).to_pydatetime()))
-        #         dates = helper(all_dates)
-        #         self.dates = dates
-
-        #     def __getitem__(self, index):
-        #         return self.data[index], self.phys[index], self.dates[index], self.label[index]
-
-        #     def __len__(self):
-        #         return self.len
-
-
 
 
         #format training data for loading
@@ -566,19 +531,12 @@ for hid_ct,n_hidden in enumerate(n_hid_arr):
                 inputs = data[0].float()
                 targets = data[1].float()
                 targets = targets[:, begin_loss_ind:]
-                # tmp_dates = tst_dates_target[:, begin_loss_ind:]
-                # depths = inputs[:,:,0]
-
 
                 #cuda commands
                 if(use_gpu):
                     inputs = inputs.cuda()
                     targets = targets.cuda()
 
-                #forward  prop
-                # lstm_net.hidden = lstm_net.init_hidden(batch_size=inputs.size()[0])
-                # lstm_net.reset_parameters()
-                # h_state = None
                 outputs, h_state, _ = lstm_net(inputs[:,:,n_static_feats:], inputs[:,0,:n_static_feats])
                 outputs = outputs.view(outputs.size()[0],-1)
 
@@ -616,7 +574,7 @@ for hid_ct,n_hidden in enumerate(n_hid_arr):
             #check for convergence
             avg_loss = avg_loss / batches_done
             train_avg_loss = avg_loss
-            # if verbose and epoch %100 is 0:
+
             if verbose:
                 print("train rmse loss=", avg_loss)
             if epoch % 10 is 0:
@@ -659,45 +617,9 @@ for hid_ct,n_hidden in enumerate(n_hid_arr):
                         #     ct += 1
                     avg_mse = avg_mse / ct
 
-
-                        # #save model 
-                        # (outputm_npy, labelm_npy) = parseMatricesFromSeqs(pred.cpu().numpy(), targets.cpu().numpy(), tmp_dates, 
-                        #                                                 n_test_dates_target,
-                        #                                                 unique_tst_dates_target) 
-                        # #to store output
-                        # output_mats[i,:] = outputm_npy
-                        # if i == 0:
-                        #     #store label
-                        #     label_mats = labelm_npy
-                        # loss_output = outputm_npy[~np.isnan(labelm_npy)]
-                        # loss_label = labelm_npy[~np.isnan(labelm_npy)]
-
-                        # avg_mse = np.sqrt(((loss_output - loss_label) ** 2).mean())
-                        # tst_rmse_per_ep.append(avg_mse)
                     tst_rmse_per_ep[0,int(epoch/10)]=avg_mse
 
-                        # if avg_mse < min_mse:
-                        #     # save_path = "../../models/global_model_"+str(n_hidden)+"hid_"+str(num_layers)+"layer_"+str(dropout)+"drop"
-                        #     # saveModel(lstm_net.state_dict(), optimizer.state_dict(), save_path)
-                        #     min_train_ep = epoch
-                        #     min_train_rmse = train_avg_loss
-                        #     min_mse = avg_mse
-                        #     ep_since_min = 0
-                        # else:
-                        #     ep_since_min += 1
-                        #     if ep_since_min == patience:
-                        #         print("patience met")
-                        #         print("min test ep/rmse: ",min_train_ep,"\n",min_train_rmse)
-                        #         done = True
-                        #         break
-
-                        # print("Test RMSE: ", avg_mse, "(min=",min_mse,")---ep since ",ep_since_min*10)
-                    # print("Test RMSE: ", avg_mse)
-                # save_path = "../../models/EALSTM_global_model_"+str(n_hidden)+"hid_"+str(num_layers)+"layer_wElevTypeCodes_partial"
-                # saveModel(lstm_net.state_dict(), optimizer.state_dict(), save_path)
-            # if avg_loss < targ_rmse and epoch > targ_ep:
-            #     break
-
+            #check if best validation performance
             if avg_mse < min_mse:
                 min_mse = avg_mse
                 ep_min_mse = epoch
@@ -711,28 +633,12 @@ for hid_ct,n_hidden in enumerate(n_hid_arr):
                 done = True
                 break
 
-            # if test:
-
-
-                # if epoch % 100 == 0 and epoch != 0:
-
-            #     save_path = "../../models/"+lakename+"/basicLSTM_source_model_"+str(n_hidden)+"hid_"+str(epoch)+"ep"
-
-            #     saveModel(lstm_net.state_dict(), optimizer.state_dict(), save_path)
-            #     if n_hidden == n_hidden_list[0]:
-            #         ep_list16.append(epoch)
-            #     elif n_hidden == n_hidden_list[1]:
-            #         ep_list32.append(epoch)
-            #     elif n_hidden is n_hidden_list[2]:
-            #         ep_list64.append(epoch)
-            #     elif n_hidden is n_hidden_list[3]:
-            #         ep_list128.append(epoch)
             save_path = "../../models/EALSTM_k"+str(k)+"_"+str(epoch)+"ep"
 
             saveModel(lstm_net.state_dict(), optimizer.state_dict(), save_path)
-                    # print("saved at ",save_path)
-    pdb.set_trace()
-    # max_ind = int(np.where(np.isnan(tst_rmse_per_ep))[1].min()-1)
+            # print("saved at ",save_path)
+
+    #calculate best epoch
     max_ind = int(np.where(np.isnan(tst_rmse_per_ep))[1].min())
     tst_rmse_per_ep = tst_rmse_per_ep[:,:max_ind]
     trn_rmse_per_ep = trn_rmse_per_ep[:,:max_ind]
@@ -749,5 +655,5 @@ for hid_ct,n_hidden in enumerate(n_hid_arr):
 
 print("best hid: ",n_hid_arr[int(np.argmin(best_tstrmse_per_hid))])
 print("best ep: ",best_ep_per_hid[int(np.argmin(best_tstrmse_per_hid))])
-print("best tst_rmse: ",best_tstrmse_per_hid.min())
+# print("best tst_rmse: ",best_tstrmse_per_hid.min())
 print("best trn_rmse: ",best_trnrmse_per_hid[int(np.argmin(best_tstrmse_per_hid))])
