@@ -75,7 +75,12 @@ targ_ep = None
 targ_rmse = None
 
 
-metadata = pd.read_csv("../../metadata/surface_lake_metadata_041421_wCluster.csv")
+#load metadata
+metadata = pd.read_csv("../../metadata/lake_metadata.csv")
+
+#trim to observed lakes
+metadata = metadata[metadata['num_obs'] > 0]
+
 obs = pd.read_feather("../../data/raw/obs/surface_lake_temp_daily_062321.feather")
 k = int(sys.argv[1])
 ###############################
@@ -109,6 +114,8 @@ final_output_df = pd.DataFrame()
 
 
 #INSERT FOUND HYPERPARAMETERS FOR EACH FOLD HERE
+hp = pd.read_csv("../../results/ealstm_hyperparams.csv")
+pdb.set_trace()
 if k == 0:
     targ_ep = 50
     targ_rmse = 2.20

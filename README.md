@@ -39,9 +39,14 @@ Pipeline to run
     + `source data_jobs1.sh` (submit jobs)  
     + `source data_jobs2.sh` (run ONLY after previous jobs have finished)  
 
-4. Do hyperparameter tuning for EA-LSTM and XGB (Gradient Boosting) (optional, defaults already enabled)
+4. (optional, defaults already enabled)  Do hyperparameter tuning for EA-LSTM and XGB (Gradient Boosting)  
 `cd src/hyperparam`  
-`python xgb_hypertune [fold #]` (enter numbers 1-5 to get it for each, enter values in ~/results/xgb_hyperparams.csv) 
+`python xgb_hypertune [fold #]` (enter numbers 1-5 to get it for each, enter values in ~/results/xgb_hyperparams.csv)  
+`python EALSTM_hypertune [fold #]` (enter numbers 1-5 to get it for each, enter values in ~/results/ealstm_hyperparams.csv)  
+
+5. Train linear model (LM), XGB, and EALSTM for each fold
+
+
 
 
 
