@@ -102,7 +102,7 @@ yhat_batch_size = 1
 ##################################
 #create train and test sets
 
-n_folds = 3
+n_folds = 5
 # k = int(sys.argv[1])
 # trn_rmse_per_ep = np.empty((n_folds,int(n_eps/10)))
 # tst_rmse_per_ep = np.empty((n_folds,int(n_eps/10)))
@@ -112,7 +112,7 @@ n_hid_arr = np.array([256])
 best_ep_per_hid = np.empty_like(n_hid_arr)
 best_tstrmse_per_hid = np.empty_like(n_hid_arr,dtype=np.float)
 best_trnrmse_per_hid = np.empty_like(n_hid_arr,dtype=np.float)
-best_ep_per_hid[:] = np.nan
+best_ep_per_hid[:] = -999 #invalid value
 best_tstrmse_per_hid[:] = np.nan
 best_trnrmse_per_hid[:] = np.nan
 for hid_ct,n_hidden in enumerate(n_hid_arr):
