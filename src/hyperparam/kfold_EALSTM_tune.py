@@ -19,7 +19,6 @@ sys.path.append('../../data')
 sys.path.append('../data')
 sys.path.append('../../models')
 sys.path.append('../models')
-from pytorch_data_operations import buildLakeDataForRNNPretrain
 from pytorch_model_operations import saveModel
 import pytorch_data_operations
 import datetime
@@ -137,6 +136,7 @@ for hid_ct,n_hidden in enumerate(n_hid_arr):
         other_ks = np.delete(folds_arr,k)
         lakenames = metadata[np.isin(metadata['cluster_id'],other_ks)]['site_id'].values
         # lakenames = metadata['site_id'].values
+        pdb.set_trace()
         test_lakenames = metadata[metadata['cluster_id']==k]['site_id'].values
         ep_arr = []   
 
