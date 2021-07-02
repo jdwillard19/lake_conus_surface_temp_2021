@@ -74,8 +74,10 @@ lambda1 = 0
 og_k = int(sys.argv[1])
 folds_arr = np.array(np.delete(np.arange(5),[og_k]))+1
 
-# n_eps = 10000
-n_eps = 21
+n_eps = 10000
+if debug:       
+    n_eps = 21
+
 # targ_ep = 0
 # targ_rmse = 1.46
 # ep_list16 = [] #list of epochs at which models were saved for * hidden units
@@ -136,7 +138,6 @@ for hid_ct,n_hidden in enumerate(n_hid_arr):
         other_ks = np.delete(folds_arr,k)
         lakenames = metadata[np.isin(metadata['cluster_id'],other_ks)]['site_id'].values
         # lakenames = metadata['site_id'].values
-        pdb.set_trace()
         test_lakenames = metadata[metadata['cluster_id']==k]['site_id'].values
         ep_arr = []   
 
