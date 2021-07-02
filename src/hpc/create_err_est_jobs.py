@@ -19,9 +19,9 @@ n_folds = 5
 
 sbatch = ""
 ct = 0
-folds_array = np.arange(5)+1
+folds_arr = np.arange(5)+1
 
-for name in range(n_folds):
+for name in folds_arr:
     ct += 1
     #for each unique lake
     print(name)
