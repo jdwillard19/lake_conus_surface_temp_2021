@@ -171,7 +171,8 @@ for hid_ct,n_hidden in enumerate(n_hid_arr):
         print(len(test_lakenames), " lakes of data")
         # trn_data = tst_data
         if debug:
-            batch_size = trn_data.size()[0]
+            batch_size = 200
+            # trn_data.size()[0]
         else:
             batch_size = int(math.floor(trn_data.size()[0])/150)
         # batch_size = 2000
