@@ -71,8 +71,6 @@ save = True
 grad_clip = 1.0 #how much to clip the gradient 2-norm in training
 dropout = 0.
 num_layers = 1
-# n_hidden = 128
-# lambda1 = 1e-
 lambda1 = 0
 og_k = int(sys.argv[1])
 folds_arr = np.array(np.delete(np.arange(5),[og_k]))
@@ -86,23 +84,11 @@ n_eps = 21
 # ep_list64 = [] 
 # ep_list128 = [] 
 
-# lakenames = np.load("../../data/static/lists/source_lakes_conus.npy",allow_pickle=True)
-metadata = pd.read_csv("../../metadata/surface_lake_metadata_021521_wCluster.csv")
-# metadata = metadata.iloc[150:350]
+#load metadata
+metadata = pd.read_csv("../../metadata/lake_metadata.csv")
 
-###############################
-# data preprocess
-##################################
-#create train and test sets
-
-
-
-
-#####################################################################################
-####################################################3
-# fine tune
-###################################################33
-##########################################################################################33
+#trim to observed lakes
+metadata = metadata[metadata['num_obs'] > 0]# metadata = metadata.iloc[150:350]
 
 #####################
 #params
@@ -144,9 +130,9 @@ for hid_ct,n_hidden in enumerate(n_hid_arr):
         print("fold ",k)
         k = int(folds_arr[0])
         other_ks = np.delete(folds_arr,k)
-        lakenames = metadata[np.isin(metadata['5fold_fold'],other_ks)]['site_id'].values
+        lakenames = metadata[np.isin(metadata['cluster_id'],other_ks)]['site_id'].values
         # lakenames = metadata['site_id'].values
-        test_lakenames = metadata[metadata['5fold_fold']==k]['site_id'].values
+        test_lakenames = metadata[metadata['cluster_id']==k]['site_id'].values
         ep_arr = []   
 
         if not os.path.exists("./ealstm_trn_data_ofold"+str(og_k)+"_ifold"+str(k)+".npy"):
