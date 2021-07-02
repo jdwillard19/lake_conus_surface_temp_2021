@@ -89,7 +89,11 @@ metadata = pd.read_csv("../../metadata/lake_metadata.csv")
 
 #trim to observed lakes
 metadata = metadata[metadata['num_obs'] > 0]
-metadata = metadata.iloc[150:350] #debug vals
+
+debug = True
+
+if debug:
+    metadata = metadata.iloc[150:350] #debug vals
 
 #####################
 #params
@@ -164,8 +168,10 @@ for hid_ct,n_hidden in enumerate(n_hid_arr):
         print("train_data size: ",trn_data.size())
         print(len(lakenames), " lakes of data")
         # trn_data = tst_data
-        # batch_size = trn_data.size()[0]
-        batch_size = int(math.floor(trn_data.size()[0])/150)
+        if debug:
+            batch_size = trn_data.size()[0]
+        else:
+            batch_size = int(math.floor(trn_data.size()[0])/150)
         # batch_size = 2000
 
 
