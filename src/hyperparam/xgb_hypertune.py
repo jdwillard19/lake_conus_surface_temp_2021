@@ -65,13 +65,12 @@ print("train set dimensions: ",X.shape)
 gbm = xgb.XGBRegressor(booster='gbtree')
 nfolds = 3
 parameters = {'objective':['reg:squarederror'],
-              'learning_rate': [.025, 0.05], #so called `eta` value
+              'learning_rate': [.025, 0.05,.10], #so called `eta` value
               'max_depth': [6],
               'min_child_weight': [11],
               'subsample': [0.8],
               'colsample_bytree': [0.7],
-              'n_estimators': [5000,10000], #number of trees, change it to 1000 for better results
-              # 'n_estimators': [5000,10000,15000], #number of trees, change it to 1000 for better results
+              'n_estimators': [5000,10000,15000], #number of trees, change it to 1000 for better results
               }
 def gb_param_selection(X, y, nfolds):
     grid_search = GridSearchCV(gbm, parameters, n_jobs=-1, cv=nfolds,verbose=1)

@@ -31,9 +31,9 @@ from pytorch_data_operations import buildLakeDataForRNN_multilakemodel_conus, pa
 currentDT = datetime.datetime.now()
 print(str(currentDT))
 
-#../../metadata/conus_source_metadata.csv
 ####################################################3
-# (Nov 2020 - Jared) source model script, takes lakename as required command line argument
+# (July 2021 - Jared) error estimatoin for EALSTM model
+# , takes fold number as required command line argument
 ###################################################33
 
 #enable/disable cuda 
@@ -115,32 +115,15 @@ final_output_df = pd.DataFrame()
 
 #INSERT FOUND HYPERPARAMETERS FOR EACH FOLD HERE
 hp = pd.read_csv("../../results/ealstm_hyperparams.csv")
-pdb.set_trace()
-if k == 0:
-    targ_ep = 50
-    targ_rmse = 2.20
-elif k == 1:
-    targ_ep = 70
-    targ_rmse = 2.45
-elif k == 2:
-    targ_ep = 80
-    targ_rmse = 2.18
-elif k == 3:
-    targ_ep = 50
-    targ_rmse = 2.44
-elif k == 4:
-    targ_ep = 50
-    targ_rmse = 2.42
 
-#DEBUG VALUES
-# targ_ep = 0 #DEBUG VALUE
-# targ_rmse = 3.5 #DEBUG VALUE
-# metadata = metadata.iloc[150:250] #DEBUG VALUE
+targ_ep = hp[(hp['fold']+1)==k]['n_ep'].values[0]
+targ_rmse = hp[(hp['fold']+1)==k]['trn_rmse'].values[0]
+
 
 
 #get lakenames
-lakenames = metadata[metadata['5fold_fold']!=k]['site_id'].values
-test_lakes = metadata[metadata['5fold_fold']==k]['site_id'].values
+lakenames = metadata[metadata['cluster_id']!=k]['site_id'].values
+test_lakes = metadata[metadata['cluster_id']==k]['site_id'].values
 
 ep_arr = []   
 if not os.path.exists("./ealstm_trn_data_062421_5fold_k"+str(k)+".npy"):
@@ -152,28 +135,14 @@ if not os.path.exists("./ealstm_trn_data_062421_5fold_k"+str(k)+".npy"):
     np.save("ealstm_trn_data_062421_5fold_k"+str(k)+".npy",trn_data)
 else:
     trn_data = torch.from_numpy(np.load("ealstm_trn_data_062421_5fold_k"+str(k)+".npy"))
-# (tst_data, _) = buildLakeDataForRNN_multilakemodel_conus(test_lakenames,\
-#                                             seq_length, n_total_feats,\
-#                                             win_shift = win_shift, begin_loss_ind = begin_loss_ind,\
-#                                             static_feats=True,n_static_feats = 4) 
-# np.save("conus_trn_data_final.npy",trn_data)
-# np.save("_tst_data_wStatic.npy",tst_data)
-# sys.exit()
-# trn_data = torch.from_numpy(np.load("conus_trn_data_wStatic.npy"))
-# tst_data = torch.from_numpy(np.load("global_tst_data_wStatic.npy"))
-# tst_data = tst_data[:,:,[0,1,2,4,7,-1]]
 
-# trn_data = torch.from_numpy(np.load("conus_trn_data_final.npy",allow_pickle=True))
-# n_features = 4
-# n_static_feats = 1
-# n_total_feats = n_features + n_static_feats
+
+
 print("train_data size: ",trn_data.size())
 print(len(lakenames), " lakes of data")
-# trn_data = tst_data
+
+
 batch_size = int(math.floor(trn_data.size()[0])/150) #REAL VALUE
-# batch_size = int(math.floor(trn_data.size()[0])/20)
-# batch_size = 3000
-# batch_size = trn_data.size()[0] #DEBUG VALUE
 
 
 
@@ -533,15 +502,12 @@ for epoch in range(n_eps):
     batches_done = 0
     ct = 0
     for m, data in enumerate(trainloader, 0):
-        #now for mendota data
         #this loop is dated, there is now only one item in testloader
 
         #parse data into inputs and targets
         inputs = data[0].float()
         targets = data[1].float()
         targets = targets[:, begin_loss_ind:]
-        # tmp_dates = tst_dates_target[:, begin_loss_ind:]
-        # depths = inputs[:,:,0]
 
 
         #cuda commands
@@ -550,9 +516,6 @@ for epoch in range(n_eps):
             targets = targets.cuda()
 
         #forward  prop
-        # lstm_net.hidden = lstm_net.init_hidden(batch_size=inputs.size()[0])
-        # lstm_net.reset_parameters()
-        # h_state = None
         outputs, h_state, _ = lstm_net(inputs[:,:,n_static_feats:], inputs[:,0,:n_static_feats])
         outputs = outputs.view(outputs.size()[0],-1)
 
@@ -611,35 +574,13 @@ for epoch in range(n_eps):
         print("training complete")
         break
 
-        #after training, do test predictions / error estimation
+#after training, do test predictions / error estimation
 for targ_ct, target_id in enumerate(test_lakes): #for each target lake
-    # if targ_ct %100 == 0:
-    #     print(str(targ_ct),'/',len(test_lakes),':',target_id)
     lake_df = pd.DataFrame()
     lake_id = target_id
 
-    # lake_df = pd.read_feather("../../metadata/diffs/target_nhdhr_"+lake_id+".feather")
-    # lake_df = lake_df[np.isin(lake_df['site_id'], train_lakes_wp)]
-    # X = pd.DataFrame(lake_df[feats])
-
-
-    # y_pred = model.predict(X)
-    # lake_df['rmse_pred'] = y_pred
-
-    # lake_df.sort_values(by=['rmse_pred'], inplace=True)
-    # lowest_rmse = lake_df.iloc[0]['rmse_pred']
-# 
-    # top_ids = [str(j) for j in lake_df.iloc[:k]['site_id']]
-    
-    # best_site = top_ids[0]
-
-
-
-
     data_dir_target = "../../data/processed/"+target_id+"/" 
-    #target agnostic model and data params
     use_gpu = True
-    # n_hidden = 20
     seq_length = 350
     win_shift = 175
     begin_loss_ind = 0
@@ -711,12 +652,12 @@ for targ_ct, target_id in enumerate(test_lakes): #for each target lake
 
         final_output_df = pd.concat([final_output_df, output_df],ignore_index=True)
         mat_rmse = np.sqrt(((loss_output - loss_label) ** 2).mean())
-        # if targ_ct % 100
         print("globLSTM rmse(",loss_output.shape[0]," obs)=", mat_rmse)
         if output_df.shape[0] != obs[obs['site_id']==target_id].shape[0]:
             print("missed obs?")
 
 # final_output_df.to_feather("../../results/err_est_outputs_225hid_EALSTM_fold"+str(k)+".feather")
-final_output_df.to_feather("../../results/err_est_outputs_062421_EALSTM_fold"+str(k)+".feather")
-save_path = "../../models/EALSTM_"+str(n_hidden)+"hid_"+str(num_layers)+"layer_237rmse_fold"+str(k)
+final_output_df.to_feather("../../results/err_est_outputs_070221_EALSTM_fold"+str(k)+".feather")
+save_path = "../../models/EALSTM_fold"+str(k)
 saveModel(lstm_net.state_dict(), optimizer.state_dict(), save_path)
+print("saved to ",save_path)
