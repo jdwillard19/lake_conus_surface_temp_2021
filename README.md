@@ -39,4 +39,9 @@ Pipeline to run
     + `source data_jobs1.sh` (submit jobs)  
     + `source data_jobs2.sh` (run ONLY after previous jobs have finished)  
 
-4. Do hyperparameter tuning for EA-LSTM and XGB (Gradient Boosting)  
+4. Do hyperparameter tuning for EA-LSTM and XGB (Gradient Boosting) (optional, defaults already enabled)
+`cd src/hyperparam`  
+`python xgb_hypertune [fold #]` (enter numbers 1-5 to get it for each, enter values in ~/results/xgb_hyperparams.csv) 
+
+
+
