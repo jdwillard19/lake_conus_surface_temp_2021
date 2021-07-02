@@ -125,10 +125,10 @@ for hid_ct,n_hidden in enumerate(n_hid_arr):
     print("n hidden: ",n_hidden)
     n_hidden = int(n_hidden)
     # trn_rmse_per_ep = np.empty((len(folds_arr),int(n_eps/10)))
-    trn_rmse_per_ep = np.empty((1,int(n_eps/10)))
+    trn_rmse_per_ep = np.empty((1,int(n_eps/10)+1))
     trn_rmse_per_ep[:] = np.nan
     # tst_rmse_per_ep = np.empty((len(folds_arr),int(n_eps/10)))
-    tst_rmse_per_ep = np.empty((1,int(n_eps/10)))
+    tst_rmse_per_ep = np.empty((1,int(n_eps/10)+1))
     tst_rmse_per_ep[:] = np.nan
     for k_ct, k in enumerate(folds_arr):
         if k_ct > 0:
