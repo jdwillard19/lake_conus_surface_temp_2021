@@ -731,6 +731,7 @@ for hid_ct,n_hidden in enumerate(n_hid_arr):
 
             saveModel(lstm_net.state_dict(), optimizer.state_dict(), save_path)
                     # print("saved at ",save_path)
+    pdb.set_trace()
     max_ind = int(np.where(np.isnan(tst_rmse_per_ep))[1].min()-1)
     tst_rmse_per_ep = tst_rmse_per_ep[:,:max_ind]
     trn_rmse_per_ep = trn_rmse_per_ep[:,:max_ind]
