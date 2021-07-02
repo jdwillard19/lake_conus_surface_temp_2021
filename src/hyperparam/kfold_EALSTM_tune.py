@@ -88,7 +88,8 @@ n_eps = 21
 metadata = pd.read_csv("../../metadata/lake_metadata.csv")
 
 #trim to observed lakes
-metadata = metadata[metadata['num_obs'] > 0]# metadata = metadata.iloc[150:350]
+metadata = metadata[metadata['num_obs'] > 0]
+metadata = metadata.iloc[150:350] #debug vals
 
 #####################
 #params
