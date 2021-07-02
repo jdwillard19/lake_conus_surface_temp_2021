@@ -24,11 +24,11 @@ for i in k_arr:
     # script3 = "python singleModel_customSparse.py %s"%(l)
     all= "\n".join([header,script,script2])
     sbatch = "\n".join(["sbatch job_ealstm_tune_%s.sh"%(i),sbatch])
-    with open('./jobs/job_ealstm_tune_{}.sh'.format(i), 'w') as output:
+    with open('../../hpc/job_ealstm_tune_{}.sh'.format(i), 'w') as output:
         output.write(all)
 
 
-compile_job_path= './jobs/ealstm_tune_jobs.sh'
+compile_job_path= '../../hpc/ealstm_tune_jobs.sh'
 with open(compile_job_path, 'w') as output2:
     output2.write(sbatch)
 
