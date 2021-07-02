@@ -167,6 +167,8 @@ for hid_ct,n_hidden in enumerate(n_hid_arr):
         # n_total_feats = n_features + n_static_feats
         print("train_data size: ",trn_data.size())
         print(len(lakenames), " lakes of data")
+        print("validation_data size: ",tst_data.size())
+        print(len(test_lakenames), " lakes of data")
         # trn_data = tst_data
         if debug:
             batch_size = trn_data.size()[0]
