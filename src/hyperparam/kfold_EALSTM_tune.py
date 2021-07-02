@@ -51,6 +51,7 @@ verbose = True
 save = True
 test = False
 
+debug = True
 
 
 #####################3
@@ -91,7 +92,6 @@ metadata = pd.read_csv("../../metadata/lake_metadata.csv")
 #trim to observed lakes
 metadata = metadata[metadata['num_obs'] > 0]
 
-debug = True
 
 if debug:
     metadata = metadata.iloc[150:550] #debug vals
