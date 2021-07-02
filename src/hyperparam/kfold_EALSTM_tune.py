@@ -93,7 +93,7 @@ metadata = metadata[metadata['num_obs'] > 0]
 debug = True
 
 if debug:
-    metadata = metadata.iloc[150:350] #debug vals
+    metadata = metadata.iloc[150:550] #debug vals
 
 #####################
 #params
