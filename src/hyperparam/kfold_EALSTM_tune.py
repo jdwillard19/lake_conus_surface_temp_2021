@@ -139,11 +139,11 @@ for hid_ct,n_hidden in enumerate(n_hid_arr):
             (trn_data, _) = buildLakeDataForRNN_multilakemodel_conus(lakenames,\
                                                             seq_length, n_total_feats,\
                                                             win_shift = win_shift, begin_loss_ind = begin_loss_ind,\
-                                                            static_feats=True,n_static_feats = 4) 
+                                                            static_feats=True,n_static_feats = 4,verbose=True) 
             (tst_data, _) = buildLakeDataForRNN_multilakemodel_conus(test_lakenames,\
                                                         seq_length, n_total_feats,\
                                                         win_shift = win_shift, begin_loss_ind = begin_loss_ind,\
-                                                        static_feats=True,n_static_feats = 4) 
+                                                        static_feats=True,n_static_feats = 4,verbose=True) 
 
             np.save("ealstm_trn_data_ofold"+str(og_k)+"_ifold"+str(k)+".npy",trn_data)
             np.save("ealstm_tst_data_ofold"+str(og_k)+"_ifold"+str(k)+".npy",tst_data)
