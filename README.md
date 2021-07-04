@@ -44,9 +44,15 @@ Pipeline to run
 `python xgb_hypertune [fold #]` (enter numbers 1-5 to get it for each, enter values in ~/results/xgb_hyperparams.csv)  
 `python EALSTM_hypertune [fold #]` (enter numbers 1-5 to get it for each, enter values in ~/results/ealstm_hyperparams.csv)  
 
-5. Train linear model (LM), XGB, and EALSTM for each fold
+5. Train linear model (LM), XGB, and EALSTM for each fold and estimate error through cross validation
+`cd src/evaluate`  
+`python EALSTM_error_estimation_and_output_single_fold.py [fold #]` (run for each fold 1-5)  
+`python linear_model_error_est.py [fold #]`     
+`python xgb_error_est.py [fold #]`  
 
-
+6. Train final EA-LSTM model   
+`cd src/train/` 
+``
 
 
 
