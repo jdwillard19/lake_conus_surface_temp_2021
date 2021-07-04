@@ -124,7 +124,7 @@ targ_rmse = hp[(hp['fold']+1)==k]['trn_rmse'].values[0]
 #get lakenames
 lakenames = metadata[metadata['cluster_id']!=k]['site_id'].values
 test_lakes = metadata[metadata['cluster_id']==k]['site_id'].values
-
+pdb.set_trace()
 ep_arr = []   
 if not os.path.exists("./ealstm_trn_data_062421_5fold_k"+str(k)+".npy"):
     (trn_data, _) = buildLakeDataForRNN_multilakemodel_conus(lakenames,\
