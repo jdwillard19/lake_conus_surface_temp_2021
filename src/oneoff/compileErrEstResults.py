@@ -19,7 +19,8 @@ combined_df = pd.DataFrame()
 combined_lm = pd.DataFrame()
 combined_gb = pd.DataFrame()
 combined_ea = pd.DataFrame()
-for k in range(n_folds): #CHANGE DIS----------------
+folds_arr = np.arange(n_folds)+1 
+for k in folds_arr: #CHANGE DIS----------------
 
 	print("fold ",k)
 	# lm_df = pd.read_feather("../../results/lm_conus_022221_fold"+str(k)+".feather")
