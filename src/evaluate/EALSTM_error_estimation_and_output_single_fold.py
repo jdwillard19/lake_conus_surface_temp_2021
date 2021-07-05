@@ -561,7 +561,7 @@ for epoch in range(n_eps):
         ep_since_min = 0
         min_train_rmse = avg_loss
         print("model saved")
-        save_path = "../../models/EALSTM_err_est_"+str(k)
+        save_path = "../../models/EALSTM_err_est_"+str(k)+"_newparam"
         saveModel(lstm_net.state_dict(), optimizer.state_dict(), save_path)
     else:
         ep_since_min += 1
@@ -656,7 +656,7 @@ for targ_ct, target_id in enumerate(test_lakes): #for each target lake
             print("missed obs?")
 
 # final_output_df.to_feather("../../results/err_est_outputs_225hid_EALSTM_fold"+str(k)+".feather")
-final_output_df.to_feather("../../results/err_est_outputs_070221_EALSTM_fold"+str(k)+".feather")
-save_path = "../../models/EALSTM_fold"+str(k)
+final_output_df.to_feather("../../results/err_est_outputs_070521_EALSTM_fold"+str(k)+".feather")
+save_path = "../../models/EALSTM_fold"+str(k)+"_newparam"
 saveModel(lstm_net.state_dict(), optimizer.state_dict(), save_path)
 print("saved to ",save_path)

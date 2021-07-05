@@ -31,10 +31,9 @@ from pytorch_data_operations import buildLakeDataForRNN_multilakemodel_conus, pa
 currentDT = datetime.datetime.now()
 print(str(currentDT))
 
-#../../metadata/conus_source_metadata.csv
-####################################################3
-# (Nov 2020 - Jared) source model script, takes lakename as required command line argument
-###################################################33
+####################################################
+# (July 2021 - Jared) trains final EA-LSTM model
+###################################################
 
 #enable/disable cuda 
 use_gpu = True 
@@ -53,9 +52,6 @@ test = True
 #####################3
 #params
 ###########################33
-first_save_epoch = 0
-
-#ow
 seq_length = 350 #how long of sequences to use in model
 begin_loss_ind = 0#index in sequence where we begin to calculate error or predict
 n_features = 5  #number of physical drivers
@@ -67,15 +63,14 @@ grad_clip = 1.0 #how much to clip the gradient 2-norm in training
 dropout = 0.
 num_layers = 1
 n_hidden = 256
-# lambda1 = 1e-
 lambda1 = 0.000
 
-# n_eps = 10000
+
+#epoch settings
 n_eps = 1000
+first_save_epoch = 0
 targ_ep = 40
 targ_rmse = 2.43
-# targ_ep = 0 #DEBUG VALUE
-# targ_rmse = 3.5 #DEBUG VALUE
 
 #load metadata
 metadata = pd.read_csv("../../metadata/lake_metadata.csv")
@@ -83,33 +78,11 @@ metadata = pd.read_csv("../../metadata/lake_metadata.csv")
 #trim to observed lakes
 metadata = metadata[metadata['num_obs'] > 0]
 
-# metadata = metadata.iloc[150:350] #DEBUG VALUE
-# obs = pd.read_feather("../../data/raw/obs/surface_lake_temp_daily_020421.feather")
-###############################
-# data preprocess
-##################################
-#create train and test sets
 
-
-
-
-#####################################################################################
-####################################################3
-# fine tune
-###################################################33
-##########################################################################################33
-
-#####################
-#params
-###########################
 first_save_epoch = 0
 epoch_since_best = 0
-yhat_batch_size = 1
+yhat_batch_size = 1 #obsolete since this isnt PGDL
 
-###############################
-# data preprocess
-##################################
-#create train and test sets
 
 final_output_df = pd.DataFrame()
 lakenames = metadata['site_id'].values
@@ -159,7 +132,6 @@ train_data = TemperatureTrainDataset(trn_data)
 
 
 #format total y-hat data for loading
-# total_data = TotalModelOutputDataset(all_data, all_phys_data, all_dates)
 n_batches = math.floor(trn_data.size()[0] / batch_size)
 
 #batch samplers used to draw samples in dataloaders
