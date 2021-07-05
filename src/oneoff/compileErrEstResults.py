@@ -8,7 +8,7 @@ metadata = pd.read_csv("../../metadata/lake_metadata.csv")
 
 #trim to observed lakes
 metadata = metadata[metadata['num_obs'] > 0]# obs = pd.read_feather("../../data/raw/obs/surface_lake_temp_daily_020421.feather")
-obs = pd.read_feather("../../data/raw/obs/surface_lake_temp_daily_062321.feather")
+obs = pd.read_csv("../../data/raw/obs/lake_surface_temp_obs.csv")
 
 site_ids = np.unique(obs['site_id'].values)
 print(len(site_ids), ' lakes')
