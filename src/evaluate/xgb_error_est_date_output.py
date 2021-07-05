@@ -51,9 +51,9 @@ k = int(sys.argv[1])
 final_output_df = pd.DataFrame()
 result_df = pd.DataFrame(columns=['site_id','Date'])
 
-train_lakes = metadata[metadata['5fold_fold']!=k]['site_id'].values
+train_lakes = metadata[metadata['cluster_id']!=k]['site_id'].values
 # lakenames = metadata['site_id'].values
-test_lakes = metadata[metadata['5fold_fold']==k]['site_id'].values
+test_lakes = metadata[metadata['cluster_id']==k]['site_id'].values
 # train_df = pd.DataFrame(columns=columns)
 # test_df = pd.DataFrame(columns=columns)
 
