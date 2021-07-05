@@ -3,8 +3,11 @@ import numpy as np
 import pdb
 import os
 
-metadata = pd.read_csv("../../metadata/surface_lake_metadata_041421_wCluster.csv")
-# obs = pd.read_feather("../../data/raw/obs/surface_lake_temp_daily_020421.feather")
+#load metadata
+metadata = pd.read_csv("../../metadata/lake_metadata.csv")
+
+#trim to observed lakes
+metadata = metadata[metadata['num_obs'] > 0]# obs = pd.read_feather("../../data/raw/obs/surface_lake_temp_daily_020421.feather")
 obs = pd.read_feather("../../data/raw/obs/surface_lake_temp_daily_062321.feather")
 
 site_ids = np.unique(obs['site_id'].values)
