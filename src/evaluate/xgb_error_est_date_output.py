@@ -21,9 +21,11 @@ print("script start: ",str(currentDT))
 save_file_path = '../../models/xgb_surface_temp.joblib'
 
 
-# metadata = pd.read_csv("../../metadata/conus_source_metadata.csv")
-metadata = pd.read_csv("../../metadata/surface_lake_metadata_041421_wCluster.csv")
+#load metadata
+metadata = pd.read_csv("../../metadata/lake_metadata.csv")
 
+#trim to observed lakes
+metadata = metadata[metadata['num_obs'] > 0]
 # train_lakes = metadata['site_id'].values
 
 #############################
@@ -62,9 +64,9 @@ for ct, lake_id in enumerate(test_lakes):
     if ct %100 == 0:
       print("fold ",k,"  test lake ",ct,"/",len(test_lakes),": ",lake_id)
     #load data
-    feats = np.load("../../data/processed/"+lake_id+"/features_ea_conus_021621.npy")
+    feats = np.load("../../data/processed/"+lake_id+"/features.npy")
     dates = np.load("../../data/processed/"+lake_id+"/dates.npy")
-    labs = np.load("../../data/processed/"+lake_id+"/full.npy")
+    labs = np.load("../../data/processed/"+lake_id+"/obs.npy")
     # dates = np.load("../../data/processed/"+name+"/dates.npy")
     data = np.concatenate((feats[:,:],labs.reshape(labs.shape[0],1)),axis=1)
     X = data[:,:-1]

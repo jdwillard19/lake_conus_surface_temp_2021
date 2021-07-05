@@ -50,9 +50,13 @@ Pipeline to run
 `python linear_model_error_est.py [fold #]`     
 `python xgb_error_est.py [fold #]`  
 
-6. Train final EA-LSTM model   
+6. Compile error estimations  
+`cd src/oneoff/`
+`python compileErrEst.py`
+
+7. Train final EA-LSTM model   
 `cd src/train/` 
-``
+
 
 
 

@@ -20,7 +20,7 @@ for k in range(n_folds): #CHANGE DIS----------------
 
 	print("fold ",k)
 	# lm_df = pd.read_feather("../../results/lm_conus_022221_fold"+str(k)+".feather")
-	lm_df = pd.read_feather("../../results/lm_lagless_062421_fold"+str(k)+".feather")
+	lm_df = pd.read_feather("../../results/lm_lagless_070221_fold"+str(k)+".feather")
 	# gb_df = pd.read_feather("../../results/xgb_conus_022221_fold"+str(k)+".feather")
 
 	if os.path.exists("../../results/xgb_lagless_062421_fold"+str(k)+".feather"):
