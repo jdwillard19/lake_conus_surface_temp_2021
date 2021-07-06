@@ -29,8 +29,8 @@ Project Organization
 │   ├── ealstm_hyperparams.csv - insert found hyperparameters here   
 │   └── xgb_hyperparams.csv   
 └── src   
-    ├── data  - (data pulling and preprocessing scripts)
-    │   ├── preprocess.py
+    ├── data  - (data pulling and preprocessing scripts)  
+    │   ├── preprocess.py  
     │   ├── pull_data.r   
     │   ├── pytorch_data_operations.py   
     │   └── write_NLDAS_xy_pairs.py   
