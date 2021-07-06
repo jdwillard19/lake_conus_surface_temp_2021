@@ -34,11 +34,11 @@ for i in range(len(start)):
     # script3 = "python singleModel_customSparse.py %s"%(l)
     all= "\n".join([header,script,script2])
     sbatch = "\n".join(["sbatch job_finalout_%s.sh"%(i),sbatch])
-    with open('./jobs/job_finalout_{}.sh'.format(i), 'w') as output:
+    with open('../../hpc/job_finalout_{}.sh'.format(i), 'w') as output:
         output.write(all)
 
 
-compile_job_path= './jobs/finalout_jobs.sh'
+compile_job_path= '../../hpc/finalout_jobs.sh'
 with open(compile_job_path, 'w') as output2:
     output2.write(sbatch)
 
