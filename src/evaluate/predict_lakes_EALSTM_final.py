@@ -440,7 +440,7 @@ for targ_ct, target_id in enumerate(test_lakes): #for each target lake
     observed = False
 
     # pdb.set_trace()
-    if metadata[metadata['site_id']==target_id]['observed'].values[0]:
+    if metadata[metadata['site_id']==target_id]['num_obs'].values[0] > 0:
         (tst_data_target, tst_dates) = buildLakeDataForRNN_conus(target_id, data_dir_target, seq_length, n_features,
                                        win_shift = win_shift, begin_loss_ind = begin_loss_ind, 
                                        outputFullTestMatrix=True, allTestSeq=True, n_static_feats=n_static_feats)
