@@ -1,4 +1,4 @@
-
+   
 lake_conus_surface_temp_2021
 
 ==============================
@@ -11,62 +11,60 @@ Project Organization
 
 ------------
 
-├── conda_env.yaml
-├── data
-│   ├── description.txt
-│   ├── processed
-│   ├── raw
-│   │   ├── data_release - data pulled from sciencebase here
-│   │   ├── feats - raw data of input drivers
-│   │   └── obs - raw data of observations
-│   └── static
-│       └── lists
-├── home
-├── hpc
-├── LICENSE
-├── metadata
-│   └── lake_metadata.csv
-├── models
-├── README.md
-├── requirements.txt
-├── results
-│   ├── ealstm_hyperparams.csv
-│   └── xgb_hyperparams.csv
-└── src
-    ├── data
-    │   ├── preprocess.py
-    │   ├── pull_data.r
-    │   ├── pytorch_data_operations.py
-    │   └── write_NLDAS_xy_pairs.py
-    ├── evaluate
-    │   ├── EALSTM_error_estimation_and_output_single_fold.py
-    │   ├── linear_model_error_est.py
-    │   ├── predict_lakes_EALSTM_final.py
-    │   └── xgb_error_est.py
-    ├── hpc
-    │   ├── create_ealstm_err_est_jobs.py
-    │   ├── create_EALSTM_tune_jobs.py
-    │   ├── create_err_est_jobs.py
-    │   ├── create_final_output_jobs.py
-    │   ├── create_preprocess_jobs.py
-    │   ├── create_xgb_tune_jobs.py
-    │   └── jobs
-    ├── hyperparam
-    │   ├── EALSTM_hypertune.py
-    │   └── xgb_hypertune.py
-    ├── models
-    │   └── pytorch_model_operations.py
-    ├── oneoff
-    │   ├── acp.sh
-    │   ├── compileErrEstResults.py
-    │   ├── final_output_rmse_check.py
-    └── train
-        └── EALSTM_final_model.py
+├── conda_env.yaml   
+├── data   
+│   ├── description.txt   
+│   ├── processed   
+│   ├── raw   
+│   │   ├── data_release - data pulled from sciencebase here   
+│   │   ├── feats - raw data of input drivers   
+│   │   └── obs - raw data of observations   
+│   └── static   
+│       └── lists   
+├── home   
+├── hpc   
+├── LICENSE   
+├── metadata   
+│   └── lake_metadata.csv   
+├── models   
+├── README.md   
+├── requirements.txt   
+├── results   
+│   ├── ealstm_hyperparams.csv   
+│   └── xgb_hyperparams.csv   
+└── src   
+    ├── data   
+    │   ├── preprocess.   
+    │   ├── pull_data.r   
+    │   ├── pytorch_data_operations.py   
+    │   └── write_NLDAS_xy_pairs.py   
+    ├── evaluate   
+    │   ├── EALSTM_error_estimation_and_output_single_fold.py   
+    │   ├── linear_model_error_est.py   
+    │   ├── predict_lakes_EALSTM_final.py   
+    │   └── xgb_error_est.py   
+    ├── hpc   
+    │   ├── create_ealstm_err_est_jobs.py   
+    │   ├── create_EALSTM_tune_jobs.py   
+    │   ├── create_err_est_jobs.py   
+    │   ├── create_final_output_jobs.py   
+    │   ├── create_preprocess_jobs.py   
+    │   ├── create_xgb_tune_jobs.py   
+    ├── hyperparam   
+    │   ├── EALSTM_hypertune.py   
+    │   └── xgb_hypertune.py   
+    ├── models   
+    │   └── pytorch_model_operations.py   
+    ├── oneoff   
+    │   ├── compileErrEstResults.py   
+    │   ├── final_output_rmse_check.py   
+    └── train   
+        └── EALSTM_final_model.py   
 
 --------
 
 Pipeline to run
-
+   
 -------------
 
 1. Install necessary dependencies from yml file (Anaconda/miniconda must be installed for this), and activate conda environment. Works best on Linux (confirmed on CentOS 7(Core) and Manjaro 20.1).
