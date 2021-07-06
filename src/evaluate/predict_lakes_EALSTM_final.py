@@ -451,7 +451,7 @@ for targ_ct, target_id in enumerate(test_lakes): #for each target lake
 
     unique_tst_dates_target = np.unique(tst_dates)
     pdb.set_trace()
-    assert unique_tst_dates_target.shape[0] == 15385, "test data incorrect size"
+    assert unique_tst_dates_target.shape[0] == 14976, "test data incorrect size"
     #useful values, LSTM params
     batch_size = tst_data_target.size()[0]
     n_test_dates_target = unique_tst_dates_target.shape[0]
