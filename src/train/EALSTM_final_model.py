@@ -69,8 +69,8 @@ lambda1 = 0.000
 #epoch settings
 n_eps = 1000
 first_save_epoch = 0
-targ_ep = 40
-targ_rmse = 2.43
+targ_ep = 150
+targ_rmse = 2.03
 
 #load metadata
 metadata = pd.read_csv("../../metadata/lake_metadata.csv")
@@ -159,8 +159,6 @@ class LSTM(nn.Module):
         self.lstm = nn.LSTM(input_size = n_total_feats, hidden_size=hidden_size, batch_first=True,num_layers=num_layers,dropout=dropout) #batch_first=True?
         self.out = nn.Linear(hidden_size, 1) #1?
         self.hidden = self.init_hidden()
-        self.w_upper_to_lower = []
-        self.w_lower_to_upper = []
 
     def init_hidden(self, batch_size=0):
         # initialize both hidden layers
@@ -530,7 +528,7 @@ for epoch in range(n_eps):
     if avg_loss < min_train_rmse:
         min_train_rmse = avg_loss
         print("model saved")
-        save_path = "../../models/EALSTM_"+str(n_hidden)+"hid_"+str(num_layers)+"_final_070221"
+        save_path = "../../models/EALSTM_"+str(n_hidden)+"hid_"+str(num_layers)+"_final_070621"
         saveModel(lstm_net.state_dict(), optimizer.state_dict(), save_path)
 
     if avg_loss < targ_rmse and epoch > targ_ep:
