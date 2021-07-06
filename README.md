@@ -104,7 +104,7 @@ Pipeline to run
 
 8. Create final outputs  
 `cd src/evaluate`  
-`python `
+`python predict_lakes_EALSTM_final.py 0 185550` (arguments are start and end index, can run multiple at once)  
 
 
 
