@@ -95,8 +95,8 @@ Pipeline to run
 `python xgb_error_est.py [fold #]`  
 
 6. Compile error estimations  
-`cd src/oneoff/`
-`python compileErrEst.py`
+`cd src/oneoff/`  
+`python compileErrEst.py`  
 
 7. Train final EA-LSTM model   
 `cd src/train/`   
