@@ -34,7 +34,7 @@ Project Organization
     │   ├── pull_data.r   
     │   ├── pytorch_data_operations.py   
     │   └── write_NLDAS_xy_pairs.py   
-    ├── evaluate  - (error estimation and and final output scripts)
+    ├── evaluate  - (error estimation and and final output scripts)  
     │   ├── EALSTM_error_estimation_and_output_single_fold.py   
     │   ├── linear_model_error_est.py   
     │   ├── predict_lakes_EALSTM_final.py   
