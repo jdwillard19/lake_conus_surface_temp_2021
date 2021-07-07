@@ -25,7 +25,7 @@ c.retrieve(
     },
     fn)
 
-gr = open(fn)
+gr = pygrib.open(fn)
 for g in gr:
     print(g)
     print(g.values)
