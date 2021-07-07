@@ -27,7 +27,7 @@ for site_id in site_ids:
         {
             'format': 'grib',
             'variable': [
-                'lake_mix_layer_temperature', 'skin_temperature',
+                'lake_mix_layer_temperature',
             ],
             'year': '2020',
             'month': '07',
