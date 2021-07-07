@@ -6,6 +6,7 @@ import pandas as pd
 
 c = cdsapi.Client()
 
+fn = 'download.grib'
 gr = c.retrieve(
     'reanalysis-era5-land',
     {
@@ -22,8 +23,9 @@ gr = c.retrieve(
             -93.22,
         ],
     },
-    'download.grib')
+    fn)
 
+gr = open(fn)
 for g in gr:
     print(g)
     print(g.values)
