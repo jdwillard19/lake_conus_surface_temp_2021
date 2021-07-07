@@ -3,6 +3,12 @@ import numpy as np
 import pandas as pd
 import pygrib
 
+site_ids = ['nhdhr_']
+
+metadata = pd.read_csv('../../metadata/lake_metadata.csv')
+metadata.set_index('site_id',inplace=True)
+pdb.set_trace()
+for site_id in site_ids:
 
 
 c = cdsapi.Client()
