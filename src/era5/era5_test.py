@@ -7,7 +7,7 @@ import pandas as pd
 c = cdsapi.Client()
 
 fn = 'download.grib'
-gr = c.retrieve(
+c.retrieve(
     'reanalysis-era5-land',
     {
         'format': 'grib',
