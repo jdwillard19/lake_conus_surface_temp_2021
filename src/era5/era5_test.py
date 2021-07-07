@@ -8,7 +8,6 @@ import math
 site_ids = ['nhdhr_143249470']
 metadata = pd.read_csv('../../metadata/lake_metadata.csv')
 metadata.set_index('site_id',inplace=True)
-pdb.set_trace()
 factor = 2 
 for site_id in site_ids:
 
