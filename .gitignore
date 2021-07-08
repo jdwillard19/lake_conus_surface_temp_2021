@@ -7,6 +7,7 @@ __pycache__/
 
 # Distribution / packaging
 .Python
+src/era5/
 env/
 build/
 develop-eggs/
