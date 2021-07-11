@@ -46,7 +46,6 @@ train_df = pd.DataFrame(columns=columns)
 test_df = pd.DataFrame(columns=columns)
 
 def getBachmannFeatures(data,dates):
-    dates_str = [str(d) for d in dates]
     data = np.delete(data,(0,4,5,7,8),axis=1)
     new_x = []
     for i in range(0,data.shape[0]):
@@ -75,6 +74,8 @@ for ct, lake_id in enumerate(train_lakes):
     X = getBachmannFeatures(X,dates)
 
     y = data[:,-1]
+    dates_str = [str(d) for d in dates]
+
     inds = np.where(((np.core.defchararray.find(dates_str,'-06-')!=-1)|\
                      (np.core.defchararray.find(dates_str,'-07-')!=-1)|\
                      (np.core.defchararray.find(dates_str,'-08-')!=-1)|\
@@ -113,6 +114,7 @@ for ct, lake_id in enumerate(test_lakes):
     dates = np.load("../../data/processed/"+lake_id+"/dates.npy")
     data = np.concatenate((feats[:,:],labs.reshape(labs.shape[0],1)),axis=1)
     X = data[:,:-1]
+    dates_str = [str(d) for d in dates]
 
     X = getBachmannFeatures(X,dates)
     
