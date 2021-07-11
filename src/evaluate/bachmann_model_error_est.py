@@ -96,13 +96,12 @@ dump(model, save_file_path)
 print("model trained and saved to ", save_file_path)
 
 #tes
-pdb.set_trace()
 for ct, lake_id in enumerate(test_lakes):
     print("fold ",k," testing test lake ",ct,"/",len(test_lakes),": ",lake_id)
     #load data
     feats = np.load("../../data/processed/"+lake_id+"/features.npy")
     labs = np.load("../../data/processed/"+lake_id+"/obs.npy")
-    dates = np.load("../../data/processed/"+name+"/dates.npy")
+    dates = np.load("../../data/processed/"+lake_id+"/dates.npy")
     data = np.concatenate((feats[:,:],labs.reshape(labs.shape[0],1)),axis=1)
     X = data[:,:-1]
 
