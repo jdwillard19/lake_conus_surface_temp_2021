@@ -74,6 +74,7 @@ for ct, lake_id in enumerate(train_lakes):
     X = getBachmannFeatures(X,dates)
 
     y = data[:,-1]
+    pdb.set_trace()
     inds = np.where(np.isfinite(y))[0]
     if inds.shape[0] == 0:
         continue
