@@ -51,8 +51,10 @@ def getBachmannFeatures(data,dates):
     for i in range(0,data.shape[0]):
         if i >= 8:
             new_x.append(data[i:i+8,3].mean())
+        elif i > 0 and i < 8:
+            new_x.append(data[:i+1,3].mean())
         else:
-            new_x.append(data[:i,3].mean())
+            new_x.append(data[0,3])
 
     data[:,3] = new_x
     month = [int(str(x)[5:7]) for x in dates]
