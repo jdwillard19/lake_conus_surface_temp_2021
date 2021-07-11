@@ -50,18 +50,18 @@ for name in folds_arr:
     print(name)
     l = name
 
-    header = "#!/bin/bash -l\n#SBATCH --time=23:59:00\n#SBATCH --ntasks=8\n#SBATCH --mem=20g\n#SBATCH --mail-type=ALL\n#SBATCH --mail-user=willa099@umn.edu\n#SBATCH --output=err_est_%s.out\n#SBATCH --error=err_est_%s.err\n#SBATCH --gres=gpu:k40:2\n#SBATCH -p k40"%(l,l)
+    header = "#!/bin/bash -l\n#SBATCH --time=23:59:00\n#SBATCH --ntasks=8\n#SBATCH --mem=20g\n#SBATCH --mail-type=ALL\n#SBATCH --mail-user=willa099@umn.edu\n#SBATCH --output=err_est_bach_%s.out\n#SBATCH --error=err_est_bach_%s.err\n#SBATCH -p small"%(l,l)
     script = "source /home/kumarv/willa099/takeme_evaluate.sh\n" #cd to directory with training script
-    script2 = "python xgb_error_est.py %s 5000 .025"%(l)
-    script3 = "python linear_model_error_est.py %s"%(l)
-    all= "\n".join([header,script,script2,script3])
-    sbatch = "\n".join(["sbatch job_%s_foldXGB.sh"%(l),sbatch])
-    with open('../../hpc/job_{}_foldXGB.sh'.format(l), 'w') as output3:
+    # script2 = "python xgb_error_est.py %s 5000 .025"%(l)
+    script2 = "python bachmann_model_error_est.py %s"%(l)
+    all= "\n".join([header,script,script2])
+    sbatch = "\n".join(["sbatch job_%s_foldBach.sh"%(l),sbatch])
+    with open('../../hpc/job_{}_foldBach.sh'.format(l), 'w') as output3:
         output3.write(all)
 
 
 
-compile_job_path= '../../hpc/sbatch_script_err_est_other.sh'
+compile_job_path= '../../hpc/sbatch_script_err_est_bach.sh'
 with open(compile_job_path, 'w') as output4:
     output4.write(sbatch)
 
