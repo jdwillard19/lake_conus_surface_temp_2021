@@ -51,7 +51,7 @@ def getBachmannFeatures(data,dates):
     new_x = []
     for i in range(0,data.shape[0]-8):
         new_x.append(data[i:i+8,3].mean())
-        pdb.set_trace()
+    pdb.set_trace()
     return new
 
 for ct, lake_id in enumerate(train_lakes):
