@@ -80,7 +80,7 @@ for ct, lake_id in enumerate(train_lakes):
                      (np.core.defchararray.find(dates_str,'-07-')!=-1)|\
                      (np.core.defchararray.find(dates_str,'-08-')!=-1)|\
                      (np.core.defchararray.find(dates_str,'-09-')!=-1))&\
-                      (np.isfinite(y)))
+                      (np.isfinite(y)))[0]
 
     if inds.shape[0] == 0:
         continue
@@ -123,7 +123,7 @@ for ct, lake_id in enumerate(test_lakes):
                      (np.core.defchararray.find(dates_str,'-07-')!=-1)|\
                      (np.core.defchararray.find(dates_str,'-08-')!=-1)|\
                      (np.core.defchararray.find(dates_str,'-09-')!=-1))&\
-                      (np.isfinite(y)))
+                      (np.isfinite(y)))[0]
 
     if inds.shape[0] == 0:
         continue
