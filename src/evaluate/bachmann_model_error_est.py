@@ -47,6 +47,8 @@ train_df = pd.DataFrame(columns=columns)
 test_df = pd.DataFrame(columns=columns)
 
 def getBachmannFeatures(data,dates):
+    data = np.delete(data,(0,4,5,7,8),axis=1)
+    
     pdb.set_trace()
     return new
 
@@ -62,6 +64,7 @@ for ct, lake_id in enumerate(train_lakes):
 
     X = getBachmannFeatures(X,dates)
     y = data[:,-1]
+    y = y[7:] #since we're taking 
     inds = np.where(np.isfinite(y))[0]
     if inds.shape[0] == 0:
         continue
