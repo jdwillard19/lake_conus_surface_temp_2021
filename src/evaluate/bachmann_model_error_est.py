@@ -49,8 +49,10 @@ test_df = pd.DataFrame(columns=columns)
 def getBachmannFeatures(data,dates):
     data = np.delete(data,(0,4,5,7,8),axis=1)
     new_x = []
-    for i in range(0,data.shape[0]-8):
+    for i in range(0,data.shape[0]-7):
         new_x.append(data[i:i+8,3].mean())
+    data = data[7:,:]
+    dates = dates[7:]
     pdb.set_trace()
     return new
 
