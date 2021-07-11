@@ -39,9 +39,9 @@ k = int(sys.argv[1])
 final_output_df = pd.DataFrame()
 result_df = pd.DataFrame(columns=['site_id','temp_pred_lm','temp_actual'])
 
-train_lakes = metadata[metadata['cluster_id']!=k]['site_id'].values
+train_lakes = metadata[metadata['cluster_id']!=k]['site_id'].values[:200]
 # lakenames = metadata['site_id'].valu
-test_lakes = metadata[metadata['cluster_id']==k]['site_id'].values
+test_lakes = metadata[metadata['cluster_id']==k]['site_id'].values[:20]
 train_df = pd.DataFrame(columns=columns)
 test_df = pd.DataFrame(columns=columns)
 
@@ -74,8 +74,12 @@ for ct, lake_id in enumerate(train_lakes):
     X = getBachmannFeatures(X,dates)
 
     y = data[:,-1]
-    pdb.set_trace()
-    inds = np.where(np.isfinite(y))[0]
+    inds = np.where(((np.core.defchararray.find(dates_str,'-06-')!=-1)|\
+                     (np.core.defchararray.find(dates_str,'-07-')!=-1)|\
+                     (np.core.defchararray.find(dates_str,'-08-')!=-1)|\
+                     (np.core.defchararray.find(dates_str,'-09-')!=-1))&\
+                      (np.isfinite(y)))
+
     if inds.shape[0] == 0:
         continue
     X = np.array([X[i,:] for i in inds],dtype = np.float)
@@ -112,13 +116,18 @@ for ct, lake_id in enumerate(test_lakes):
     X = getBachmannFeatures(X,dates)
     
     y = data[:,-1]
-    inds = np.where(np.isfinite(y))[0]
+    inds = np.where(((np.core.defchararray.find(dates_str,'-06-')!=-1)|\
+                     (np.core.defchararray.find(dates_str,'-07-')!=-1)|\
+                     (np.core.defchararray.find(dates_str,'-08-')!=-1)|\
+                     (np.core.defchararray.find(dates_str,'-09-')!=-1))&\
+                      (np.isfinite(y)))
+
     if inds.shape[0] == 0:
         continue
 
     X = np.array([X[i,:] for i in inds],dtype = np.float)
     y = y[inds]
-
+    dates = dates[inds]
     #remove days without obs
     data = np.concatenate((X,y.reshape(len(y),1)),axis=1)
     data = data[np.where(np.isfinite(data[:,-1]))]
@@ -131,6 +140,7 @@ for ct, lake_id in enumerate(test_lakes):
     df['temp_pred_lm'] = y_pred
     df['temp_actual'] = y_act
     df['site_id'] = lake_id
+    df['date'] = dates
     result_df = result_df.append(df)
 
 result_df.reset_index(inplace=True)
