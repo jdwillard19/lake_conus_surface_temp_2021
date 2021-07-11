@@ -55,7 +55,7 @@ def getBachmannFeatures(data,dates):
     data[:,3] = new_x
     month = [int(str(x)[5:7]) for x in dates]
     data = np.append(data,np.expand_dims(np.array(month),axis=1),axis=1)
-    return new
+    return data
 
 for ct, lake_id in enumerate(train_lakes):
     if ct %100 == 0:
