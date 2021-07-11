@@ -46,7 +46,7 @@ combined_df['wtemp_predicted-linear_model'] = combined_lm['temp_pred_lm']
 # combined_df['wtemp_actual'] = combined_ea['wtemp_actual']
 combined_df['wtemp_actual'] = combined_lm['temp_actual']
 combined_df.reset_index(inplace=True)
-# combined_df.to_feather("../../results/all_outputs_and_obs_071121_wBachmann.feather")
+combined_df.to_feather("../../results/all_outputs_and_obs_071121_wBachmann.feather")
 combined_df.to_csv("../../results/all_outputs_and_obs_071121_wBachmann.csv")
 
 combined_df = pd.read_feather("../../results/all_outputs_and_obs_071121_wBachmann.feather")
