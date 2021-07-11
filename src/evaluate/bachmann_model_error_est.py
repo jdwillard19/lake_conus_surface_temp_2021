@@ -39,19 +39,21 @@ k = int(sys.argv[1])
 final_output_df = pd.DataFrame()
 result_df = pd.DataFrame(columns=['site_id','temp_pred_lm','temp_actual'])
 
-train_lakes = metadata[metadata['cluster_id']!=k]['site_id'].values[:100]
+train_lakes = metadata[metadata['cluster_id']!=k]['site_id'].values[:200]
 # lakenames = metadata['site_id'].values
-test_lakes = metadata[metadata['cluster_id']==k]['site_id'].values[:200]
+test_lakes = metadata[metadata['cluster_id']==k]['site_id'].values[:20]
 train_df = pd.DataFrame(columns=columns)
 test_df = pd.DataFrame(columns=columns)
 
 def getBachmannFeatures(data,dates):
     data = np.delete(data,(0,4,5,7,8),axis=1)
     new_x = []
-    for i in range(0,data.shape[0]-7):
-        new_x.append(data[i:i+8,3].mean())
-    data = data[7:,:]
-    dates = dates[7:]
+    for i in range(0,data.shape[0]):
+        if i >= 8:
+            new_x.append(data[i:i+8,3].mean())
+        else:
+            new_x.append(data[:i,3].mean())
+
     data[:,3] = new_x
     month = [int(str(x)[5:7]) for x in dates]
     data = np.append(data,np.expand_dims(np.array(month),axis=1),axis=1)
@@ -70,7 +72,6 @@ for ct, lake_id in enumerate(train_lakes):
     X = getBachmannFeatures(X,dates)
 
     y = data[:,-1]
-    y = y[7:] #since we're taking 
     inds = np.where(np.isfinite(y))[0]
     if inds.shape[0] == 0:
         continue
@@ -108,7 +109,6 @@ for ct, lake_id in enumerate(test_lakes):
     X = getBachmannFeatures(X,dates)
     
     y = data[:,-1]
-    y = y[7:] #since we're taking 
     inds = np.where(np.isfinite(y))[0]
     if inds.shape[0] == 0:
         continue
