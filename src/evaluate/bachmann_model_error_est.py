@@ -45,10 +45,8 @@ test_lakes = metadata[metadata['cluster_id']==k]['site_id'].values[:20]
 train_df = pd.DataFrame(columns=columns)
 test_df = pd.DataFrame(columns=columns)
 
-dates_str = 'None'
 def getBachmannFeatures(data,dates):
-    if dates_str is 'None':
-        dates_str = [str(d) for d in dates]
+    dates_str = [str(d) for d in dates]
     data = np.delete(data,(0,4,5,7,8),axis=1)
     new_x = []
     for i in range(0,data.shape[0]):
