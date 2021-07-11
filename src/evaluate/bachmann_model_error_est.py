@@ -41,7 +41,7 @@ result_df = pd.DataFrame(columns=['site_id','temp_pred_lm','temp_actual'])
 
 train_lakes = metadata[metadata['cluster_id']!=k]['site_id'].values[:100]
 # lakenames = metadata['site_id'].values
-test_lakes = metadata[metadata['cluster_id']==k]['site_id'].values[:100]
+test_lakes = metadata[metadata['cluster_id']==k]['site_id'].values[:200]
 train_df = pd.DataFrame(columns=columns)
 test_df = pd.DataFrame(columns=columns)
 
