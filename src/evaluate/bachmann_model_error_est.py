@@ -48,8 +48,10 @@ test_df = pd.DataFrame(columns=columns)
 
 def getBachmannFeatures(data,dates):
     data = np.delete(data,(0,4,5,7,8),axis=1)
-    
-    pdb.set_trace()
+    new_x = []
+    for i in range(0,data.shape[0]-8):
+        new_x.append(data[i:i+8,3].mean())
+        pdb.set_trace()
     return new
 
 for ct, lake_id in enumerate(train_lakes):
