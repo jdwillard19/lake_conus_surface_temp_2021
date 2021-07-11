@@ -27,9 +27,8 @@ metadata = pd.read_csv("../../metadata/lake_metadata.csv")
 metadata = metadata[metadata['num_obs'] > 0]
 
 
-columns = ['Surface_Area','Latitude','Longitude', 'Elevation',
-           'ShortWave','LongWave','AirTemp','WindSpeedU','WindspeedV',\
-           'Surface_Temp']
+columns = ['Latitude','Longitude', 'Elevation',
+           'AirTemp','Month', 'Surface_Temp']
 
 train_df = pd.DataFrame(columns=columns)
 
@@ -53,7 +52,9 @@ def getBachmannFeatures(data,dates):
         new_x.append(data[i:i+8,3].mean())
     data = data[7:,:]
     dates = dates[7:]
-    pdb.set_trace()
+    data[:,3] = new_x
+    month = [int(str(x)[5:7]) for x in dates]
+    data = np.append(data,np.expand_dims(np.array(month),axis=1),axis=1)
     return new
 
 for ct, lake_id in enumerate(train_lakes):
@@ -67,6 +68,7 @@ for ct, lake_id in enumerate(train_lakes):
     X = data[:,:-1]
 
     X = getBachmannFeatures(X,dates)
+
     y = data[:,-1]
     y = y[7:] #since we're taking 
     inds = np.where(np.isfinite(y))[0]
@@ -99,10 +101,14 @@ for ct, lake_id in enumerate(test_lakes):
     #load data
     feats = np.load("../../data/processed/"+lake_id+"/features.npy")
     labs = np.load("../../data/processed/"+lake_id+"/obs.npy")
-    # dates = np.load("../../data/processed/"+name+"/dates.npy")
+    dates = np.load("../../data/processed/"+name+"/dates.npy")
     data = np.concatenate((feats[:,:],labs.reshape(labs.shape[0],1)),axis=1)
     X = data[:,:-1]
+
+    X = getBachmannFeatures(X,dates)
+    
     y = data[:,-1]
+    y = y[7:] #since we're taking 
     inds = np.where(np.isfinite(y))[0]
     if inds.shape[0] == 0:
         continue
@@ -125,4 +131,4 @@ for ct, lake_id in enumerate(test_lakes):
     result_df = result_df.append(df)
 
 result_df.reset_index(inplace=True)
-result_df.to_feather("../../results/lm_lagless_070221_fold"+str(k)+".feather")
+result_df.to_feather("../../results/bachmann_071121_fold"+str(k)+".feather")
