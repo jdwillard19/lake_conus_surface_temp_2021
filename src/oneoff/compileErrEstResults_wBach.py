@@ -30,21 +30,22 @@ for k in folds_arr: #CHANGE DIS----------------
 	# ea_df = pd.read_feather("../../results/err_est_outputs_2layer128hid_2.4rmse_EALSTM_fold"+str(k)+".feather")
 	ea_df = pd.read_feather("../../results/err_est_outputs_070521_EALSTM_fold"+str(k)+".feather")
 	# ea_df = pd.read_feather("../../results/err_est_outputs_070221_EALSTM_fold"+str(k)+".feather")
-	pdb.set_trace()
+	# pdb.set_trace()
 	# ea_df.drop(ea_df[ea_df['Date'] < gb_date_df['Date'].min()].index,axis=0,inplace=True)
-	assert ea_df.shape[0] == lm_df.shape[0]
+	# assert ea_df.shape[0] == lm_df.shape[0]
 
+	ea_df = pd.merge(ea_df,lm_df,left_on=['Date','site_id'],right_on=['date','site_id'])
 	combined_ea = combined_ea.append(ea_df)
 	combined_ea.reset_index(inplace=True,drop=True)
-	combined_lm = combined_lm.append(lm_df)
-	combined_lm.reset_index(inplace=True,drop=True)
+	# combined_lm = combined_lm.append(lm_df)
+	# combined_lm.reset_index(inplace=True,drop=True)
 
 combined_df['Date'] = combined_ea['Date']
-combined_df['site_id'] = combined_lm['site_id']
+combined_df['site_id'] = combined_ea['site_id']
 combined_df['wtemp_predicted-ealstm'] = combined_ea['wtemp_predicted']
-combined_df['wtemp_predicted-linear_model'] = combined_lm['temp_pred_lm']
+combined_df['wtemp_predicted-linear_model'] = combined_ea['temp_pred_lm']
 # combined_df['wtemp_actual'] = combined_ea['wtemp_actual']
-combined_df['wtemp_actual'] = combined_lm['temp_actual']
+combined_df['wtemp_actual'] = combined_ea['temp_actual']
 combined_df.reset_index(inplace=True)
 combined_df.to_feather("../../results/all_outputs_and_obs_071121_wBachmann.feather")
 combined_df.to_csv("../../results/all_outputs_and_obs_071121_wBachmann.csv")
