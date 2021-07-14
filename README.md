@@ -58,7 +58,8 @@ Pipeline to run
 `python EALSTM_final_model.py`  
 
 8. Create final outputs
-``
+`cd src/evaluate`  
+`python predict_lakes_EALSTM_final.py 0 185550` (0 and 185550 are the starting and ending indices of the lakes to be processed as listed in ~/metadata/lake_metadata.csv)  
 
 
 
