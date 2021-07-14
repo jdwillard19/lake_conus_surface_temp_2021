@@ -1,4 +1,4 @@
-   
+
 lake_conus_surface_temp_2021
 
 ==============================
@@ -11,56 +11,12 @@ Project Organization
 
 ------------
 
-├── conda_env.yaml (conda environment initialization)
-├── data   
-│   ├── description.txt   
-│   ├── processed   
-│   ├── raw   
-│   │   ├── data_release - data pulled from sciencebase here   
-│   │   ├── feats - raw data of input drivers   
-│   │   └── obs - raw data of observations   
-├── hpc - created hpc scripts here   
-├── metadata   
-│   └── lake_metadata.csv   
-├── models - saved models here   
-├── README.md   
-├── requirements.txt   
-├── results   
-│   ├── ealstm_hyperparams.csv - insert found hyperparameters here   
-│   └── xgb_hyperparams.csv   
-└── src   
-    ├── data  - (data pulling and preprocessing scripts)  
-    │   ├── preprocess.py  
-    │   ├── pull_data.r   
-    │   ├── pytorch_data_operations.py   
-    │   └── write_NLDAS_xy_pairs.py   
-    ├── evaluate  - (error estimation and and final output scripts)  
-    │   ├── EALSTM_error_estimation_and_output_single_fold.py   
-    │   ├── linear_model_error_est.py   
-    │   ├── predict_lakes_EALSTM_final.py   
-    │   └── xgb_error_est.py   
-    ├── hpc   - (creates jobs for HPC - optional but recommendend)  
-    │   ├── create_ealstm_err_est_jobs.py   
-    │   ├── create_EALSTM_tune_jobs.py   
-    │   ├── create_err_est_jobs.py   
-    │   ├── create_final_output_jobs.py   
-    │   ├── create_preprocess_jobs.py   
-    │   ├── create_xgb_tune_jobs.py   
-    ├── hyperparam   - (hyperparameter tuning scripts)  
-    │   ├── EALSTM_hypertune.py   
-    │   └── xgb_hypertune.py   
-    ├── models   
-    │   └── pytorch_model_operations.py   
-    ├── oneoff   
-    │   ├── compileErrEstResults.py   
-    │   ├── final_output_rmse_check.py   
-    └── train - (final model training)
-        └── EALSTM_final_model.py   
+TREE HERE
 
 --------
 
 Pipeline to run
-   
+
 -------------
 
 1. Install necessary dependencies from yml file (Anaconda/miniconda must be installed for this), and activate conda environment. Works best on Linux (confirmed on CentOS 7(Core) and Manjaro 20.1).
@@ -83,29 +39,26 @@ Pipeline to run
     + `source data_jobs1.sh` (submit jobs)  
     + `source data_jobs2.sh` (run ONLY after previous jobs have finished)  
 
-4. (optional, defaults already enabled)  Do hyperparameter tuning for EA-LSTM and XGB (Gradient Boosting)  
+4. (optional, defaults already enabled)  Do hyperparameter tuning for EA-LSTM  
 `cd src/hyperparam`  
-`python xgb_hypertune [fold #]` (enter numbers 1-5 to get it for each, enter values in ~/results/xgb_hyperparams.csv)  
+
 `python EALSTM_hypertune [fold #]` (enter numbers 1-5 to get it for each, enter values in ~/results/ealstm_hyperparams.csv)  
 
-5. Train linear model (LM), XGB, and EALSTM for each fold and estimate error through cross validation
+5. Train Bachmann linear model (LM) EALSTM for each fold and estimate error through cross validation
 `cd src/evaluate`  
 `python EALSTM_error_estimation_and_output_single_fold.py [fold #]` (run for each fold 1-5)  
-`python linear_model_error_est.py [fold #]`     
-`python xgb_error_est.py [fold #]`  
+`python bachmann_model_error_est.py [fold #]`     
 
-6. Compile error estimations  
-`cd src/oneoff/`  
-`python compileErrEst.py`  
+6. Compile error estimations 
+`cd src/oneoff/`
+`python compileErrEst.py`
 
 7. Train final EA-LSTM model   
 `cd src/train/`   
-`python EALSTM_final_model`   
+`python EALSTM_final_model.py`  
 
-8. Create final outputs  
-`cd src/evaluate`  
-`python predict_lakes_EALSTM_final.py 0 185550` (arguments are start and end index, can run multiple at once)  
-
+8. Create final outputs
+``
 
 
 
