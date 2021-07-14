@@ -11,7 +11,48 @@ Project Organization
 
 ------------
 
-TREE HERE
+
+├── conda_env.yaml (conda environment initialization)
+├── data   
+│   ├── description.txt   
+│   ├── processed   
+│   ├── raw   
+│   │   ├── data_release - data pulled from sciencebase here   
+│   │   ├── feats - raw data of input drivers   
+│   │   └── obs - raw data of observations   
+├── hpc - created hpc scripts here   
+├── metadata   
+│   └── lake_metadata.csv   
+├── models - saved models here   
+├── README.md   
+├── requirements.txt   
+├── results   
+│   └── ealstm_hyperparams.csv - insert found hyperparameters here   
+└── src   
+    ├── data  - (data pulling and preprocessing scripts)  
+    │   ├── preprocess.py  
+    │   ├── pull_data.r   
+    │   ├── pytorch_data_operations.py   
+    │   └── write_NLDAS_xy_pairs.py   
+    ├── evaluate  - (error estimation and and final output scripts)  
+    │   ├── EALSTM_error_estimation_and_output_single_fold.py   
+    │   ├── bachmann_model_error_est.py    
+    │   ├── predict_lakes_EALSTM_final.py   
+    ├── hpc   - (creates jobs for HPC - optional but recommendend)  
+    │   ├── create_ealstm_err_est_jobs.py   
+    │   ├── create_EALSTM_tune_jobs.py   
+    │   ├── create_final_output_jobs.py   
+    │   ├── create_preprocess_jobs.py   
+    ├── hyperparam   - (hyperparameter tuning scripts)  
+    │   ├── EALSTM_hypertune.py   
+    ├── models   
+    │   └── pytorch_model_operations.py   
+    ├── oneoff   
+    │   ├── compileErrEstResults.py   
+    │   ├── final_output_rmse_check.py   
+    └── train - (final model training)  
+        └── EALSTM_final_model.py   
+
 
 --------
 
