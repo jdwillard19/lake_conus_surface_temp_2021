@@ -11,8 +11,7 @@ Project Organization
 
 ------------
 
-
-├── conda_env.yaml (conda environment initialization)
+├── conda_env.yaml (conda environment initialization)  
 ├── data   
 │   ├── description.txt   
 │   ├── processed   
@@ -60,9 +59,10 @@ Pipeline to run
 
 -------------
 
-1. Install necessary dependencies from yml file (Anaconda/miniconda must be installed for this), and activate conda environment. Works best on Linux (confirmed on CentOS 7(Core) and Manjaro 20.1).
+1. Install necessary dependencies from yml file (Anaconda/miniconda must be installed for this), and activate conda environment. Works best on Linux (confirmed on CentOS 7(Core) and Manjaro 20.1).  
 `conda env create -f conda_env.yaml`  
-`conda activate conda_env`
+`conda activate conda_env`  
+
 
 2. Pull data from USGS Sciencebase repository (may take a while, ~10GB download)  
 `cd src/data/`  
