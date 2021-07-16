@@ -28,11 +28,11 @@ n_lakes = site_ids.shape[0]
 #load weather files
 base_path = '../../data/raw/data_release/'
 feat_base_path = "../../data/raw/feats/"
-w1_fn = '01_weather_N40-53_W98-126.nc4'
-w2_fn = '02_weather_N24-40_W98-126.nc4'
-w3_fn = '03_weather_N40-53_W82-98.nc4'
-w4_fn = '04_weather_N24-40_W82-98.nc4'
-w5_fn = '05_weather_N24-53_W67-82.nc4'
+w1_fn = '01_weather_N40-53_W98-126.nc'
+w2_fn = '02_weather_N24-40_W98-126.nc'
+w3_fn = '03_weather_N40-53_W82-98.nc'
+w4_fn = '04_weather_N24-40_W82-98.nc'
+w5_fn = '05_weather_N24-53_W67-82.nc'
 w1 = xr.open_dataset(base_path+w1_fn)
 w2 = xr.open_dataset(base_path+w2_fn)
 w3 = xr.open_dataset(base_path+w3_fn)
