@@ -3,7 +3,7 @@ import numpy as np
 import os
 import pdb
 
-metadata = pd.read_csv("../../metadata/lake_metadata_full_conus_185k.csv")
+metadata = pd.read_csv("../../metadata/lake_metadata.csv")
 site_ids = metadata['site_id'].values
 
 sites = []
