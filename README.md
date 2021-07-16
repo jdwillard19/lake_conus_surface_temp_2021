@@ -35,7 +35,7 @@ Project Organization
     │   └── write_NLDAS_xy_pairs.py   
     ├── evaluate  - (error estimation and and final output scripts)  
     │   ├── EALSTM_error_estimation_and_output_single_fold.py   
-    │   ├── bachmann_model_error_est.py    
+    │ ├── bachmann_model_error_est.py    
     │   ├── predict_lakes_EALSTM_final.py   
     ├── hpc   - (creates jobs for HPC - optional but recommendend)  
     │   ├── create_ealstm_err_est_jobs.py   
@@ -50,7 +50,7 @@ Project Organization
     │   ├── compileErrEstResults.py   
     │   ├── final_output_rmse_check.py   
     └── train - (final model training)  
-        └── EALSTM_final_model.py   
+           └── EALSTM_final_model.py   
 
 
 --------
