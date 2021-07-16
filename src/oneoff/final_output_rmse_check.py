@@ -13,7 +13,7 @@ def calc_rmse(predictions, targets):
     return np.sqrt(((predictions - targets) ** 2).mean()) 
 for site_ct,site_id in enumerate(site_ids):
     print(site_ct,"/",len(site_ids), " site")
-    if not metadata[metadata['site_id'] == site_id]['observed'].values[0]:
+    if not metadata[metadata['site_id'] == site_id]['num_obs'].values[0] > 0:
         print("unobserved")
         continue
     else:
