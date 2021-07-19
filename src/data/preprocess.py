@@ -80,6 +80,7 @@ else:
             wsv = np.load(feat_base_path+"WSV_"+w_id.decode()+".npy",allow_pickle=True)
             wsvs[site_ct,:] = wsv
 
+pdb.set_trace()
 n_features = mean_feats.shape[0]
 
 #get dates
