@@ -59,6 +59,8 @@ if not calc_stats:  #pre-calculated statistics
     std_feats = np.array([1.630222, 6.45012084, 9.8714776, 474.08400329,9.10455152, 7.54579132, 3.32533227, 1.62018831, 1.70615275])
 else: 
     for site_ct, site_id in enumerate(site_ids):
+            if site_ct % 1000 == 0:
+                print(site_ct)
             area = np.log(metadata[metadata['site_id']==site_id].area_m2)
             areas[site_ct] = area
             lat = metadata[metadata['site_id']==site_id].lake_lat_deg
