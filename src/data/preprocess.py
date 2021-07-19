@@ -35,7 +35,7 @@ n_dyn_feats = 5 #AT,LW,SW,WSU,WSV
 n_stc_feats = 4 #AREA,LAT,LON,ELEV
 
 mean_feats = None
-calc_stats = False
+calc_stats = True
 
 #get dates
 
@@ -99,6 +99,7 @@ else:
             # wsvs[site_ct,0] = wsv.mean()
             wsvs[site_ct,1] = wsv.std()**2
 
+pdb.set_trace()
 n_features = mean_feats.shape[0]
 
 #get dates
