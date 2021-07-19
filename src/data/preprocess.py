@@ -64,7 +64,7 @@ else:
     for site_ct, site_id in enumerate(site_ids):
             if site_ct % 1000 == 0:
                 print(site_ct)
-            w_id = metadata.loc[site_id]['weather_id'].values[0].encode()
+            w_id = metadata.loc[site_id]['weather_id'].encode()
             area = np.log(metadata.loc[site_id].area_m2)
             areas[site_ct] = area
             lat = metadata.loc[site_id].lake_lat_deg
