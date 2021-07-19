@@ -57,46 +57,46 @@ feat_base_path = '../../data/raw/feats/'
 
 
 if not calc_stats:  #pre-calculated statistics
-    mean_feats = np.array([11.6896, 39.822, 
-                           -94.141577, 476.3117, 
-                           3661.1549, 1759.52895, 
-                           197.5949, 3.4463, 
-                           4.315085986565])
-    std_feats = np.array([1.1173, 6.7915, 
+    # mean_feats = np.array([11.6896, 39.822, 
+    #                        -94.141577, 476.3117, 
+    #                        3661.1549, 1759.52895, 
+    #                        197.5949, 3.4463, 
+    #                        4.315085986565])
+    std_feats = np.sqrt(np.array([1.1173, 6.7915, 
                           12.1085, 575.42646,
                           3590.02027, 1567.7766, 
                           94.7788, 3.36159, 
-                          4.39655])
+                          4.39655]))
 else: 
     metadata.set_index('site_id',inplace=True)
     for site_ct, site_id in enumerate(site_ids):
             if site_ct % 1000 == 0:
                 print(site_ct)
             w_id = metadata.loc[site_id]['weather_id'].encode()
-            area = np.log(metadata.loc[site_id].area_m2)
-            areas[site_ct] = area
-            lat = metadata.loc[site_id].lake_lat_deg
-            lats[site_ct] = lat
-            lon = metadata.loc[site_id].lake_lon_deg
-            lons[site_ct] = lon
-            elev = metadata.loc[site_id].elevation_m
-            elevs[site_ct] = elev
+            # area = np.log(metadata.loc[site_id].area_m2)
+            # areas[site_ct] = area
+            # lat = metadata.loc[site_id].lake_lat_deg
+            # lats[site_ct] = lat
+            # lon = metadata.loc[site_id].lake_lon_deg
+            # lons[site_ct] = lon
+            # elev = metadata.loc[site_id].elevation_m
+            # elevs[site_ct] = elev
 
             #get dynamic feats
             sw = np.load(feat_base_path+"SW_"+w_id.decode()+".npy",allow_pickle=True)
-            sws[site_ct,0] = sw.mean()
+            # sws[site_ct,0] = sw.mean()
             sws[site_ct,1] = sw.std()**2
             lw = np.load(feat_base_path+"LW_"+w_id.decode()+".npy",allow_pickle=True)
-            lws[site_ct,0] = lw.mean()
+            # lws[site_ct,0] = lw.mean()
             lws[site_ct,1] = lw.std()**2
             at = np.load(feat_base_path+"AT_"+w_id.decode()+".npy",allow_pickle=True)
-            ats[site_ct,0] = at.mean()
+            # ats[site_ct,0] = at.mean()
             ats[site_ct,1] = at.std()**2
             wsu = np.load(feat_base_path+"WSU_"+w_id.decode()+".npy",allow_pickle=True)
-            wsus[site_ct,0] = wsu.mean()
+            # wsus[site_ct,0] = wsu.mean()
             wsus[site_ct,1] = wsu.std()**2
             wsv = np.load(feat_base_path+"WSV_"+w_id.decode()+".npy",allow_pickle=True)
-            wsvs[site_ct,0] = wsv.mean()
+            # wsvs[site_ct,0] = wsv.mean()
             wsvs[site_ct,1] = wsv.std()**2
 
 n_features = mean_feats.shape[0]
