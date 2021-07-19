@@ -60,16 +60,18 @@ if not calc_stats:  #pre-calculated statistics
     mean_feats = np.array([13.1700613, 41.67473611, -90.43172611, 397.97342139, 1.76944297e+02, 3.07248340e+02, 2.82968074e+02, 7.85104236e-01, 2.86081133e-01])
     std_feats = np.array([1.630222, 6.45012084, 9.8714776, 474.08400329,9.10455152, 7.54579132, 3.32533227, 1.62018831, 1.70615275])
 else: 
+    metadata.set_index('site_id',inplace=True)
     for site_ct, site_id in enumerate(site_ids):
             if site_ct % 1000 == 0:
                 print(site_ct)
-            area = np.log(metadata[metadata['site_id']==site_id].area_m2)
+            w_id = metadata.loc[site_id]['weather_id'].values[0].encode()
+            area = np.log(metadata.loc[site_id].area_m2)
             areas[site_ct] = area
-            lat = metadata[metadata['site_id']==site_id].lake_lat_deg
+            lat = metadata.loc[site_id].lake_lat_deg
             lats[site_ct] = lat
-            lon = metadata[metadata['site_id']==site_id].lake_lon_deg
+            lon = metadata.loc[site_id].lake_lon_deg
             lons[site_ct] = lon
-            elev = metadata[metadata['site_id']==site_id].elevation_m
+            elev = metadata.loc[site_id].elevation_m
             elevs[site_ct] = elev
 
             #get dynamic feats
