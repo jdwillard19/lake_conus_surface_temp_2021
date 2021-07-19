@@ -35,7 +35,7 @@ n_dyn_feats = 5 #AT,LW,SW,WSU,WSV
 n_stc_feats = 4 #AREA,LAT,LON,ELEV
 
 mean_feats = None
-calc_stats = True
+calc_stats = False
 
 #get dates
 
@@ -57,8 +57,16 @@ feat_base_path = '../../data/raw/feats/'
 
 
 if not calc_stats:  #pre-calculated statistics
-    mean_feats = np.array([13.1700613, 41.67473611, -90.43172611, 397.97342139, 1.76944297e+02, 3.07248340e+02, 2.82968074e+02, 7.85104236e-01, 2.86081133e-01])
-    std_feats = np.array([1.630222, 6.45012084, 9.8714776, 474.08400329,9.10455152, 7.54579132, 3.32533227, 1.62018831, 1.70615275])
+    mean_feats = np.array([11.6896, 39.822, 
+                           -94.141577, 476.3117, 
+                           3661.1549, 1759.52895, 
+                           197.5949, 3.4463, 
+                           4.315085986565])
+    std_feats = np.array([1.1173, 6.7915, 
+                          12.1085, 575.42646,
+                          3590.02027, 1567.7766, 
+                          94.7788, 3.36159, 
+                          4.39655])
 else: 
     metadata.set_index('site_id',inplace=True)
     for site_ct, site_id in enumerate(site_ids):
@@ -91,7 +99,6 @@ else:
             wsvs[site_ct,0] = wsv.mean()
             wsvs[site_ct,1] = wsv.std()**2
 
-pdb.set_trace()
 n_features = mean_feats.shape[0]
 
 #get dates
