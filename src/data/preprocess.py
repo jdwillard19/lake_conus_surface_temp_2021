@@ -48,11 +48,11 @@ areas = np.empty((n_lakes))
 lats = np.empty((n_lakes))
 lons = np.empty((n_lakes))
 elevs = np.empty((n_lakes))
-sws = np.empty((n_lakes,n_dates))
-lws = np.empty((n_lakes,n_dates))
-ats = np.empty((n_lakes,n_dates))
-wsus = np.empty((n_lakes,n_dates))
-wsvs = np.empty((n_lakes,n_dates))
+sws = np.empty((n_lakes,2))
+lws = np.empty((n_lakes,2))
+ats = np.empty((n_lakes,2))
+wsus = np.empty((n_lakes,2))
+wsvs = np.empty((n_lakes,2))
 feat_base_path = '../../data/raw/feats/'
 
 
@@ -76,15 +76,20 @@ else:
 
             #get dynamic feats
             sw = np.load(feat_base_path+"SW_"+w_id.decode()+".npy",allow_pickle=True)
-            sws[site_ct,:] = sw
+            sws[site_ct,0] = sw.mean()
+            sws[site_ct,1] = sw.std()**2
             lw = np.load(feat_base_path+"LW_"+w_id.decode()+".npy",allow_pickle=True)
-            lws[site_ct,:] = lw
+            lws[site_ct,0] = lw.mean()
+            lws[site_ct,1] = lw.std()**2
             at = np.load(feat_base_path+"AT_"+w_id.decode()+".npy",allow_pickle=True)
-            ats[site_ct,:] = at
+            ats[site_ct,0] = at.mean()
+            ats[site_ct,1] = at.std()**2
             wsu = np.load(feat_base_path+"WSU_"+w_id.decode()+".npy",allow_pickle=True)
-            wsus[site_ct,:] = wsu
+            wsus[site_ct,0] = wsu.mean()
+            wsus[site_ct,1] = wsu.std()**2
             wsv = np.load(feat_base_path+"WSV_"+w_id.decode()+".npy",allow_pickle=True)
-            wsvs[site_ct,:] = wsv
+            wsvs[site_ct,0] = wsv.mean()
+            wsvs[site_ct,1] = wsv.std()**2
 
 pdb.set_trace()
 n_features = mean_feats.shape[0]
