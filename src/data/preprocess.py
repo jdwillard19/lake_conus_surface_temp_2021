@@ -34,10 +34,52 @@ n_lakes = site_ids.shape[0]
 n_dyn_feats = 5 #AT,LW,SW,WSU,WSV
 n_stc_feats = 4 #AREA,LAT,LON,ELEV
 
-#pre-calculated statistics
-mean_feats = np.array([13.1700613, 41.67473611, -90.43172611, 397.97342139, 1.76944297e+02, 3.07248340e+02, 2.82968074e+02, 7.85104236e-01, 2.86081133e-01])
-std_feats = np.array([1.630222, 6.45012084, 9.8714776, 474.08400329,9.10455152, 7.54579132, 3.32533227, 1.62018831, 1.70615275])
-   
+mean_feats = None
+calc_stats = True
+
+#get dates
+base_path = '../../data/raw/data_release/'
+w1 = xr.open_dataset(base_path+'01_weather_N40-53_W98-126.nc4')
+dates = w1['time'].values
+n_dates = len(dates)
+
+areas = np.empty((n_lakes))
+lats = np.empty((n_lakes))
+lons = np.empty((n_lakes))
+elevs = np.empty((n_lakes))
+sws = np.empty((n_lakes,n_dates))
+lws = np.empty((n_lakes,n_dates))
+ats = np.empty((n_lakes,n_dates))
+wsus = np.empty((n_lakes,n_dates))
+wsvs = np.empty((n_lakes,n_dates))
+
+
+if not calc_stats:  #pre-calculated statistics
+    mean_feats = np.array([13.1700613, 41.67473611, -90.43172611, 397.97342139, 1.76944297e+02, 3.07248340e+02, 2.82968074e+02, 7.85104236e-01, 2.86081133e-01])
+    std_feats = np.array([1.630222, 6.45012084, 9.8714776, 474.08400329,9.10455152, 7.54579132, 3.32533227, 1.62018831, 1.70615275])
+else: 
+    for site_ct, site_id in enumerate(site_ids):
+            area = np.log(metadata[metadata['site_id']==site_id].area_m2)
+            areas[site_ct] = area
+            lat = metadata[metadata['site_id']==site_id].lake_lat_deg
+            lats[site_ct] = lat
+            lon = metadata[metadata['site_id']==site_id].lake_lon_deg
+            lons[site_ct] = lon
+            elev = metadata[metadata['site_id']==site_id].elevation_m
+            elevs[site_ct] = elev
+
+            #get dynamic feats
+            sw = np.load(feat_base_path+"SW_"+w_id.decode()+".npy",allow_pickle=True)
+            sws[site_ct,:] = sw
+            lw = np.load(feat_base_path+"LW_"+w_id.decode()+".npy",allow_pickle=True)
+            lws[site_ct,:] = lw
+            at = np.load(feat_base_path+"AT_"+w_id.decode()+".npy",allow_pickle=True)
+            ats[site_ct,:] = at
+            wsu = np.load(feat_base_path+"WSU_"+w_id.decode()+".npy",allow_pickle=True)
+            wsus[site_ct,:] = wsu
+            wsv = np.load(feat_base_path+"WSV_"+w_id.decode()+".npy",allow_pickle=True)
+            wsvs[site_ct,:] = wsv
+
 n_features = mean_feats.shape[0]
 
 #get dates
