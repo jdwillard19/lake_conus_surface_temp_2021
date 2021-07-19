@@ -38,6 +38,7 @@ mean_feats = None
 calc_stats = True
 
 #get dates
+
 base_path = '../../data/raw/data_release/'
 w1 = xr.open_dataset(base_path+'01_weather_N40-53_W98-126.nc4')
 dates = w1['time'].values
@@ -52,6 +53,7 @@ lws = np.empty((n_lakes,n_dates))
 ats = np.empty((n_lakes,n_dates))
 wsus = np.empty((n_lakes,n_dates))
 wsvs = np.empty((n_lakes,n_dates))
+feat_base_path = '../../data/raw/feats/'
 
 
 if not calc_stats:  #pre-calculated statistics
@@ -90,7 +92,6 @@ base_path = '../../data/raw/data_release/'
 w1 = xr.open_dataset(base_path+'01_weather_N40-53_W98-126.nc4')
 dates = w1['time'].values
 
-feat_base_path = '../../data/raw/feats/'
 
 # loop to preprocess each site
 for site_ct, site_id in enumerate(site_ids):
