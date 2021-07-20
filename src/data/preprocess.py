@@ -35,7 +35,7 @@ n_dyn_feats = 5 #AT,LW,SW,WSU,WSV
 n_stc_feats = 4 #AREA,LAT,LON,ELEV
 
 mean_feats = None
-calc_stats = True
+calc_stats = False
 
 #get dates
 
@@ -62,11 +62,11 @@ if not calc_stats:  #pre-calculated statistics
                            3661.1549, 1759.52895, 
                            197.5949, 3.4463, 
                            4.315085986565])
-    std_feats = np.sqrt(np.array([1.1173, 6.7915, 
-                          12.1085, 575.42646,
-                          3590.02027, 1567.7766, 
-                          94.7788, 3.36159, 
-                          4.39655]))
+    std_feats = np.sqrt(np.array([1.1173**2, 6.7915**2, 
+                          12.1085**2, 575.42646**2,
+                          7136.574, 3205.9666, 
+                          110.0645, 6.2657, 
+                          8.1407]))
 else: 
     metadata.set_index('site_id',inplace=True)
     for site_ct, site_id in enumerate(site_ids):
@@ -99,25 +99,25 @@ else:
             wsvs[site_ct,0] = wsv.mean()
             wsvs[site_ct,1] = wsv.std()**2
 
-print(areas.mean())
-print(areas.std())
-print(lats.mean())
-print(lats.std())
-print(lons.mean())
-print(lons.std())
-print(elevs.mean())
-print(elevs.std())
-print(sws[:,0].mean())
-print(sws[:,1].mean())
-print(lws[:,0].mean())
-print(lws[:,1].mean())
-print(ats[:,0].mean())
-print(ats[:,1].mean())
-print(wsus[:,0].mean())
-print(wsus[:,1].mean())
-print(wsvs[:,0].mean())
-print(wsvs[:,1].mean())
-sys.exit()
+# print(areas.mean())
+# print(areas.std())
+# print(lats.mean())
+# print(lats.std())
+# print(lons.mean())
+# print(lons.std())
+# print(elevs.mean())
+# print(elevs.std())
+# print(sws[:,0].mean())
+# print(sws[:,1].mean())
+# print(lws[:,0].mean())
+# print(lws[:,1].mean())
+# print(ats[:,0].mean())
+# print(ats[:,1].mean())
+# print(wsus[:,0].mean())
+# print(wsus[:,1].mean())
+# print(wsvs[:,0].mean())
+# print(wsvs[:,1].mean())
+# sys.exit()
 n_features = mean_feats.shape[0]
 
 #get dates
