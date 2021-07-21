@@ -70,6 +70,7 @@ if not os.path.exists("bachmannX_"+str(k)+".npy"):
         #load data
         feats = np.load("../../data/processed/"+lake_id+"/features.npy")
         labs = np.load("../../data/processed/"+lake_id+"/obs.npy")
+        
         dates = np.load("../../data/processed/"+lake_id+"/dates.npy",allow_pickle=True)
         data = np.concatenate((feats[:,:],labs.reshape(labs.shape[0],1)),axis=1)
         X = data[:,:-1]
@@ -95,7 +96,6 @@ if not os.path.exists("bachmannX_"+str(k)+".npy"):
 
         data = data[np.where(np.isfinite(data[:,-1]))]
         new_df = pd.DataFrame(columns=columns,data=data)
-        pdb.set_trace()
         train_df = pd.concat([train_df, new_df], ignore_index=True)
     X = train_df[columns[:-1]].values
     y = np.ravel(train_df[columns[-1]].values)
@@ -105,7 +105,6 @@ else:
     X = np.load("bachmannX_"+str(k)+".npy",allow_pickle=True)
     y = np.load("bachmannY_"+str(k)+".npy",allow_pickle=True)
 print("train set dimensions: ",X.shape)
-pdb.set_trace()
 #declare model and fit
 model = LinearRegression()
 
