@@ -86,6 +86,7 @@ if not os.path.exists("bachmannX_"+str(k)+".npy"):
                           (np.isfinite(y)))[0]
 
         if inds.shape[0] == 0:
+            print("empty")
             continue
         X = np.array([X[i,:] for i in inds],dtype = np.float)
         y = y[inds]
