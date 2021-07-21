@@ -101,6 +101,8 @@ print("train set dimensions: ",X.shape)
 model = LinearRegression()
 
 print("Training linear model...fold ",k)
+np.save("bachmannX_"+str(k),X)
+np.save("bachmannY_"+str(k),y)
 model.fit(X, y)
 dump(model, save_file_path)
 print("model trained and saved to ", save_file_path)
