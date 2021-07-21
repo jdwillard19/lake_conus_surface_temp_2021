@@ -100,8 +100,8 @@ if not os.path.exists("bachmannX_"+str(k)+".npy"):
     np.save("bachmannX_"+str(k),X)
     np.save("bachmannY_"+str(k),y)
 else:
-    X = np.load("bachmannX_"+str(k)+".npy")
-    y = np.load("bachmannY_"+str(k)+".npy")
+    X = np.load("bachmannX_"+str(k)+".npy",allow_pickle=True)
+    y = np.load("bachmannY_"+str(k)+".npy",allow_pickle=True)
 print("train set dimensions: ",X.shape)
 pdb.set_trace()
 #declare model and fit
