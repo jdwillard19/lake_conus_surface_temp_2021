@@ -61,48 +61,54 @@ def getBachmannFeatures(data,dates):
     data = np.append(data,np.expand_dims(np.array(month),axis=1),axis=1)
     return data
 
-for ct, lake_id in enumerate(train_lakes):
-    if ct %100 == 0:
-      print("fold ",k," assembling training lake ",ct,"/",len(train_lakes),": ",lake_id)
-    #load data
-    feats = np.load("../../data/processed/"+lake_id+"/features.npy")
-    labs = np.load("../../data/processed/"+lake_id+"/obs.npy")
-    dates = np.load("../../data/processed/"+lake_id+"/dates.npy",allow_pickle=True)
-    data = np.concatenate((feats[:,:],labs.reshape(labs.shape[0],1)),axis=1)
-    X = data[:,:-1]
+X = None
+y = None
+if not os.path.exists("bachmannX_"+str(k)+".npy"):
+    for ct, lake_id in enumerate(train_lakes):
+        if ct %100 == 0:
+          print("fold ",k," assembling training lake ",ct,"/",len(train_lakes),": ",lake_id)
+        #load data
+        feats = np.load("../../data/processed/"+lake_id+"/features.npy")
+        labs = np.load("../../data/processed/"+lake_id+"/obs.npy")
+        dates = np.load("../../data/processed/"+lake_id+"/dates.npy",allow_pickle=True)
+        data = np.concatenate((feats[:,:],labs.reshape(labs.shape[0],1)),axis=1)
+        X = data[:,:-1]
 
-    X = getBachmannFeatures(X,dates)
+        X = getBachmannFeatures(X,dates)
 
-    y = data[:,-1]
-    dates_str = [str(d) for d in dates]
+        y = data[:,-1]
+        dates_str = [str(d) for d in dates]
 
-    inds = np.where(((np.core.defchararray.find(dates_str,'-06-')!=-1)|\
-                     (np.core.defchararray.find(dates_str,'-07-')!=-1)|\
-                     (np.core.defchararray.find(dates_str,'-08-')!=-1)|\
-                     (np.core.defchararray.find(dates_str,'-09-')!=-1))&\
-                      (np.isfinite(y)))[0]
+        inds = np.where(((np.core.defchararray.find(dates_str,'-06-')!=-1)|\
+                         (np.core.defchararray.find(dates_str,'-07-')!=-1)|\
+                         (np.core.defchararray.find(dates_str,'-08-')!=-1)|\
+                         (np.core.defchararray.find(dates_str,'-09-')!=-1))&\
+                          (np.isfinite(y)))[0]
 
-    if inds.shape[0] == 0:
-        continue
-    X = np.array([X[i,:] for i in inds],dtype = np.float)
-    y = y[inds]
-    #remove days without obs
-    data = np.concatenate((X,y.reshape(len(y),1)),axis=1)
+        if inds.shape[0] == 0:
+            continue
+        X = np.array([X[i,:] for i in inds],dtype = np.float)
+        y = y[inds]
+        #remove days without obs
+        data = np.concatenate((X,y.reshape(len(y),1)),axis=1)
 
-    data = data[np.where(np.isfinite(data[:,-1]))]
-    new_df = pd.DataFrame(columns=columns,data=data)
-    train_df = pd.concat([train_df, new_df], ignore_index=True)
-X = train_df[columns[:-1]].values
-y = np.ravel(train_df[columns[-1]].values)
-
+        data = data[np.where(np.isfinite(data[:,-1]))]
+        new_df = pd.DataFrame(columns=columns,data=data)
+        train_df = pd.concat([train_df, new_df], ignore_index=True)
+    X = train_df[columns[:-1]].values
+    y = np.ravel(train_df[columns[-1]].values)
+    np.save("bachmannX_"+str(k),X)
+    np.save("bachmannY_"+str(k),y)
+else:
+    X = np.load("bachmannX_"+str(k)+".npy")
+    y = np.load("bachmannY_"+str(k)+".npy")
 print("train set dimensions: ",X.shape)
-
+pdb.set_trace()
 #declare model and fit
 model = LinearRegression()
 
 print("Training linear model...fold ",k)
-np.save("bachmannX_"+str(k),X)
-np.save("bachmannY_"+str(k),y)
+
 model.fit(X, y)
 dump(model, save_file_path)
 print("model trained and saved to ", save_file_path)
