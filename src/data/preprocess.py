@@ -198,7 +198,6 @@ for site_ct, site_id in enumerate(site_ids):
     n_obs = n_unq_obs_dates
     n_obs_placed = 0
     for o in range(0,n_obs):
-        pdb.set_trace()
         if len(np.where(dates == pd.Timestamp(site_obs['Date'].values[o]).to_datetime64())[0]) < 1:
             print("not within meteo dates")
             continue
