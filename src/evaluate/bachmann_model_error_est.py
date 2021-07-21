@@ -94,6 +94,7 @@ if not os.path.exists("bachmannX_"+str(k)+".npy"):
 
         data = data[np.where(np.isfinite(data[:,-1]))]
         new_df = pd.DataFrame(columns=columns,data=data)
+        pdb.set_trace()
         train_df = pd.concat([train_df, new_df], ignore_index=True)
     X = train_df[columns[:-1]].values
     y = np.ravel(train_df[columns[-1]].values)
