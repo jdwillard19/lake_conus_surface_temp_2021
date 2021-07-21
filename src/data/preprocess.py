@@ -193,17 +193,17 @@ for site_ct, site_id in enumerate(site_ids):
 
 
     # get unique observation days
-    unq_obs_dates = np.unique(site_obs.values[:,0])
+    unq_obs_dates = np.unique(site_obs['Date'].values)
     n_unq_obs_dates = unq_obs_dates.shape[0]
     n_obs = n_unq_obs_dates
     n_obs_placed = 0
     for o in range(0,n_obs):
         pdb.set_trace()
-        if len(np.where(dates == pd.Timestamp(site_obs.values[o,2]).to_datetime64())[0]) < 1:
+        if len(np.where(dates == pd.Timestamp(site_obs['Date'].values[o]).to_datetime64())[0]) < 1:
             print("not within meteo dates")
             continue
-        date_ind = np.where(dates == pd.Timestamp(site_obs.values[o,2]).to_datetime64())[0][0]
-        site_obs_mat[date_ind] = site_obs.values[o,2]
+        date_ind = np.where(dates == pd.Timestamp(site_obs['Date'].values[o]).to_datetime64())[0][0]
+        site_obs_mat[date_ind] = site_obs['wtemp_obs'].values[o]
         n_obs_placed += 1
 
     #make directory if not exist
