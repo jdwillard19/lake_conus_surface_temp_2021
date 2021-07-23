@@ -18,7 +18,6 @@ import datetime
 
 #load metadata, get command line arguments indicating indices of lakes you wish to preprocess, get ids
 metadata = pd.read_csv("../../metadata/lake_metadata.csv")
-pdb.set_trace()
 start = int(sys.argv[1])
 end = int(sys.argv[2])
 site_ids = metadata['site_id'].values[start:end]
@@ -82,8 +81,7 @@ else:
     for site_ct, site_id in enumerate(site_ids):
             # if site_ct == 0:
             #     site_id = 'nhdhr_143249470'
-            if site_ct % 1000==0:
-                pdb.set_trace()
+            if site_ct % 10000==0:
                 print(site_ct)
             w_id = metadata.loc[site_id]['weather_id'].encode()
             area = np.log(metadata.loc[site_id].area_m2)
@@ -112,26 +110,30 @@ else:
             wsvs[site_ct,0] = wsv.mean()
             wsvs[site_ct,1] = wsv.std()**2
 
-pdb.set_trace()
-# print(areas.mean())
-# print(areas.std())
-# print(lats.mean())
-# print(lats.std())
-# print(lons.mean())
-# print(lons.std())
-# print(elevs.mean())
-# print(elevs.std())
-# print(sws[:,0].mean())
-# print(sws[:,1].mean())
-# print(lws[:,0].mean())
-# print(lws[:,1].mean())
-# print(ats[:,0].mean())
-# print(ats[:,1].mean())
-# print(wsus[:,0].mean())
-# print(wsus[:,1].mean())
-# print(wsvs[:,0].mean())
-# print(wsvs[:,1].mean())
-# sys.exit()
+print(areas.mean())
+print(areas.std())
+print(lats.mean())
+print(lats.std())
+print(lons.mean())
+print(lons.std())
+print(elevs.mean())
+print(elevs.std())
+print(sws[:,0].mean())
+print(sws[:,1].mean())
+print(lws[:,0].mean())
+print(lws[:,1].mean())
+print(ats[:,0].mean())
+print(ats[:,1].mean())
+print(wsus[:,0].mean())
+print(wsus[:,1].mean())
+print(wsvs[:,0].mean())
+print(wsvs[:,1].mean())
+np.save("sws",sws)
+np.save("lws",lws)
+np.save("ats",ats)
+np.save("wsus",wsus)
+np.save("wsvs",wsvs)
+sys.exit()
 n_features = mean_feats.shape[0]
 
 #get dates
@@ -237,7 +239,6 @@ for site_ct, site_id in enumerate(site_ids):
     assert np.isfinite(feats_norm).all()
     assert np.isfinite(dates).all()
 
-    pdb.set_trace()
 
     np.save(feat_path, site_feats)
     np.save(norm_feat_path, feats_norm)
