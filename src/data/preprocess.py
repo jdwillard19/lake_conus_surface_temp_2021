@@ -82,9 +82,8 @@ else:
     for site_ct, site_id in enumerate(site_ids):
             # if site_ct == 0:
             #     site_id = 'nhdhr_143249470'
-            if site_ct % 50000 == 0:
-                pdb.set_trace()
             if site_ct % 1000==0:
+                pdb.set_trace()
                 print(site_ct)
             w_id = metadata.loc[site_id]['weather_id'].encode()
             area = np.log(metadata.loc[site_id].area_m2)
