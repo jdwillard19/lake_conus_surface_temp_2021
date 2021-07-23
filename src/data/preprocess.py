@@ -82,7 +82,9 @@ else:
     for site_ct, site_id in enumerate(site_ids):
             # if site_ct == 0:
             #     site_id = 'nhdhr_143249470'
-            if site_ct % 1000 == 0:
+            if site_ct % 50000 == 0:
+                pdb.set_trace()
+            if site_ct % 1000==0:
                 print(site_ct)
             w_id = metadata.loc[site_id]['weather_id'].encode()
             area = np.log(metadata.loc[site_id].area_m2)
@@ -110,7 +112,8 @@ else:
             wsv = np.load(feat_base_path+"WSV_"+w_id.decode()+".npy",allow_pickle=True)
             wsvs[site_ct,0] = wsv.mean()
             wsvs[site_ct,1] = wsv.std()**2
-            pdb.set_trace()
+
+pdb.set_trace()
 # print(areas.mean())
 # print(areas.std())
 # print(lats.mean())
