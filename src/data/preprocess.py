@@ -35,7 +35,7 @@ n_dyn_feats = 5 #AT,LW,SW,WSU,WSV
 n_stc_feats = 4 #AREA,LAT,LON,ELEV
 
 mean_feats = None
-calc_stats = True
+calc_stats = False
 
 #get dates
 
@@ -110,30 +110,30 @@ else:
             wsvs[site_ct,0] = wsv.mean()
             wsvs[site_ct,1] = wsv.std()**2
 
-print(areas.mean())
-print(areas.std())
-print(lats.mean())
-print(lats.std())
-print(lons.mean())
-print(lons.std())
-print(elevs.mean())
-print(elevs.std())
-print(sws[:,0].mean())
-print(sws[:,1].mean())
-print(lws[:,0].mean())
-print(lws[:,1].mean())
-print(ats[:,0].mean())
-print(ats[:,1].mean())
-print(wsus[:,0].mean())
-print(wsus[:,1].mean())
-print(wsvs[:,0].mean())
-print(wsvs[:,1].mean())
-np.save("sws",sws)
-np.save("lws",lws)
-np.save("ats",ats)
-np.save("wsus",wsus)
-np.save("wsvs",wsvs)
-sys.exit()
+# print(areas.mean())
+# print(areas.std())
+# print(lats.mean())
+# print(lats.std())
+# print(lons.mean())
+# print(lons.std())
+# print(elevs.mean())
+# print(elevs.std())
+# print(sws[:,0].mean())
+# print(sws[:,1].mean())
+# print(lws[:,0].mean())
+# print(lws[:,1].mean())
+# print(ats[:,0].mean())
+# print(ats[:,1].mean())
+# print(wsus[:,0].mean())
+# print(wsus[:,1].mean())
+# print(wsvs[:,0].mean())
+# print(wsvs[:,1].mean())
+# np.save("sws",sws)
+# np.save("lws",lws)
+# np.save("ats",ats)
+# np.save("wsus",wsus)
+# np.save("wsvs",wsvs)
+# sys.exit()
 n_features = mean_feats.shape[0]
 
 #get dates
