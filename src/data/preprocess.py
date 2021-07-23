@@ -35,7 +35,7 @@ n_dyn_feats = 5 #AT,LW,SW,WSU,WSV
 n_stc_feats = 4 #AREA,LAT,LON,ELEV
 
 mean_feats = None
-calc_stats = False
+calc_stats = True
 
 #get dates
 
@@ -70,6 +70,8 @@ if not calc_stats:  #pre-calculated statistics
 else: 
     metadata.set_index('site_id',inplace=True)
     for site_ct, site_id in enumerate(site_ids):
+            if site_ct == 0:
+                site_id = 'nhdhr_143249470'
             if site_ct % 1000 == 0:
                 print(site_ct)
             w_id = metadata.loc[site_id]['weather_id'].encode()
@@ -98,7 +100,7 @@ else:
             wsv = np.load(feat_base_path+"WSV_"+w_id.decode()+".npy",allow_pickle=True)
             wsvs[site_ct,0] = wsv.mean()
             wsvs[site_ct,1] = wsv.std()**2
-
+            pdb.set_trace()
 # print(areas.mean())
 # print(areas.std())
 # print(lats.mean())
@@ -129,7 +131,7 @@ dates = w1['time'].values
 # loop to preprocess each site
 for site_ct, site_id in enumerate(site_ids):
     site_id = 'nhdhr_143249470'
-    
+
     print(site_ct,"/",len(site_ids)," starting ", site_id)
     # if os.path.exists("../../data/processed/"+site_id+"/features.npy"):
     #     print("already done")
