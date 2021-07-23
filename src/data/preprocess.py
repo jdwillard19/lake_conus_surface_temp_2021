@@ -18,6 +18,7 @@ import datetime
 
 #load metadata, get command line arguments indicating indices of lakes you wish to preprocess, get ids
 metadata = pd.read_csv("../../metadata/lake_metadata.csv")
+pdb.set_trace()
 start = int(sys.argv[1])
 end = int(sys.argv[2])
 site_ids = metadata['site_id'].values[start:end]
@@ -45,14 +46,23 @@ dates = w1['time'].values
 n_dates = len(dates)
 
 areas = np.empty((n_lakes))
+areas[:] = np.nan
 lats = np.empty((n_lakes))
+lats[:] = np.nan
 lons = np.empty((n_lakes))
+lons[:] = np.nan
 elevs = np.empty((n_lakes))
+elevs[:] = np.nan
 sws = np.empty((n_lakes,2))
+sws[:] = np.nan
 lws = np.empty((n_lakes,2))
+lws[:] = np.nan
 ats = np.empty((n_lakes,2))
+ats[:] = np.nan
 wsus = np.empty((n_lakes,2))
+wsus[:] = np.nan
 wsvs = np.empty((n_lakes,2))
+wsvs[:] = np.nan
 feat_base_path = '../../data/raw/feats/'
 
 
@@ -70,8 +80,8 @@ if not calc_stats:  #pre-calculated statistics
 else: 
     metadata.set_index('site_id',inplace=True)
     for site_ct, site_id in enumerate(site_ids):
-            if site_ct == 0:
-                site_id = 'nhdhr_143249470'
+            # if site_ct == 0:
+            #     site_id = 'nhdhr_143249470'
             if site_ct % 1000 == 0:
                 print(site_ct)
             w_id = metadata.loc[site_id]['weather_id'].encode()
