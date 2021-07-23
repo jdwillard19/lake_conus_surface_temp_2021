@@ -128,6 +128,8 @@ dates = w1['time'].values
 
 # loop to preprocess each site
 for site_ct, site_id in enumerate(site_ids):
+    site_id = 'nhdhr_143249470'
+    
     print(site_ct,"/",len(site_ids)," starting ", site_id)
     # if os.path.exists("../../data/processed/"+site_id+"/features.npy"):
     #     print("already done")
@@ -220,6 +222,8 @@ for site_ct, site_id in enumerate(site_ids):
     assert np.isfinite(site_feats).all()
     assert np.isfinite(feats_norm).all()
     assert np.isfinite(dates).all()
+
+    pdb.set_trace()
 
     np.save(feat_path, site_feats)
     np.save(norm_feat_path, feats_norm)
