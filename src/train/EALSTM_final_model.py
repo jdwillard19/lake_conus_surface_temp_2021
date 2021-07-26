@@ -387,11 +387,13 @@ class Model(nn.Module):
         c_n : torch,Tensor
             Tensor containing the cell states of each time step
         """
+        pdb.set_trace()
         if self.concat_static or self.no_static:
             h_n, c_n = self.lstm(x_d)
         else:
             h_n, c_n = self.lstm(x_d, x_s)
         h_n = self.dropout(h_n)
+        
         # last_h = self.dropout(h_n[:, -1, :])
         out = self.fc(h_n)
         return out, h_n, c_n
