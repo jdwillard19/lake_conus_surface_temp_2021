@@ -245,4 +245,3 @@ for site_ct, site_id in enumerate(site_ids):
     np.save(dates_path, dates)
     np.save(obs_path, site_obs_mat)
 
-    pdb.set_trace()
