@@ -144,7 +144,7 @@ dates = w1['time'].values
 
 # loop to preprocess each site
 for site_ct, site_id in enumerate(site_ids):
-    site_id = 'nhdhr_143249470'
+    # site_id = 'nhdhr_143249470'
 
     print(site_ct,"/",len(site_ids)," starting ", site_id)
     # if os.path.exists("../../data/processed/"+site_id+"/features.npy"):
@@ -245,3 +245,4 @@ for site_ct, site_id in enumerate(site_ids):
     np.save(dates_path, dates)
     np.save(obs_path, site_obs_mat)
 
+    pdb.set_trace()
