@@ -33,7 +33,7 @@ for k in folds_arr: #CHANGE DIS----------------
 	# pdb.set_trace()
 	# ea_df.drop(ea_df[ea_df['Date'] < gb_date_df['Date'].min()].index,axis=0,inplace=True)
 	# assert ea_df.shape[0] == lm_df.shape[0]
-
+	pdb.set_trace()
 	ea_df = pd.merge(ea_df,lm_df,left_on=['Date','site_id'],right_on=['date','site_id'])
 	combined_ea = combined_ea.append(ea_df)
 	combined_ea.reset_index(inplace=True,drop=True)
@@ -62,7 +62,6 @@ for i,site_id in enumerate(site_ids):
 	site_df['rmse_ealstm'] = [np.sqrt(((per_site_res['wtemp_predicted-ealstm'] - per_site_res['wtemp_actual']) ** 2).mean())]
 	site_df['rmse_lm'] = [np.sqrt(((per_site_res['wtemp_predicted-linear_model'] - per_site_res['wtemp_actual']) ** 2).mean())]
 	if np.isnan(site_df['rmse_ealstm']).any():
-		pdb.set_trace()
 		continue
 	site_df['site_id'] = [site_id]
 	site_df['n_obs'] = [per_site_res.shape[0]]
