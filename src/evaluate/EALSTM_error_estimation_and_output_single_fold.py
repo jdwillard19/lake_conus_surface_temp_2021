@@ -657,7 +657,6 @@ for targ_ct, target_id in enumerate(test_lakes): #for each target lake
         output_df = pd.DataFrame()
         output_df['Date'] = loss_days
         output_df['site_id'] = target_id
-        pdb.set_trace()
         output_df['wtemp_predicted'] = loss_output
         output_df['wtemp_actual'] =loss_label
         output_df['fold'] = k
