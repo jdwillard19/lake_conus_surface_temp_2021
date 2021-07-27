@@ -69,8 +69,8 @@ lambda1 = 0.000
 #epoch settings
 n_eps = 1000
 first_save_epoch = 0
-targ_ep = 150
-targ_rmse = 2.03
+targ_ep = 170
+targ_rmse = 1.71
 
 #load metadata
 metadata = pd.read_csv("../../metadata/lake_metadata.csv")
@@ -90,15 +90,15 @@ lakenames = metadata['site_id'].values
 ep_arr = []   
 
 
-if not os.path.exists("./ealstm_trn_data_070321.npy"):
+if not os.path.exists("./ealstm_trn_data_072621.npy"):
     (trn_data, _) = buildLakeDataForRNN_multilakemodel_conus(lakenames,\
                                                     seq_length, n_total_feats,\
                                                     win_shift = win_shift, begin_loss_ind = begin_loss_ind,\
                                                     static_feats=True,n_static_feats = 4,verbose=True,cold_filter=False) 
 
-    np.save("./ealstm_trn_data_070321.npy",trn_data)
+    np.save("./ealstm_trn_data_072621.npy",trn_data)
 else:
-    trn_data = torch.from_numpy(np.load("./ealstm_trn_data_070321.npy"))
+    trn_data = torch.from_numpy(np.load("./ealstm_trn_data_072621.npy"))
 
 
 print("train_data size: ",trn_data.size())
@@ -387,7 +387,6 @@ class Model(nn.Module):
         c_n : torch,Tensor
             Tensor containing the cell states of each time step
         """
-        pdb.set_trace()
         if self.concat_static or self.no_static:
             h_n, c_n = self.lstm(x_d)
         else:
@@ -530,7 +529,7 @@ for epoch in range(n_eps):
     if avg_loss < min_train_rmse:
         min_train_rmse = avg_loss
         print("model saved")
-        save_path = "../../models/EALSTM_"+str(n_hidden)+"hid_"+str(num_layers)+"_final_070621"
+        save_path = "../../models/EALSTM_"+str(n_hidden)+"hid_"+str(num_layers)+"_final_072621"
         saveModel(lstm_net.state_dict(), optimizer.state_dict(), save_path)
 
     if avg_loss < targ_rmse and epoch > targ_ep:
