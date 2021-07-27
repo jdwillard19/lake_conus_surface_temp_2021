@@ -28,7 +28,7 @@ for k in folds_arr: #CHANGE DIS----------------
 	# gb_df = pd.read_feather("../../results/xgb_conus_022221_fold"+str(k)+".feather")
 
 	# ea_df = pd.read_feather("../../results/err_est_outputs_2layer128hid_2.4rmse_EALSTM_fold"+str(k)+".feather")
-	ea_df = pd.read_feather("../../results/err_est_outputs_070521_EALSTM_fold"+str(k)+".feather")
+	ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+".feather")
 	# ea_df = pd.read_feather("../../results/err_est_outputs_070221_EALSTM_fold"+str(k)+".feather")
 	# pdb.set_trace()
 	# ea_df.drop(ea_df[ea_df['Date'] < gb_date_df['Date'].min()].index,axis=0,inplace=True)
@@ -47,10 +47,10 @@ combined_df['wtemp_predicted-linear_model'] = combined_ea['temp_pred_lm']
 # combined_df['wtemp_actual'] = combined_ea['wtemp_actual']
 combined_df['wtemp_actual'] = combined_ea['temp_actual']
 combined_df.reset_index(inplace=True)
-combined_df.to_feather("../../results/all_outputs_and_obs_071121_wBachmann.feather")
-combined_df.to_csv("../../results/all_outputs_and_obs_071121_wBachmann.csv")
+combined_df.to_feather("../../results/all_outputs_and_obs_072621_wBachmann.feather")
+combined_df.to_csv("../../results/all_outputs_and_obs_072621_wBachmann.csv")
 
-combined_df = pd.read_feather("../../results/all_outputs_and_obs_071121_wBachmann.feather")
+combined_df = pd.read_feather("../../results/all_outputs_and_obs_072621_wBachmann.feather")
 
 per_site_df = pd.DataFrame(columns=['site_id','n_obs','rmse_ealstm','rmse_lm'])
 # per_site_df = pd.DataFrame(columns=['site_id','n_obs','rmse_ealstm','rmse_xgboost'])
@@ -68,5 +68,5 @@ for i,site_id in enumerate(site_ids):
 	per_site_df = per_site_df.append(site_df)
 
 per_site_df.reset_index(inplace=True)
-per_site_df.to_csv("../../results/err_per_site_wBachmann_071121.csv")
+per_site_df.to_csv("../../results/err_per_site_wBachmann_072621.csv")
 # per_site_df.to_feather("../../results/err_per_site_wBachmann_071121.feather")
