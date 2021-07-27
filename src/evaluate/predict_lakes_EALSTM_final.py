@@ -399,7 +399,7 @@ lstm_net = Model(input_size_dyn=n_features,input_size_stat=n_static_feats,hidden
 if use_gpu:
     lstm_net = lstm_net.cuda()
 
-load_path = "../../models/EALSTM_256hid_1_final_070621"
+load_path = "../../models/EALSTM_256hid_1_final_072621"
 n_hidden = torch.load(load_path)['state_dict']['lstm.weight_hh'].shape[0]
 lstm_net = Model(input_size_dyn=n_features,input_size_stat=n_static_feats,hidden_size=n_hidden)
 if use_gpu:
@@ -416,11 +416,6 @@ mse_criterion = nn.MSELoss()
 
 #after training, do test predictions / error estimation
 for targ_ct, target_id in enumerate(test_lakes): #for each target lake
-    if target_id == "nhdhr_{ef5a02dc-f608-4740-ab0e-de374bf6471c}" or target_id == 'nhdhr_136665792' or target_id == 'nhdhr_136686179':
-        continue
-
-
-
     print(str(targ_ct),'/',len(test_lakes),':',target_id)
     # if pd.read_feather('../../results/SWT_results/outputs_'+target_id+'.feather').shape[0] == 14976:
     #     print("already good")
