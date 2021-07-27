@@ -125,15 +125,15 @@ targ_rmse = hp[(hp['fold']+1)==k]['trn_rmse'].values[0]
 lakenames = metadata[metadata['cluster_id']!=k]['site_id'].values
 test_lakes = metadata[metadata['cluster_id']==k]['site_id'].values
 ep_arr = []   
-if not os.path.exists("./ealstm_trn_data_062421_5fold_k"+str(k)+".npy"):
+if not os.path.exists("./ealstm_trn_data_072621_5fold_k"+str(k)+".npy"):
     (trn_data, _) = buildLakeDataForRNN_multilakemodel_conus(lakenames,\
                                                     seq_length, n_total_feats,\
                                                     win_shift = win_shift, begin_loss_ind = begin_loss_ind,\
                                                     static_feats=True,n_static_feats = 4,verbose=True) 
 
-    np.save("ealstm_trn_data_062421_5fold_k"+str(k)+".npy",trn_data)
+    np.save("ealstm_trn_data_072621_5fold_k"+str(k)+".npy",trn_data)
 else:
-    trn_data = torch.from_numpy(np.load("ealstm_trn_data_062421_5fold_k"+str(k)+".npy"))
+    trn_data = torch.from_numpy(np.load("ealstm_trn_data_072621_5fold_k"+str(k)+".npy"))
 
 
 
@@ -656,7 +656,7 @@ for targ_ct, target_id in enumerate(test_lakes): #for each target lake
             print("missed obs?")
 
 # final_output_df.to_feather("../../results/err_est_outputs_225hid_EALSTM_fold"+str(k)+".feather")
-final_output_df.to_feather("../../results/err_est_outputs_070521_EALSTM_fold"+str(k)+".feather")
+final_output_df.to_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+".feather")
 save_path = "../../models/EALSTM_fold"+str(k)+"_newparam"
 saveModel(lstm_net.state_dict(), optimizer.state_dict(), save_path)
 print("saved to ",save_path)
