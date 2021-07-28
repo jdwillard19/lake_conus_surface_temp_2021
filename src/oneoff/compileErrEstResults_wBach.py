@@ -44,6 +44,7 @@ combined_df['site_id'] = combined_ea['site_id']
 combined_df['wtemp_predicted-ealstm'] = combined_ea['wtemp_predicted']
 combined_df['wtemp_predicted-linear_model'] = combined_ea['temp_pred_lm']
 # combined_df['wtemp_actual'] = combined_ea['wtemp_actual']
+pdb.set_trace()
 combined_df['wtemp_actual'] = combined_ea['temp_actual']
 combined_df.reset_index(inplace=True)
 combined_df.to_feather("../../results/all_outputs_and_obs_072621_wBachmann.feather")
