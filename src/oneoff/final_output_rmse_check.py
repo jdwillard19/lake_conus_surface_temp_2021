@@ -4,6 +4,7 @@ import os
 import pdb
 
 metadata = pd.read_csv("../../metadata/lake_metadata.csv")
+metadata = metadata[metadata['num_obs'] > 0]
 site_ids = metadata['site_id'].values
 
 sites = []
