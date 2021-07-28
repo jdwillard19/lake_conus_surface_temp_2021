@@ -456,22 +456,22 @@ lstm_net = Model(input_size_dyn=n_features,input_size_stat=n_static_feats,hidden
 
 def boundedGroupLoss(output, y):
     loss_outputs = outputs[:,begin_loss_ind:]
-    loss_targets = targets[:,begin_loss_ind:]
-    loss_indices = torch.isfinite(loss_targets)
+    loss_targets = targets[:,begin_loss_ind:].cpu()
 
-    loss_targets1 = loss_targets[np.where(loss_targets <= 10)]
+    loss_targets1 = torch.from_numpy(loss_targets[np.where(loss_targets <= 10)])
     loss_outputs1 = loss_outputs[np.where(loss_targets <= 10)]
-    loss_targets2 = loss_targets[np.where((loss_targets > 10)&(loss_targets <= 20))]
+    loss_targets2 = torch.from_numpy(loss_targets[np.where((loss_targets > 10)&(loss_targets <= 20))])
     loss_outputs2 = loss_outputs[np.where((loss_targets > 10)&(loss_targets <= 20))]
-    loss_targets3 = loss_targets[np.where((loss_targets > 20)&(loss_targets <= 30))]
+    loss_targets3 = torch.from_numpy(loss_targets[np.where((loss_targets > 20)&(loss_targets <= 30))])
     loss_outputs3 = loss_outputs[np.where((loss_targets > 20)&(loss_targets <= 30))]
-    loss_targets4 = loss_targets[np.where((loss_targets > 30)&(loss_targets <= 40))]
+    loss_targets4 = torch.from_numpy(loss_targets[np.where((loss_targets > 30)&(loss_targets <= 40))])
     loss_outputs4 = loss_outputs[np.where((loss_targets > 30)&(loss_targets <= 40))]
 
-    loss_indices1 = np.array(np.isfinite(loss_targets1.cpu()), dtype='bool_')
-    loss_indices2 = np.array(np.isfinite(loss_targets2.cpu()), dtype='bool_')
-    loss_indices3 = np.array(np.isfinite(loss_targets3.cpu()), dtype='bool_')
-    loss_indices4 = np.array(np.isfinite(loss_targets4.cpu()), dtype='bool_')
+
+    loss_targets1 = loss_outputs1.cuda()
+    loss_targets2 = loss_outputs2.cuda()
+    loss_targets3 = loss_outputs3.cuda()
+    loss_targets4 = loss_outputs4.cuda()
 
     loss = 0
 
