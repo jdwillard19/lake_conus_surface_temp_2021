@@ -47,7 +47,7 @@ torch.set_printoptions(precision=10)
 verbose = True
 save = True
 test = True
-train = False
+train = True
 
 
 #####################3
@@ -454,15 +454,17 @@ class Model(nn.Module):
 # lstm_net = myLSTM_Net(n_total_feats, n_hidden, batch_size)
 lstm_net = Model(input_size_dyn=n_features,input_size_stat=n_static_feats,hidden_size=n_hidden)
 
-def myLoss(output, y):
+def boundedGroupLoss(output, y):
     loss_outputs = outputs[:,begin_loss_ind:]
     loss_targets = targets[:,begin_loss_ind:].cpu()
     loss_indices = np.array(np.isfinite(loss_targets.cpu()), dtype='bool_')
-    loss = (output - y).abs_()
-    for j in range(loss.size(0)):
-        if loss[j].mean() > threshold:
-            loss[j] = loss[j].add_(1).log_().mul_(50)
-    return loss.mean()
+    pdb.set_trace()
+    # mse_criterion(loss_outputs[loss_indices1], loss_targets[loss_indices1])
+    # loss = (output - y).abs_()
+    # for j in range(loss.size(0)):
+        # if loss[j].mean() > threshold:
+            # loss[j] = loss[j].add_(1).log_().mul_(50)
+    # return loss.mean()
 #tell model to use GPU if needed
 if use_gpu:
     lstm_net = lstm_net.cuda()
@@ -489,7 +491,7 @@ min_train_ep = -1
 done = False
 
 if not train:
-    load_path = "../../models/EALSTM_err_est_"+str(k)+"_newparam"
+    load_path = "../../models/EALSTM_err_est_"+str(k)+"_grouploss"
     if use_gpu:
         lstm_net = lstm_net.cuda(0)
     pretrain_dict = torch.load(load_path)['state_dict']
@@ -558,10 +560,7 @@ else:
                 loss_outputs = loss_outputs.cuda()
                 loss_targets = loss_targets.cuda()
 
-            loss = mse_criterion(loss_outputs[loss_indices1], loss_targets[loss_indices1]) + 
-                 + mse_criterion(loss_outputs[loss_indices2], loss_targets[loss_indices2]) +
-                 mse_criterion(loss_outputs[loss_indices3], loss_targets[loss_indices3])+
-                 mse_criterion(loss_outputs[loss_indices4], loss_targets[loss_indices4])
+            loss = boundedGroupLoss(loss_outputs,loss_targets)
 
             #backward
 
@@ -589,7 +588,7 @@ else:
             ep_since_min = 0
             min_train_rmse = avg_loss
             print("model saved")
-            save_path = "../../models/EALSTM_err_est_"+str(k)+"_newparam"
+            save_path = "../../models/EALSTM_err_est_"+str(k)+"_grouploss"
             saveModel(lstm_net.state_dict(), optimizer.state_dict(), save_path)
         else:
             ep_since_min += 1
@@ -685,6 +684,6 @@ for targ_ct, target_id in enumerate(test_lakes): #for each target lake
 
 # final_output_df.to_feather("../../results/err_est_outputs_225hid_EALSTM_fold"+str(k)+".feather")
 final_output_df.to_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+".feather")
-save_path = "../../models/EALSTM_fold"+str(k)+"_newparam"
+save_path = "../../models/EALSTM_fold"+str(k)+"_grouploss"
 saveModel(lstm_net.state_dict(), optimizer.state_dict(), save_path)
 print("saved to ",save_path)
