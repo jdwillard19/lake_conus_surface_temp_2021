@@ -24,40 +24,40 @@ for k in folds_arr: #CHANGE DIS----------------
 
 	print("fold ",k)
 	# lm_df = pd.read_feather("../../results/lm_conus_022221_fold"+str(k)+".feather")
-	lm_df = pd.read_feather("../../results/lm_lagless_070221_fold"+str(k)+".feather")
+	# lm_df = pd.read_feather("../../results/lm_lagless_070221_fold"+str(k)+".feather")
 	# gb_df = pd.read_feather("../../results/xgb_conus_022221_fold"+str(k)+".feather")
 
-	if os.path.exists("../../results/xgb_lagless_062421_fold"+str(k)+".feather"):
-		gb_df = pd.read_feather("../../results/xgb_lagless_062421_fold"+str(k)+".feather")
+	# if os.path.exists("../../results/xgb_lagless_062421_fold"+str(k)+".feather"):
+		# gb_df = pd.read_feather("../../results/xgb_lagless_062421_fold"+str(k)+".feather")
 	# else:
 		# gb_df = pd.read_feather("../../results/xgb_lagless_041321_fold"+str(k)+".feather")
 
 
-	gb_date_df = pd.read_feather("../../results/xgb_lagless_dates_fold"+str(k)+".feather")
+	# gb_date_df = pd.read_feather("../../results/xgb_lagless_dates_fold"+str(k)+".feather")
 	# ea_df = pd.read_feather("../../results/err_est_outputs_225hid_EALSTM_fold"+str(k)+".feather")
 	# ea_df = pd.read_feather("../../results/err_est_outputs_1layer256hid_2.4rmse_EALSTM_fold"+str(k)+".feather")
 	# ea_df = pd.read_feather("../../results/err_est_outputs_2layer128hid_2.4rmse_EALSTM_fold"+str(k)+".feather")
 	ea_df = pd.read_feather("../../results/err_est_outputs_070521_EALSTM_fold"+str(k)+".feather")
 	# ea_df = pd.read_feather("../../results/err_est_outputs_070221_EALSTM_fold"+str(k)+".feather")
 
-	ea_df.drop(ea_df[ea_df['Date'] < gb_date_df['Date'].min()].index,axis=0,inplace=True)
-	pdb.set_trace()
-	assert (ea_df['Date'].values == gb_date_df['Date'].values).all()
-	assert ea_df.shape[0] == lm_df.shape[0]
-	assert ea_df.shape[0] == gb_df.shape[0]
+	# ea_df.drop(ea_df[ea_df['Date'] < gb_date_df['Date'].min()].index,axis=0,inplace=True)
+	# pdb.set_trace()
+	# assert (ea_df['Date'].values == gb_date_df['Date'].values).all()
+	# assert ea_df.shape[0] == lm_df.shape[0]
+	# assert ea_df.shape[0] == gb_df.shape[0]
 
 	combined_ea = combined_ea.append(ea_df)
 	combined_ea.reset_index(inplace=True,drop=True)
-	combined_gb = combined_gb.append(gb_df)
-	combined_gb.reset_index(inplace=True,drop=True)
-	combined_lm = combined_lm.append(lm_df)
-	combined_lm.reset_index(inplace=True,drop=True)
+	# combined_gb = combined_gb.append(gb_df)
+	# combined_gb.reset_index(inplace=True,drop=True)
+	# combined_lm = combined_lm.append(lm_df)
+	# combined_lm.reset_index(inplace=True,drop=True)
 
 combined_df['Date'] = combined_ea['Date']
 combined_df['site_id'] = combined_gb['site_id']
 combined_df['wtemp_predicted-ealstm'] = combined_ea['wtemp_predicted']
-combined_df['wtemp_predicted-xgboost'] = combined_gb['temp_pred_xgb']
-combined_df['wtemp_predicted-linear_model'] = combined_lm['temp_pred_lm']
+# combined_df['wtemp_predicted-xgboost'] = combined_gb['temp_pred_xgb']
+# combined_df['wtemp_predicted-linear_model'] = combined_lm['temp_pred_lm']
 # combined_df['wtemp_actual'] = combined_ea['wtemp_actual']
 combined_df['wtemp_actual'] = combined_gb['temp_actual']
 combined_df.reset_index(inplace=True)

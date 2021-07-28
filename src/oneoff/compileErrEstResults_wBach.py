@@ -33,8 +33,7 @@ for k in folds_arr: #CHANGE DIS----------------
 	# pdb.set_trace()
 	# ea_df.drop(ea_df[ea_df['Date'] < gb_date_df['Date'].min()].index,axis=0,inplace=True)
 	# assert ea_df.shape[0] == lm_df.shape[0]
-	pdb.set_trace()
-	ea_df = pd.merge(ea_df,lm_df,left_on=['Date','site_id'],right_on=['date','site_id'])
+	ea_df = pd.merge(ea_df,lm_df,left_on=['Date','site_id'],right_on=['date','site_id'],how='left')
 	combined_ea = combined_ea.append(ea_df)
 	combined_ea.reset_index(inplace=True,drop=True)
 	# combined_lm = combined_lm.append(lm_df)
