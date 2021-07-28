@@ -457,9 +457,31 @@ lstm_net = Model(input_size_dyn=n_features,input_size_stat=n_static_feats,hidden
 def boundedGroupLoss(output, y):
     loss_outputs = outputs[:,begin_loss_ind:]
     loss_targets = targets[:,begin_loss_ind:].cpu()
-    loss_indices = np.array(np.isfinite(loss_targets.cpu()), dtype='bool_')
-    pdb.set_trace()
-    # mse_criterion(loss_outputs[loss_indices1], loss_targets[loss_indices1])
+    loss_targets1 = loss_targets[np.where(loss_targets <= 10)]
+    loss_targets2 = loss_targets[np.where((loss_targets > 10)&(loss_targets <= 20))]
+    loss_targets3 = loss_targets[np.where((loss_targets > 20)&(loss_targets <= 30))]
+    loss_targets4 = loss_targets[np.where((loss_targets > 30)&(loss_targets <= 40))]
+
+    loss_indices1 = np.array(np.isfinite(loss_targets1.cpu()), dtype='bool_')
+    loss_indices2 = np.array(np.isfinite(loss_targets2.cpu()), dtype='bool_')
+    loss_indices3 = np.array(np.isfinite(loss_targets3.cpu()), dtype='bool_')
+    loss_indices4 = np.array(np.isfinite(loss_targets4.cpu()), dtype='bool_')
+
+    loss = 0
+    loss1 = mse_criterion(loss_outputs[loss_indices1], loss_targets[loss_indices1])
+    loss2 = mse_criterion(loss_outputs[loss_indices2], loss_targets[loss_indices2])
+    loss3 = mse_criterion(loss_outputs[loss_indices3], loss_targets[loss_indices3])
+    loss4 = mse_criterion(loss_outputs[loss_indices4], loss_targets[loss_indices4])
+    if loss1 > targ_rmse:
+        loss += loss1
+    if loss2 > targ_rmse:
+        loss += loss2
+    if loss3 > targ_rmse:
+        loss += loss3
+    if loss4 > targ_rmse:
+        loss += loss4
+
+    return loss
     # loss = (output - y).abs_()
     # for j in range(loss.size(0)):
         # if loss[j].mean() > threshold:
@@ -542,25 +564,12 @@ else:
             outputs, h_state, _ = lstm_net(inputs[:,:,n_static_feats:], inputs[:,0,:n_static_feats])
             outputs = outputs.view(outputs.size()[0],-1)
 
-            #calculate losses
-            reg1_loss = 0
-            if lambda1 > 0:
-                reg1_loss = calculate_l1_loss(lstm_net)
 
-
-            loss_outputs = outputs[:,begin_loss_ind:]
-            loss_targets = targets[:,begin_loss_ind:].cpu()
-
-
-            #get indices to calculate loss
-            # loss_indices = np.array(np.isfinite(loss_targets.cpu()), dtype='bool_')
-            loss_indices = np.array(np.isfinite(loss_targets.cpu()), dtype='bool_')
-            pdb.set_trace()
             if use_gpu:
-                loss_outputs = loss_outputs.cuda()
-                loss_targets = loss_targets.cuda()
+                outputs = outputs.cuda()
+                targets = targets.cuda()
 
-            loss = boundedGroupLoss(loss_outputs,loss_targets)
+            loss = boundedGroupLoss(outputs,targets)
 
             #backward
 
@@ -596,7 +605,7 @@ else:
             print("training complete")
             break
         # if epoch % 10 is 0:
-        if avg_loss < targ_rmse and epoch > targ_ep:
+        if avg_loss < 0 and epoch > targ_ep:
             print("training complete")
             break
 
