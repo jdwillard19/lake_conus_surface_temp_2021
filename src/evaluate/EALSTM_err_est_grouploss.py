@@ -411,7 +411,7 @@ class Model(nn.Module):
             -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
         """Run forward pass through the model.
         Parameters
-        ----------
+        ----------c
         x_d : torch.Tensor
             Tensor containing the dynamic input features of shape [batch, seq_length, n_features]
         x_s : torch.Tensor, optional
@@ -456,11 +456,17 @@ lstm_net = Model(input_size_dyn=n_features,input_size_stat=n_static_feats,hidden
 
 def boundedGroupLoss(output, y):
     loss_outputs = outputs[:,begin_loss_ind:]
-    loss_targets = targets[:,begin_loss_ind:].cpu()
+    loss_targets = targets[:,begin_loss_ind:]
+    loss_indices = torch.isfinite(loss_targets)
+
     loss_targets1 = loss_targets[np.where(loss_targets <= 10)]
+    loss_outputs1 = loss_outputs[np.where(loss_targets <= 10)]
     loss_targets2 = loss_targets[np.where((loss_targets > 10)&(loss_targets <= 20))]
+    loss_outputs2 = loss_outputs[np.where((loss_targets > 10)&(loss_targets <= 20))]
     loss_targets3 = loss_targets[np.where((loss_targets > 20)&(loss_targets <= 30))]
+    loss_outputs3 = loss_outputs[np.where((loss_targets > 20)&(loss_targets <= 30))]
     loss_targets4 = loss_targets[np.where((loss_targets > 30)&(loss_targets <= 40))]
+    loss_outputs4 = loss_outputs[np.where((loss_targets > 30)&(loss_targets <= 40))]
 
     loss_indices1 = np.array(np.isfinite(loss_targets1.cpu()), dtype='bool_')
     loss_indices2 = np.array(np.isfinite(loss_targets2.cpu()), dtype='bool_')
@@ -468,11 +474,11 @@ def boundedGroupLoss(output, y):
     loss_indices4 = np.array(np.isfinite(loss_targets4.cpu()), dtype='bool_')
 
     loss = 0
-    pdb.set_trace()
-    loss1 = mse_criterion(loss_outputs[loss_indices1], loss_targets[loss_indices1])
-    loss2 = mse_criterion(loss_outputs[loss_indices2], loss_targets[loss_indices2])
-    loss3 = mse_criterion(loss_outputs[loss_indices3], loss_targets[loss_indices3])
-    loss4 = mse_criterion(loss_outputs[loss_indices4], loss_targets[loss_indices4])
+
+    loss1 = mse_criterion(loss_outputs1, loss_targets1)
+    loss2 = mse_criterion(loss_outputs2, loss_targets2)
+    loss3 = mse_criterion(loss_outputs3, loss_targets3)
+    loss4 = mse_criterion(loss_outputs4, loss_targets4)
     if loss1 > targ_rmse:
         loss += loss1
     if loss2 > targ_rmse:
