@@ -468,6 +468,7 @@ def boundedGroupLoss(output, y):
     loss_indices4 = np.array(np.isfinite(loss_targets4.cpu()), dtype='bool_')
 
     loss = 0
+    pdb.set_trace()
     loss1 = mse_criterion(loss_outputs[loss_indices1], loss_targets[loss_indices1])
     loss2 = mse_criterion(loss_outputs[loss_indices2], loss_targets[loss_indices2])
     loss3 = mse_criterion(loss_outputs[loss_indices3], loss_targets[loss_indices3])
