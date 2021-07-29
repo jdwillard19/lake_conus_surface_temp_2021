@@ -479,10 +479,10 @@ def boundedGroupLoss(output, y):
     loss2 = mse_criterion(loss_outputs2, loss_targets2)
     loss3 = mse_criterion(loss_outputs3, loss_targets3)
     loss4 = mse_criterion(loss_outputs4, loss_targets4)
-    print("loss 1: ", loss1)
-    print("loss 2: ", loss2)
-    print("loss 3: ", loss3)
-    print("loss 4: ", loss4)
+    # print("loss 1: ", loss1)
+    # print("loss 2: ", loss2)
+    # print("loss 3: ", loss3)
+    # print("loss 4: ", loss4)
     if loss1 > targ_rmse:
         loss += loss1
     if loss2 > targ_rmse:
