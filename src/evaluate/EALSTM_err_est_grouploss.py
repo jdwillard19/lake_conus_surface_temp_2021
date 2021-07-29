@@ -583,8 +583,8 @@ else:
             loss = boundedGroupLoss(outputs,targets)
 
             #backward
-
-            loss.backward(retain_graph=False)
+            if torch.is_tensor(loss):
+                loss.backward(retain_graph=False)
             if grad_clip > 0:
                 clip_grad_norm_(lstm_net.parameters(), grad_clip, norm_type=2)
 
