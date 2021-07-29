@@ -66,7 +66,7 @@ save = True
 grad_clip = 1.0 #how much to clip the gradient 2-norm in training
 dropout = 0.
 num_layers = 1
-n_hidden = 512
+n_hidden = 256
 lambda1 = 0.000
 patience = 100
 
@@ -479,10 +479,10 @@ def boundedGroupLoss(output, y):
     loss2 = mse_criterion(loss_outputs2, loss_targets2)
     loss3 = mse_criterion(loss_outputs3, loss_targets3)
     loss4 = mse_criterion(loss_outputs4, loss_targets4)
-    print("loss 1: ", loss1)
-    print("loss 2: ", loss2)
-    print("loss 3: ", loss3)
-    print("loss 4: ", loss4)
+    # print("loss 1: ", loss1)
+    # print("loss 2: ", loss2)
+    # print("loss 3: ", loss3)
+    # print("loss 4: ", loss4)
     if loss1 > targ_rmse:
         loss += loss1
     if loss2 > targ_rmse:
@@ -490,7 +490,7 @@ def boundedGroupLoss(output, y):
     if loss3 > targ_rmse:
         loss += loss3
     if loss4 > targ_rmse:
-        loss += loss4*50
+        loss += loss4*2
 
     return loss
 
@@ -519,10 +519,10 @@ def boundedGroupLossFull(output, y):
     loss2 = mse_criterion(loss_outputs2, loss_targets2)
     loss3 = mse_criterion(loss_outputs3, loss_targets3)
     loss4 = mse_criterion(loss_outputs4, loss_targets4)
-    # print("loss 1: ", loss1)
-    # print("loss 2: ", loss2)
-    # print("loss 3: ", loss3)
-    # print("loss 4: ", loss4)
+    print("loss 1: ", loss1)
+    print("loss 2: ", loss2)
+    print("loss 3: ", loss3)
+    print("loss 4: ", loss4)
     if not torch.isnan(loss1):
         loss += loss1
     if not torch.isnan(loss2):
@@ -564,7 +564,7 @@ min_train_ep = -1
 done = False
 
 if not train:
-    load_path = "../../models/EALSTM_err_est_"+str(k)+"_grouploss"
+    load_path = "../../models/EALSTM_err_est_"+str(k)+"_fullgrouploss"
     if use_gpu:
         lstm_net = lstm_net.cuda(0)
     pretrain_dict = torch.load(load_path)['state_dict']
@@ -620,7 +620,7 @@ else:
                 outputs = outputs.cuda()
                 targets = targets.cuda()
 
-            loss = boundedGroupLoss(outputs,targets)
+            loss = boundedGroupLossFull(outputs,targets)
 
             #backward
             if torch.is_tensor(loss):
@@ -652,7 +652,7 @@ else:
             ep_since_min = 0
             min_train_rmse = avg_loss
             print("model saved")
-            save_path = "../../models/EALSTM_err_est_"+str(k)+"_grouploss"
+            save_path = "../../models/EALSTM_err_est_"+str(k)+"_fullgrouploss"
             saveModel(lstm_net.state_dict(), optimizer.state_dict(), save_path)
         else:
             ep_since_min += 1
@@ -660,7 +660,7 @@ else:
             print("training complete")
             break
         # if epoch % 10 is 0:
-        if avg_loss == 0 and epoch > targ_ep:
+        if avg_loss < 0 and epoch > targ_ep:
             print("training complete")
             break
 
@@ -747,7 +747,7 @@ for targ_ct, target_id in enumerate(test_lakes): #for each target lake
             print("missed obs?")
 
 # final_output_df.to_feather("../../results/err_est_outputs_225hid_EALSTM_fold"+str(k)+".feather")
-final_output_df.to_feather("../../results/err_est_outputs_072921_EALSTMgrouploss_fold"+str(k)+".feather")
+final_output_df.to_feather("../../results/err_est_outputs_072921_EALSTMfullgrouploss_fold"+str(k)+".feather")
 save_path = "../../models/EALSTM_fold"+str(k)+"_grouploss"
 saveModel(lstm_net.state_dict(), optimizer.state_dict(), save_path)
 print("saved to ",save_path)
