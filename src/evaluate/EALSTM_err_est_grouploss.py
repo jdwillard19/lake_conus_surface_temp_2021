@@ -635,8 +635,8 @@ else:
                 optimizer.zero_grad()
                 avg_loss += loss
                 batches_done += 1
-            else:
-                print("NO LOSS?")
+            # else:
+                # print("NO LOSS?")
 
         #check for convergence
         if batches_done > 0:
