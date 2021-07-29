@@ -10,6 +10,7 @@ site_ids = metadata['site_id'].values
 sites = []
 rmses = []
 final_df = pd.DataFrame()
+rmse_per_site = np.empty((len(site_ids)))
 def calc_rmse(predictions, targets):
     return np.sqrt(((predictions - targets) ** 2).mean()) 
 for site_ct,site_id in enumerate(site_ids):
