@@ -66,7 +66,7 @@ save = True
 grad_clip = 1.0 #how much to clip the gradient 2-norm in training
 dropout = 0.
 num_layers = 1
-n_hidden = 256
+n_hidden = 512
 lambda1 = 0.000
 patience = 100
 
@@ -490,7 +490,7 @@ def boundedGroupLoss(output, y):
     if loss3 > targ_rmse:
         loss += loss3
     if loss4 > targ_rmse:
-        loss += loss4
+        loss += loss4*2
 
     return loss
     # loss = (output - y).abs_()
@@ -507,7 +507,7 @@ if use_gpu:
 
 #define loss and optimizer
 mse_criterion = nn.MSELoss()
-optimizer = optim.Adam(lstm_net.parameters(), lr=.005)#, weight_decay=0.01)
+optimizer = optim.Adam(lstm_net.parameters(), lr=.001)#, weight_decay=0.01)
 
 #training loop
 
@@ -585,26 +585,30 @@ else:
             #backward
             if torch.is_tensor(loss):
                 loss.backward(retain_graph=False)
-            if grad_clip > 0:
-                clip_grad_norm_(lstm_net.parameters(), grad_clip, norm_type=2)
+                if grad_clip > 0:
+                    clip_grad_norm_(lstm_net.parameters(), grad_clip, norm_type=2)
 
-            #optimize
-            optimizer.step()
+                #optimize
+                optimizer.step()
 
-            #zero the parameter gradients
-            optimizer.zero_grad()
-            avg_loss += loss
-            batches_done += 1
+                #zero the parameter gradients
+                optimizer.zero_grad()
+                avg_loss += loss
+                batches_done += 1
+            else:
+                print("NO LOSS?")
 
         #check for convergence
-        avg_loss = avg_loss / batches_done
-        train_avg_loss = avg_loss
+        if batches_done > 0:
+            avg_loss = avg_loss / batches_done
+        else:
+            print("no batches with loss?")
         # if verbose and epoch %100 is 0:
 
 
         if verbose:
             print("train rmse loss=", avg_loss)
-        if avg_loss < min_train_rmse:
+        if avg_loss < min_train_rmse and torch.is_tensor(avg_loss):
             ep_since_min = 0
             min_train_rmse = avg_loss
             print("model saved")
@@ -703,7 +707,7 @@ for targ_ct, target_id in enumerate(test_lakes): #for each target lake
             print("missed obs?")
 
 # final_output_df.to_feather("../../results/err_est_outputs_225hid_EALSTM_fold"+str(k)+".feather")
-final_output_df.to_feather("../../results/err_est_outputs_072621_EALSTMgrouploss_fold"+str(k)+".feather")
+final_output_df.to_feather("../../results/err_est_outputs_072921_EALSTMgrouploss_fold"+str(k)+".feather")
 save_path = "../../models/EALSTM_fold"+str(k)+"_grouploss"
 saveModel(lstm_net.state_dict(), optimizer.state_dict(), save_path)
 print("saved to ",save_path)
