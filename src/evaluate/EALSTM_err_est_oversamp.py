@@ -66,7 +66,7 @@ save = True
 grad_clip = 1.0 #how much to clip the gradient 2-norm in training
 dropout = 0.
 num_layers = 1
-n_hidden = 512
+n_hidden = 256
 lambda1 = 0.000
 patience = 100
 
@@ -125,15 +125,8 @@ targ_rmse = hp[(hp['fold']+1)==k]['trn_rmse'].values[0]
 lakenames = metadata[metadata['cluster_id']!=k]['site_id'].values
 test_lakes = metadata[metadata['cluster_id']==k]['site_id'].values
 ep_arr = []   
-if not os.path.exists("./ealstm_trn_data_072621_5fold_k"+str(k)+".npy"):
-    (trn_data, _) = buildLakeDataForRNN_multilakemodel_conus(lakenames,\
-                                                    seq_length, n_total_feats,\
-                                                    win_shift = win_shift, begin_loss_ind = begin_loss_ind,\
-                                                    static_feats=True,n_static_feats = 4,verbose=True) 
 
-    np.save("ealstm_trn_data_072621_5fold_k"+str(k)+".npy",trn_data)
-else:
-    trn_data = torch.from_numpy(np.load("ealstm_trn_data_072621_5fold_k"+str(k)+".npy"))
+trn_data = torch.from_numpy(np.load("ealstm_trn_data_072621_hotaug_k"+str(k)+".npy"))
 
 
 
@@ -411,7 +404,7 @@ class Model(nn.Module):
             -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
         """Run forward pass through the model.
         Parameters
-        ----------c
+        ----------
         x_d : torch.Tensor
             Tensor containing the dynamic input features of shape [batch, seq_length, n_features]
         x_s : torch.Tensor, optional
@@ -454,91 +447,6 @@ class Model(nn.Module):
 # lstm_net = myLSTM_Net(n_total_feats, n_hidden, batch_size)
 lstm_net = Model(input_size_dyn=n_features,input_size_stat=n_static_feats,hidden_size=n_hidden)
 
-def boundedGroupLoss(output, y):
-    loss_outputs = outputs[:,begin_loss_ind:]
-    loss_targets = targets[:,begin_loss_ind:].cpu()
-
-    loss_targets1 = loss_targets[np.where(loss_targets <= 10)]
-    loss_outputs1 = loss_outputs[np.where(loss_targets <= 10)]
-    loss_targets2 = loss_targets[np.where((loss_targets > 10)&(loss_targets <= 20))]
-    loss_outputs2 = loss_outputs[np.where((loss_targets > 10)&(loss_targets <= 20))]
-    loss_targets3 = loss_targets[np.where((loss_targets > 20)&(loss_targets <= 30))]
-    loss_outputs3 = loss_outputs[np.where((loss_targets > 20)&(loss_targets <= 30))]
-    loss_targets4 = loss_targets[np.where((loss_targets > 30)&(loss_targets <= 40))]
-    loss_outputs4 = loss_outputs[np.where((loss_targets > 30)&(loss_targets <= 40))]
-
-
-    loss_targets1 = loss_targets1.cuda()
-    loss_targets2 = loss_targets2.cuda()
-    loss_targets3 = loss_targets3.cuda()
-    loss_targets4 = loss_targets4.cuda()
-
-    loss = 0
-
-    loss1 = mse_criterion(loss_outputs1, loss_targets1)
-    loss2 = mse_criterion(loss_outputs2, loss_targets2)
-    loss3 = mse_criterion(loss_outputs3, loss_targets3)
-    loss4 = mse_criterion(loss_outputs4, loss_targets4)
-    print("loss 1: ", loss1)
-    print("loss 2: ", loss2)
-    print("loss 3: ", loss3)
-    print("loss 4: ", loss4)
-    if loss1 > targ_rmse:
-        loss += loss1
-    if loss2 > targ_rmse:
-        loss += loss2
-    if loss3 > targ_rmse:
-        loss += loss3
-    if loss4 > targ_rmse:
-        loss += loss4*50
-
-    return loss
-
-def boundedGroupLossFull(output, y):
-    loss_outputs = outputs[:,begin_loss_ind:]
-    loss_targets = targets[:,begin_loss_ind:].cpu()
-
-    loss_targets1 = loss_targets[np.where(loss_targets <= 10)]
-    loss_outputs1 = loss_outputs[np.where(loss_targets <= 10)]
-    loss_targets2 = loss_targets[np.where((loss_targets > 10)&(loss_targets <= 20))]
-    loss_outputs2 = loss_outputs[np.where((loss_targets > 10)&(loss_targets <= 20))]
-    loss_targets3 = loss_targets[np.where((loss_targets > 20)&(loss_targets <= 30))]
-    loss_outputs3 = loss_outputs[np.where((loss_targets > 20)&(loss_targets <= 30))]
-    loss_targets4 = loss_targets[np.where((loss_targets > 30)&(loss_targets <= 40))]
-    loss_outputs4 = loss_outputs[np.where((loss_targets > 30)&(loss_targets <= 40))]
-
-
-    loss_targets1 = loss_targets1.cuda()
-    loss_targets2 = loss_targets2.cuda()
-    loss_targets3 = loss_targets3.cuda()
-    loss_targets4 = loss_targets4.cuda()
-
-    loss = 0
-
-    loss1 = mse_criterion(loss_outputs1, loss_targets1)
-    loss2 = mse_criterion(loss_outputs2, loss_targets2)
-    loss3 = mse_criterion(loss_outputs3, loss_targets3)
-    loss4 = mse_criterion(loss_outputs4, loss_targets4)
-    # print("loss 1: ", loss1)
-    # print("loss 2: ", loss2)
-    # print("loss 3: ", loss3)
-    # print("loss 4: ", loss4)
-    if not torch.isnan(loss1):
-        loss += loss1
-    if not torch.isnan(loss2):
-        loss += loss2
-    if not torch.isnan(loss3):
-        loss += loss3
-    if not torch.isnan(loss4):
-        loss += loss4*2
-
-    return loss
-    # loss = (output - y).abs_()
-    # for j in range(loss.size(0)):
-        # if loss[j].mean() > threshold:
-            # loss[j] = loss[j].add_(1).log_().mul_(50)
-    # return loss.mean()
-
 #tell model to use GPU if needed
 if use_gpu:
     lstm_net = lstm_net.cuda()
@@ -548,7 +456,7 @@ if use_gpu:
 
 #define loss and optimizer
 mse_criterion = nn.MSELoss()
-optimizer = optim.Adam(lstm_net.parameters(), lr=.001)#, weight_decay=0.01)
+optimizer = optim.Adam(lstm_net.parameters(), lr=.005)#, weight_decay=0.01)
 
 #training loop
 
@@ -565,7 +473,7 @@ min_train_ep = -1
 done = False
 
 if not train:
-    load_path = "../../models/EALSTM_err_est_"+str(k)+"_grouploss"
+    load_path = "../../models/EALSTM_err_est_"+str(k)+"_newparam_oversamp"
     if use_gpu:
         lstm_net = lstm_net.cuda(0)
     pretrain_dict = torch.load(load_path)['state_dict']
@@ -616,44 +524,50 @@ else:
             outputs, h_state, _ = lstm_net(inputs[:,:,n_static_feats:], inputs[:,0,:n_static_feats])
             outputs = outputs.view(outputs.size()[0],-1)
 
+            #calculate losses
+            reg1_loss = 0
+            if lambda1 > 0:
+                reg1_loss = calculate_l1_loss(lstm_net)
+
+
+            loss_outputs = outputs[:,begin_loss_ind:]
+            loss_targets = targets[:,begin_loss_ind:].cpu()
+
+
+            #get indices to calculate loss
+            loss_indices = np.array(np.isfinite(loss_targets.cpu()), dtype='bool_')
 
             if use_gpu:
-                outputs = outputs.cuda()
-                targets = targets.cuda()
-
-            loss = boundedGroupLoss(outputs,targets)
-
+                loss_outputs = loss_outputs.cuda()
+                loss_targets = loss_targets.cuda()
+            loss = mse_criterion(loss_outputs[loss_indices], loss_targets[loss_indices]) + lambda1*reg1_loss 
             #backward
-            if torch.is_tensor(loss):
-                loss.backward(retain_graph=False)
-                if grad_clip > 0:
-                    clip_grad_norm_(lstm_net.parameters(), grad_clip, norm_type=2)
 
-                #optimize
-                optimizer.step()
+            loss.backward(retain_graph=False)
+            if grad_clip > 0:
+                clip_grad_norm_(lstm_net.parameters(), grad_clip, norm_type=2)
 
-                #zero the parameter gradients
-                optimizer.zero_grad()
-                avg_loss += loss
-                batches_done += 1
-            # else:
-                # print("NO LOSS?")
+            #optimize
+            optimizer.step()
+
+            #zero the parameter gradients
+            optimizer.zero_grad()
+            avg_loss += loss
+            batches_done += 1
 
         #check for convergence
-        if batches_done > 0:
-            avg_loss = avg_loss / batches_done
-        else:
-            print("no batches with loss?")
+        avg_loss = avg_loss / batches_done
+        train_avg_loss = avg_loss
         # if verbose and epoch %100 is 0:
 
 
         if verbose:
             print("train rmse loss=", avg_loss)
-        if avg_loss < min_train_rmse and torch.is_tensor(avg_loss):
+        if avg_loss < min_train_rmse:
             ep_since_min = 0
             min_train_rmse = avg_loss
             print("model saved")
-            save_path = "../../models/EALSTM_err_est_"+str(k)+"_grouploss"
+            save_path = "../../models/EALSTM_err_est_"+str(k)+"_newparam_oversamp"
             saveModel(lstm_net.state_dict(), optimizer.state_dict(), save_path)
         else:
             ep_since_min += 1
@@ -661,7 +575,7 @@ else:
             print("training complete")
             break
         # if epoch % 10 is 0:
-        if avg_loss == 0 and epoch > targ_ep:
+        if avg_loss < targ_rmse and epoch > targ_ep:
             print("training complete")
             break
 
@@ -748,7 +662,7 @@ for targ_ct, target_id in enumerate(test_lakes): #for each target lake
             print("missed obs?")
 
 # final_output_df.to_feather("../../results/err_est_outputs_225hid_EALSTM_fold"+str(k)+".feather")
-final_output_df.to_feather("../../results/err_est_outputs_072921_EALSTMgrouploss_fold"+str(k)+".feather")
-save_path = "../../models/EALSTM_fold"+str(k)+"_grouploss"
+final_output_df.to_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp.feather")
+save_path = "../../models/EALSTM_fold"+str(k)+"_newparam_oversamp"
 saveModel(lstm_net.state_dict(), optimizer.state_dict(), save_path)
 print("saved to ",save_path)
