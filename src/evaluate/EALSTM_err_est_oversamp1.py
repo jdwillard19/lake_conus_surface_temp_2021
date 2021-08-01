@@ -81,7 +81,7 @@ metadata = pd.read_csv("../../metadata/lake_metadata.csv")
 #trim to observed lakes
 metadata = metadata[metadata['num_obs'] > 0]
 
-obs = pd.read_csv("../../data/raw/obs/lake_surface_temp_obs.csv")
+# obs = pd.read_csv("../../data/raw/obs/lake_surface_temp_obs.csv")
 k = int(sys.argv[1])
 ###############################
 # data preprocess
@@ -126,7 +126,7 @@ lakenames = metadata[metadata['cluster_id']!=k]['site_id'].values
 test_lakes = metadata[metadata['cluster_id']==k]['site_id'].values
 ep_arr = []   
 
-trn_data = torch.from_numpy(np.load("ealstm_trn_data_072621_hotaug_k"+str(k)+".npy"))
+trn_data = torch.from_numpy(np.load("ealstm_trn_data_oversamp1_k"+str(k)+".npy"))
 
 pdb.set_trace()
 
@@ -658,8 +658,8 @@ for targ_ct, target_id in enumerate(test_lakes): #for each target lake
         final_output_df = pd.concat([final_output_df, output_df],ignore_index=True)
         mat_rmse = np.sqrt(((loss_output - loss_label) ** 2).mean())
         print("globLSTM rmse(",loss_output.shape[0]," obs)=", mat_rmse)
-        if output_df.shape[0] != obs[obs['site_id']==target_id].shape[0]:
-            print("missed obs?")
+        # if output_df.shape[0] != obs[obs['site_id']==target_id].shape[0]:
+        #     print("missed obs?")
 
 # final_output_df.to_feather("../../results/err_est_outputs_225hid_EALSTM_fold"+str(k)+".feather")
 final_output_df.to_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp1.feather")

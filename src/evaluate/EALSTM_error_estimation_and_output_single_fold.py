@@ -454,15 +454,6 @@ class Model(nn.Module):
 # lstm_net = myLSTM_Net(n_total_feats, n_hidden, batch_size)
 lstm_net = Model(input_size_dyn=n_features,input_size_stat=n_static_feats,hidden_size=n_hidden)
 
-def myLoss(output, y):
-    loss_outputs = outputs[:,begin_loss_ind:]
-    loss_targets = targets[:,begin_loss_ind:].cpu()
-    loss_indices = np.array(np.isfinite(loss_targets.cpu()), dtype='bool_')
-    loss = (output - y).abs_()
-    for j in range(loss.size(0)):
-        if loss[j].mean() > threshold:
-            loss[j] = loss[j].add_(1).log_().mul_(50)
-    return loss.mean()
 #tell model to use GPU if needed
 if use_gpu:
     lstm_net = lstm_net.cuda()
@@ -499,7 +490,6 @@ if not train:
     lstm_net.load_state_dict(pretrain_dict)
 
 else:
-
     for epoch in range(n_eps):
         if done:
             break
@@ -551,18 +541,12 @@ else:
 
 
             #get indices to calculate loss
-            # loss_indices = np.array(np.isfinite(loss_targets.cpu()), dtype='bool_')
             loss_indices = np.array(np.isfinite(loss_targets.cpu()), dtype='bool_')
-            pdb.set_trace()
+
             if use_gpu:
                 loss_outputs = loss_outputs.cuda()
                 loss_targets = loss_targets.cuda()
-
-            loss = mse_criterion(loss_outputs[loss_indices1], loss_targets[loss_indices1]) + 
-                 + mse_criterion(loss_outputs[loss_indices2], loss_targets[loss_indices2]) +
-                 mse_criterion(loss_outputs[loss_indices3], loss_targets[loss_indices3])+
-                 mse_criterion(loss_outputs[loss_indices4], loss_targets[loss_indices4])
-
+            loss = mse_criterion(loss_outputs[loss_indices], loss_targets[loss_indices]) + lambda1*reg1_loss 
             #backward
 
             loss.backward(retain_graph=False)
