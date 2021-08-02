@@ -28,13 +28,19 @@ for k in folds_arr: #CHANGE DIS----------------
 	# gb_df = pd.read_feather("../../results/xgb_conus_022221_fold"+str(k)+".feather")
 
 	# ea_df = pd.read_feather("../../results/err_est_outputs_2layer128hid_2.4rmse_EALSTM_fold"+str(k)+".feather")
-	ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTMgrouploss_fold"+str(k)+".feather")
+	# ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTMgrouploss_fold"+str(k)+".feather")
+	ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+".feather")
+	# ea_df_gl = pd.read_feather("../../results/err_est_outputs_072621_EALSTMgrouploss_fold"+str(k)+".feather")
+	# ea_df_fgl = pd.read_feather("../../results/err_est_outputs_072921_EALSTMfullgrouploss_fold"+str(k)+".feather")
+	
+	# ea_df_os1 = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp1.feather")
 
 	# ea_df = pd.read_feather("../../results/err_est_outputs_070221_EALSTM_fold"+str(k)+".feather")
 	# pdb.set_trace()
 	# ea_df.drop(ea_df[ea_df['Date'] < gb_date_df['Date'].min()].index,axis=0,inplace=True)
 	# assert ea_df.shape[0] == lm_df.shape[0]
 	ea_df = pd.merge(ea_df,lm_df,left_on=['Date','site_id'],right_on=['date','site_id'],how='left')
+	# ea_df = pd.merge(ea_df,ea_df_os1,left_on=['Date','site_id'],right_on=['Date','site_id'],how='left')
 	combined_ea = combined_ea.append(ea_df)
 	combined_ea.reset_index(inplace=True,drop=True)
 	# combined_lm = combined_lm.append(lm_df)
@@ -43,23 +49,28 @@ for k in folds_arr: #CHANGE DIS----------------
 combined_df['Date'] = combined_ea['Date']
 combined_df['site_id'] = combined_ea['site_id']
 combined_df['wtemp_predicted-ealstm'] = combined_ea['wtemp_predicted']
+# combined_df['wtemp_predicted-ealstm_os1'] = combined_ea['wtemp_predicted']
 combined_df['wtemp_predicted-linear_model'] = combined_ea['temp_pred_lm']
 # combined_df['wtemp_actual'] = combined_ea['wtemp_actual']
 combined_df['wtemp_actual'] = combined_ea['wtemp_actual']
 combined_df.reset_index(inplace=True)
-combined_df.to_feather("../../results/all_outputs_and_obs_072921_wGroup.feather")
-combined_df.to_csv("../../results/all_outputs_and_obs_072921_wGroup.csv")
+combined_df.to_feather("../../results/all_outputs_and_obs_072921.feather")
+combined_df.to_csv("../../results/all_outputs_and_obs_072921.csv")
 
-combined_df = pd.read_feather("../../results/all_outputs_and_obs_072921_wGroup.feather")
+combined_df = pd.read_feather("../../results/all_outputs_and_obs_072921.feather")
+pdb.set_trace()
 
 per_site_df = pd.DataFrame(columns=['site_id','n_obs','rmse_ealstm','rmse_lm'])
 # per_site_df = pd.DataFrame(columns=['site_id','n_obs','rmse_ealstm','rmse_xgboost'])
 for i,site_id in enumerate(site_ids):
 	print(i)
-	per_site_res = combined_df[combined_df['site_id'] == site_id]
+	per_site_res = combined_df[(combined_df['site_id'] == site_id)]
+	# per_site_res2 = per_site_res[per_site_res['wtemp_actual'] > 32]
 	site_df = pd.DataFrame(columns=['site_id','n_obs','rmse_ealstm','rmse_lm'])
 	# site_df = pd.DataFrame(columns=['site_id','n_obs','rmse_ealstm','rmse_xgboost'])
 	site_df['rmse_ealstm'] = [np.sqrt(((per_site_res['wtemp_predicted-ealstm'] - per_site_res['wtemp_actual']) ** 2).mean())]
+	# site_df['rmse_ealstm_gt32'] = [np.sqrt(((per_site_res2['wtemp_predicted-ealstm'] - per_site_res2['wtemp_actual']) ** 2).mean())]
+	# site_df['rmse_ealstm_os1'] = [np.sqrt(((per_site_res['wtemp_predicted-ealstm'] - per_site_res['wtemp_actual']) ** 2).mean())]
 	site_df['rmse_lm'] = [np.sqrt(((per_site_res['wtemp_predicted-linear_model'] - per_site_res['wtemp_actual']) ** 2).mean())]
 	if np.isnan(site_df['rmse_ealstm']).any():
 		continue
