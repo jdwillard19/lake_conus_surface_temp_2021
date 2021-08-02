@@ -14,6 +14,7 @@ for k in k_arr:
 	#remove non-hot obs in augment
 	ind3 = np.where(augment[:,:,-1] < 32)
 	# augment[ind3] = np.nan
+	pdb.set_trace()
 	augment[ind3,-1] = np.nan
 	data = np.concatenate((data,augment), axis=0)
 	pdb.set_trace()
