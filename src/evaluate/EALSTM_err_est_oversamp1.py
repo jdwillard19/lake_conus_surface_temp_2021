@@ -540,6 +540,7 @@ else:
                 loss_outputs = loss_outputs.cuda()
                 loss_targets = loss_targets.cuda()
             loss = mse_criterion(loss_outputs[loss_indices], loss_targets[loss_indices]) + lambda1*reg1_loss 
+            print("loss: ", loss)
             #backward
 
             loss.backward(retain_graph=False)
