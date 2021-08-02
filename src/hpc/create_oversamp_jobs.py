@@ -54,7 +54,7 @@ for name in folds_arr:
                               #SBATCH --mail-user=willa099@umn.edu\n\
                               #SBATCH --output=EALSTM_%s_oversamp2.out\n\
                               #SBATCH --error=EALSTM_%s_oversamp2.err\n\
-                              #SBATCH --gres=gpu:k40:2\n#SBATCH -p k40"%(l,l)
+                              #SBATCH --gres=gpu:k40:1\n#SBATCH -p k40"%(l,l)
     script = "source /home/kumarv/willa099/takeme_evaluate.sh\n" #cd to directory with training script
     script2 = "python EALSTM_err_est_oversamp2.py %s"%(l)
     all= "\n".join([header,script,script2])
@@ -82,7 +82,7 @@ for name in folds_arr:
                               #SBATCH --mail-user=willa099@umn.edu\n\
                               #SBATCH --output=EALSTM_%s_oversamp3.out\n\
                               #SBATCH --error=EALSTM_%s_oversamp3.err\n\
-                              #SBATCH --gres=gpu:k40:2\n#SBATCH -p k40"%(l,l)
+                              #SBATCH --gres=gpu:k40:1\n#SBATCH -p k40"%(l,l)
     script = "source /home/kumarv/willa099/takeme_evaluate.sh\n" #cd to directory with training script
     script2 = "python EALSTM_err_est_oversamp3.py %s"%(l)
     all= "\n".join([header,script,script2])
