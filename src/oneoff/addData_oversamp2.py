@@ -16,7 +16,7 @@ for k in k_arr:
 	augment[ind3] = np.nan
 
 	augment[:,:,:-1] = augment[:,:,:-1] + (.1**.5)*np.random.randn(augment.shape[0],augment.shape[1],augment.shape[2]-1)
-	augment[:,:,-1] = augment[:,:,-1] + np.random.randn(augment.shape[0],augment.shape[1],augment.shape[2]-1)
+	augment[:,:,-1] = augment[:,:,-1] + np.random.randn(augment.shape[0],augment.shape[1])
 
 	data = np.concatenate((data,augment), axis=0)
 	np.save("../evaluate/ealstm_trn_data_oversamp2_k"+str(int(k))+".npy",data)
