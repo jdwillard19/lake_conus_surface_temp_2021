@@ -128,7 +128,6 @@ ep_arr = []
 
 trn_data = torch.from_numpy(np.load("ealstm_trn_data_oversamp1_k"+str(k)+".npy"))
 print("loaded trn data")
-pdb.set_trace()
 
 print("train_data size: ",trn_data.size())
 print(len(lakenames), " lakes of data")
@@ -540,7 +539,6 @@ else:
             if use_gpu:
                 loss_outputs = loss_outputs.cuda()
                 loss_targets = loss_targets.cuda()
-            pdb.set_trace()
             loss = mse_criterion(loss_outputs[loss_indices], loss_targets[loss_indices]) + 1e-10
             print("loss: ", loss)
             #backward
