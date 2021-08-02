@@ -540,7 +540,7 @@ else:
                 loss_outputs = loss_outputs.cuda()
                 loss_targets = loss_targets.cuda()
             pdb.set_trace()
-            loss = mse_criterion(loss_outputs[loss_indices], loss_targets[loss_indices]) 
+            loss = mse_criterion(loss_outputs[loss_indices], loss_targets[loss_indices]) + 1e-10
             print("loss: ", loss)
             #backward
 
