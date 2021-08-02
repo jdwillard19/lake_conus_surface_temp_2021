@@ -13,7 +13,7 @@ for k in k_arr:
 
 	#remove non-hot obs in augment
 	ind3 = np.where(augment[:,:,-1] < 32)
-	augment[ind3] = np.nan
+	augment[ind3[0],ind3[1],-1] = np.nan
 
 	augment[:,:,:-1] = augment[:,:,:-1] + (.1**.5)*np.random.randn(augment.shape[0],augment.shape[1],augment.shape[2]-1)
 	augment[:,:,-1] = augment[:,:,-1] + np.random.randn(augment.shape[0],augment.shape[1])
