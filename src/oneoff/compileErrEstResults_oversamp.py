@@ -29,8 +29,12 @@ for k in folds_arr: #CHANGE DIS----------------
 
 	# ea_df = pd.read_feather("../../results/err_est_outputs_2layer128hid_2.4rmse_EALSTM_fold"+str(k)+".feather")
 	# ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTMgrouploss_fold"+str(k)+".feather")
-	ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+".feather")
-	# ea_df_gl = pd.read_feather("../../results/err_est_outputs_072621_EALSTMgrouploss_fold"+str(k)+".feather")
+	
+	# OG
+	# ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+".feather")
+	
+	# group loss
+	ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTMgrouploss_fold"+str(k)+".feather")
 	# ea_df_fgl = pd.read_feather("../../results/err_est_outputs_072921_EALSTMfullgrouploss_fold"+str(k)+".feather")
 	
 	# ea_df_os1 = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp1.feather")
