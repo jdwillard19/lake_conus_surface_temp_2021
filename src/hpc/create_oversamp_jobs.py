@@ -90,8 +90,7 @@ for name in folds_arr:
     with open('../../hpc/job_{}_foldEAoversamp3.sh'.format(l), 'w') as output:
         output.write(all)
 
-sbatch = ""
-ct = 0
+
 
 compile_job_path= '../../hpc/sbatch_script_err_est_ea_oversamp3.sh'
 with open(compile_job_path, 'w') as output2:
