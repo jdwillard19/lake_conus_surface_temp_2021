@@ -16,4 +16,5 @@ for k in k_arr:
 	augment[ind3] = np.nan
 
 	data = np.concatenate((data,augment), axis=0)
+	pdb.set_trace()
 	np.save("../evaluate/ealstm_trn_data_oversamp1_k"+str(int(k))+".npy",data)
