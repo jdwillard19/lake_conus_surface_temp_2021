@@ -63,7 +63,7 @@ n_static_feats = 4
 n_total_feats =n_static_feats+n_features
 win_shift = 175 #how much to slide the window on training set each time
 save = True 
-grad_clip = 1.0 #how much to clip the gradient 2-norm in training
+grad_clip = .5 #how much to clip the gradient 2-norm in training
 dropout = 0.
 num_layers = 1
 n_hidden = 256
@@ -455,7 +455,7 @@ if use_gpu:
 
 #define loss and optimizer
 mse_criterion = nn.MSELoss()
-optimizer = optim.Adam(lstm_net.parameters(), lr=.005)#, weight_decay=0.01)
+optimizer = optim.Adam(lstm_net.parameters(), lr=.001)#, weight_decay=0.01)
 
 #training loop
 
