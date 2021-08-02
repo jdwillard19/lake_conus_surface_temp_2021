@@ -58,6 +58,13 @@ combined_df.to_feather("../../results/all_outputs_and_obs_072921.feather")
 combined_df.to_csv("../../results/all_outputs_and_obs_072921.csv")
 
 combined_df = pd.read_feather("../../results/all_outputs_and_obs_072921.feather")
+print(">32 RMSE")
+print(np.sqrt(((combined_df[combined_df['wtemp_actual']>32]['wtemp_predicted-ealstm'] - combined_df[combined_df['wtemp_actual']>32]['wtemp_actual'])**2).mean()))
+print(">33 RMSE")
+print(np.sqrt(((combined_df[combined_df['wtemp_actual']>33]['wtemp_predicted-ealstm'] - combined_df[combined_df['wtemp_actual']>33]['wtemp_actual'])**2).mean()))
+print(">34 RMSE")
+print(np.sqrt(((combined_df[combined_df['wtemp_actual']>34]['wtemp_predicted-ealstm'] - combined_df[combined_df['wtemp_actual']>34]['wtemp_actual'])**2).mean()))
+
 pdb.set_trace()
 
 per_site_df = pd.DataFrame(columns=['site_id','n_obs','rmse_ealstm','rmse_lm'])
@@ -78,6 +85,12 @@ for i,site_id in enumerate(site_ids):
 	site_df['n_obs'] = [per_site_res.shape[0]]
 	per_site_df = per_site_df.append(site_df)
 
+print("median RMSE")
+print(per_site_df['rmse_ealstm'].quantile(.5))
+print("Q1 RMSE")
+print(per_site_df['rmse_ealstm'].quantile(.25))
+print("Q2 RMSE")
+print(per_site_df['rmse_ealstm'].quantile(.75)
 per_site_df.reset_index(inplace=True)
-per_site_df.to_csv("../../results/err_per_site_wGroup_072921.csv")
+per_site_df.to_csv("../../results/err_per_site_072921.csv")
 # per_site_df.to_feather("../../results/err_per_site_wBachmann_071121.feather")
