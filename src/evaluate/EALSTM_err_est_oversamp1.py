@@ -512,7 +512,7 @@ else:
             inputs = data[0].float()
             targets = data[1].float()
             targets = targets[:, begin_loss_ind:]
-
+            assert torch.isfinite(inputs).all()
 
             #cuda commands
             if(use_gpu):
