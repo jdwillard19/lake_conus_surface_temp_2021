@@ -46,10 +46,10 @@ for k in folds_arr: #CHANGE DIS----------------
 	# ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp2.feather")
 # 
 	#oversamp3
-	# ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp3.feather")
+	ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp3.feather")
 
 	#oversamp4
-	ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp4.feather")
+	# ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp4.feather")
 
 	# ea_df = pd.read_feather("../../results/err_est_outputs_070221_EALSTM_fold"+str(k)+".feather")
 	# pdb.set_trace()
@@ -110,3 +110,4 @@ print(per_site_df['rmse_ealstm'].quantile(.75))
 per_site_df.reset_index(inplace=True)
 per_site_df.to_csv("../../results/err_per_site_072921.csv")
 # per_site_df.to_feather("../../results/err_per_site_wBachmann_071121.feather")
+print("(3)")
