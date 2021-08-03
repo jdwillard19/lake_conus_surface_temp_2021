@@ -40,7 +40,10 @@ for k in folds_arr: #CHANGE DIS----------------
 	# ea_df = pd.read_feather("../../results/err_est_outputs_072921_EALSTMfullgrouploss_fold"+str(k)+".feather")
 	
 	# oversamp1
-	ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp1.feather")
+	# ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp1.feather")
+
+	# oversamp2
+	ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp2.feather")
 
 	# ea_df = pd.read_feather("../../results/err_est_outputs_070221_EALSTM_fold"+str(k)+".feather")
 	# pdb.set_trace()
