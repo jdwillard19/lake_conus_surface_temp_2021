@@ -27,7 +27,7 @@ for k in folds_arr: #CHANGE DIS----------------
 	lm_df = pd.read_feather("../../results/bachmann_071121_fold"+str(k)+".feather")
 	# gb_df = pd.read_feather("../../results/xgb_conus_022221_fold"+str(k)+".feather")
 
-	# ea_df = pd.read_feather("../../results/err_est_outputs_2layer128hid_2.4rmse_EALSTM_fold"+str(k)+".feather")
+	# ea_df = pd.read_feather("../../results/err_est_outputs_2layer128h(w .1/1 variance noise, > 33, 10x)id_2.4rmse_EALSTM_fold"+str(k)+".feather")
 	# ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTMgrouploss_fold"+str(k)+".feather")
 	
 	# OG
