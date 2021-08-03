@@ -47,7 +47,7 @@ torch.autograd.set_detect_anomaly(True)
 verbose = True
 save = True
 test = True
-train = True
+train = False
 
 
 #####################3
