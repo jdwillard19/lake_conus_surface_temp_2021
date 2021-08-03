@@ -47,7 +47,7 @@ torch.set_printoptions(precision=10)
 verbose = True
 save = True
 test = True
-train = True
+train = False
 
 
 #####################3
