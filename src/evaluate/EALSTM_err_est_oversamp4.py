@@ -47,7 +47,7 @@ torch.set_printoptions(precision=10)
 verbose = True
 save = True
 test = True
-train = True
+train = False
 
 
 #####################3
@@ -577,6 +577,16 @@ else:
         if avg_loss < targ_rmse and epoch > targ_ep:
             print("training complete")
             break
+
+
+#load model
+
+load_path = "../../models/EALSTM_err_est_"+str(k)+"_newparam_oversamp4"
+pretrain_dict = torch.load(load_path)['state_dict']
+model_dict = lstm_net.state_dict()
+pretrain_dict = {key: v for key, v in pretrain_dict.items() if key in model_dict}
+model_dict.update(pretrain_dict)
+lstm_net.load_state_dict(pretrain_dict)
 
 #after training, do test predictions / error estimation
 for targ_ct, target_id in enumerate(test_lakes): #for each target lake
