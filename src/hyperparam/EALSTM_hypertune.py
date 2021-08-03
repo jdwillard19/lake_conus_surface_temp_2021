@@ -143,6 +143,7 @@ for hid_ct,n_hidden in enumerate(n_hid_arr):
             trn_data = torch.from_numpy(np.load("ealstm_trn_data_ofold"+str(og_k)+"_ifold"+str(k)+".npy"))
             tst_data = torch.from_numpy(np.load("ealstm_tst_data_ofold"+str(og_k)+"_ifold"+str(k)+".npy"))
 
+        pdb.set_trace()
         # sys.exit()
         # trn_data = torch.from_numpy(np.load("conus_trn_data_wStatic.npy"))
         # tst_data = torch.from_numpy(np.load("global_tst_data_wStatic.npy"))
