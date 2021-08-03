@@ -8,7 +8,7 @@ for k in k_arr:
 	data = np.load("../evaluate/ealstm_trn_data_072621_5fold_k"+str(int(k))+".npy")
 	ind1 = np.where(data[:,:,-1]>32)[0]
 	# augment = data[ind1,:,:]
-	augment = np.repeat(data[ind1,:,:],10,axis=0)
+	augment = np.repeat(data[ind1,:,:],20,axis=0)
 
 
 	#remove non-hot obs in augment
