@@ -37,7 +37,7 @@ for k in folds_arr: #CHANGE DIS----------------
 	# ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTMgrouploss_fold"+str(k)+".feather")
 
 	#full group loss (no threshold)
-	ea_df = pd.read_feather("../../results/err_est_outputs_072921_EALSTMfullgrouploss_fold"+str(k)+".feather")
+	# ea_df = pd.read_feather("../../results/err_est_outputs_072921_EALSTMfullgrouploss_fold"+str(k)+".feather")
 	
 	# oversamp1
 	# ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp1.feather")
@@ -46,7 +46,7 @@ for k in folds_arr: #CHANGE DIS----------------
 	# ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp2.feather")
 
 	#oversamp3
-	# ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp3.feather")
+	ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp3.feather")
 
 	#oversamp4
 	# ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp4.feather")
