@@ -222,7 +222,7 @@ for name in folds_arr:
     print(name)
     l = name
 
-    header = "#!/bin/bash -l\n#SBATCH --time=23:59:00\n#SBATCH --ntasks=8\n#SBATCH --mem=20g\n#SBATCH --mail-type=ALL\n#SBATCH --mail-user=willa099@umn.edu\n#SBATCH --output=EALSTM_%s_oversamp7.out\n#SBATCH --error=EALSTM_%s_oversamp7.err\n#SBATCH --gres=gpu:v100:1\n#SBATCH -p v100"%(l,l)
+    header = "#!/bin/bash -l\n#SBATCH --time=23:59:00\n#SBATCH --ntasks=8\n#SBATCH --mem=20g\n#SBATCH --mail-type=ALL\n#SBATCH --mail-user=willa099@umn.edu\n#SBATCH --output=EALSTM_%s_oversamp7.out\n#SBATCH --error=EALSTM_%s_oversamp7.err\n#SBATCH --gres=gpu:k40:1\n#SBATCH -p k40"%(l,l)
     script = "source /home/kumarv/willa099/takeme_evaluate.sh\n" #cd to directory with training script
     script2 = "python EALSTM_err_est_oversamp7.py %s"%(l)
     all= "\n".join([header,script,script2])
@@ -247,7 +247,7 @@ for name in folds_arr:
     print(name)
     l = name
 
-    header = "#!/bin/bash -l\n#SBATCH --time=23:59:00\n#SBATCH --ntasks=8\n#SBATCH --mem=20g\n#SBATCH --mail-type=ALL\n#SBATCH --mail-user=willa099@umn.edu\n#SBATCH --output=EALSTM_%s_oversamp8.out\n#SBATCH --error=EALSTM_%s_oversamp8.err\n#SBATCH --gres=gpu:v100:1\n#SBATCH -p v100"%(l,l)
+    header = "#!/bin/bash -l\n#SBATCH --time=23:59:00\n#SBATCH --ntasks=8\n#SBATCH --mem=20g\n#SBATCH --mail-type=ALL\n#SBATCH --mail-user=willa099@umn.edu\n#SBATCH --output=EALSTM_%s_oversamp8.out\n#SBATCH --error=EALSTM_%s_oversamp8.err\n#SBATCH --gres=gpu:k40:1\n#SBATCH -p k40"%(l,l)
     script = "source /home/kumarv/willa099/takeme_evaluate.sh\n" #cd to directory with training script
     script2 = "python EALSTM_err_est_oversamp8.py %s"%(l)
     all= "\n".join([header,script,script2])
