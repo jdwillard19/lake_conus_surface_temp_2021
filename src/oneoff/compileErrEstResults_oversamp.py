@@ -41,7 +41,7 @@ for k in folds_arr: #CHANGE DIS----------------
 	
 	# oversamp1
 	# ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp1.feather")
-	ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp1b.feather")
+	# ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp1b.feather")
 
 	# oversamp2
 	# ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp2.feather")
@@ -52,7 +52,8 @@ for k in folds_arr: #CHANGE DIS----------------
 	#oversamp4
 	# ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp4.feather")
 
-	# ea_df = pd.read_feather("../../results/err_est_outputs_070221_EALSTM_fold"+str(k)+".feather")
+	#oversamp5
+	ea_df = pd.read_feather("../../results/err_est_outputs_070221_EALSTM_fold"+str(k)+"_oversamp5.feather")
 	# pdb.set_trace()
 	# ea_df.drop(ea_df[ea_df['Date'] < gb_date_df['Date'].min()].index,axis=0,inplace=True)
 	# assert ea_df.shape[0] == lm_df.shape[0]
