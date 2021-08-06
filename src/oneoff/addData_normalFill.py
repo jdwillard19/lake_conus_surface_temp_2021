@@ -31,32 +31,41 @@ for k in k_arr:
 
 	add_40 = (ydata[-1]+ydata[-2])/2 - hist[-2]
 	print("40: ",add_40)
-	to_add_arr = np.repeat(40,add_40)
-	vals = np.append(vals,to_add_arr)
+	ind40 = np.where((data[:,:,-1]>39)&(data[:,:,-1] <= 40))[0]
+	pdb.set_trace()
+	# to_add_arr = np.repeat(40,add_40)
+	# vals = np.append(vals,to_add_arr)
+
 	add_39 = (ydata[-2]+ydata[-3])/2 - hist[-3]
 	print("39: ",add_39)
 	to_add_arr = np.repeat(38.99,add_39)
 	vals = np.append(vals,to_add_arr)
+
 	add_38 = (ydata[-3]+ydata[-4])/2 - hist[-4]
 	print("38: ",add_38)
 	to_add_arr = np.repeat(37.99,add_38)
 	vals = np.append(vals,to_add_arr)
+
 	add_37 = (ydata[-4] + ydata[-5])/2 - hist[-5]
 	print("37: ",add_37)
 	to_add_arr = np.repeat(36.99,add_37)
 	vals = np.append(vals,to_add_arr)
+
 	add_36 = (ydata[-5]+ydata[-6])/2 - hist[-6]
 	print("36: ",add_36)
 	to_add_arr = np.repeat(35.99,add_36)
 	vals = np.append(vals,to_add_arr)
+
 	add_35 = (ydata[-6]+ydata[-7])/2 - hist[-6]
 	print("35: ",add_35)
 	to_add_arr = np.repeat(34.99,add_35)
 	vals = np.append(vals,to_add_arr)
+	
 	add_34 = (ydata[-7]+ydata[-8])/2 - hist[-7]
 	print("34: ",add_34)
 	to_add_arr = np.repeat(33.99,add_34)
 	vals = np.append(vals,to_add_arr)
+	
 	add_33 = (ydata[-8]+ydata[-9])/2 - hist[-8]
 	print("33: ",add_33)
 	to_add_arr = np.repeat(32.99,add_33)
