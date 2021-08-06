@@ -12,7 +12,6 @@ for k in k_arr:
 	data = np.load("../evaluate/ealstm_trn_data_072621_5fold_k"+str(int(k))+".npy")
 
 
-	pdb.set_trace()
 	vals = data[np.isfinite(data[:,:,-1])][:,-1]
 
 	mu, std = norm.fit(vals) 
