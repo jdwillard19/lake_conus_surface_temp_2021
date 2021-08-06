@@ -35,7 +35,7 @@ for k in k_arr:
 		new_data = data[np.append(ind40,np.random.choice(ind40,int(np.round(add_40)))),:,:]
 		augment = new_data
 	else:
-		augment = np.array((0,350,10))
+		augment = np.empty((0,350,10))
 
 	add_39 = (ydata[-2]+ydata[-3])/2 - hist[-3]
 	print("39: ",add_39)
