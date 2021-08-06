@@ -20,3 +20,6 @@ for k in k_arr:
 
 	data = np.concatenate((data,augment), axis=0)
 	np.save("../evaluate/ealstm_trn_data_oversamp8_k"+str(int(k))+".npy",data)
+
+
+	
