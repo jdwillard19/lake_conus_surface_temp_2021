@@ -9,7 +9,7 @@ for k in k_arr:
 
 
 	pdb.set_trace()
-	# vals = ['wtemp_actual'].values
+	vals = data[np.isfinite(data[:,:,-1])][:,-1]
 
 	mu, std = norm.fit(vals) 
 	nsize = vals.shape[0]
@@ -17,11 +17,8 @@ for k in k_arr:
 	# Plot the histogram.
 
 	hist, bins, _ = plt.hist(vals, bins=40, color='b', edgecolor='black')
-	plt.clf()
-	# Plot the PDF.
 	xmin, xmax = plt.xlim()
 
-	# changes here
 	p = norm.pdf(bins, mu, std)           
 	new_handler, = plt.plot(bins, p/p.sum() * nsize , 'r', linewidth=2)
 	# new_handler now contains a Line2D object
@@ -29,27 +26,35 @@ for k in k_arr:
 	xdata, ydata = new_handler.get_data()
 
 	add_40 = (ydata[-1]+ydata[-2])/2 - hist[-2]
+	print("40: ",add_40)
 	to_add_arr = np.repeat(40,add_40)
 	vals = np.append(vals,to_add_arr)
 	add_39 = (ydata[-2]+ydata[-3])/2 - hist[-3]
+	print("39: ",add_39)
 	to_add_arr = np.repeat(38.99,add_39)
 	vals = np.append(vals,to_add_arr)
 	add_38 = (ydata[-3]+ydata[-4])/2 - hist[-4]
+	print("38: ",add_38)
 	to_add_arr = np.repeat(37.99,add_38)
 	vals = np.append(vals,to_add_arr)
 	add_37 = (ydata[-4] + ydata[-5])/2 - hist[-5]
+	print("37: ",add_37)
 	to_add_arr = np.repeat(36.99,add_37)
 	vals = np.append(vals,to_add_arr)
 	add_36 = (ydata[-5]+ydata[-6])/2 - hist[-6]
+	print("36: ",add_36)
 	to_add_arr = np.repeat(35.99,add_36)
 	vals = np.append(vals,to_add_arr)
 	add_35 = (ydata[-6]+ydata[-7])/2 - hist[-6]
+	print("35: ",add_35)
 	to_add_arr = np.repeat(34.99,add_35)
 	vals = np.append(vals,to_add_arr)
 	add_34 = (ydata[-7]+ydata[-8])/2 - hist[-7]
+	print("34: ",add_34)
 	to_add_arr = np.repeat(33.99,add_34)
 	vals = np.append(vals,to_add_arr)
 	add_33 = (ydata[-8]+ydata[-9])/2 - hist[-8]
+	print("33: ",add_33)
 	to_add_arr = np.repeat(32.99,add_33)
 	vals = np.append(vals,to_add_arr)
 
