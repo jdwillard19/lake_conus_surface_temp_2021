@@ -1,7 +1,11 @@
-import pdb
+import matplotlib.pyplot as plt
 import numpy as np
-# from imblearn.over_sampling import SMOTE 
-
+import pandas as pd
+import pdb
+from scipy.stats import skew
+from scipy import stats
+import sys
+from scipy.stats import norm
 k_arr = np.arange(5)+1
 
 for k in k_arr:
