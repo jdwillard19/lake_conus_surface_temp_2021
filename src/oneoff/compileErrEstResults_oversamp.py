@@ -55,16 +55,20 @@ for k in folds_arr: #CHANGE DIS----------------
 	#oversamp5
 	# ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp5.feather")
 
-	#oversamp6
+	# oversamp6
 	# ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp6.feather")
 	
 
+	
+	# oversamp7
+	ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp7.feather")
+	
 	#1c
 	# ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp1c.feather")
 
 
 	#normal fill
-	ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp_norm.feather")
+	# ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp_norm.feather")
 
 	# pdb.set_trace()
 	# ea_df.drop(ea_df[ea_df['Date'] < gb_date_df['Date'].min()].index,axis=0,inplace=True)
