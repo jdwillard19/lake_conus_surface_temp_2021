@@ -53,11 +53,16 @@ for k in folds_arr: #CHANGE DIS----------------
 	# ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp4.feather")
 
 	#oversamp5
-	ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp5.feather")
+	# ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp5.feather")
 
 	#oversamp6
-	ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp6.feather")
+	# ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp6.feather")
 	
+
+	#1c
+	ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp1c.feather")
+
+
 	# pdb.set_trace()
 	# ea_df.drop(ea_df[ea_df['Date'] < gb_date_df['Date'].min()].index,axis=0,inplace=True)
 	# assert ea_df.shape[0] == lm_df.shape[0]
@@ -132,4 +137,4 @@ print(per_site_df['rmse_ealstm'].quantile(.75))
 per_site_df.reset_index(inplace=True)
 per_site_df.to_csv("../../results/err_per_site_072921.csv")
 # per_site_df.to_feather("../../results/err_per_site_wBachmann_071121.feather")
-print("()")
+print("(1c)")
