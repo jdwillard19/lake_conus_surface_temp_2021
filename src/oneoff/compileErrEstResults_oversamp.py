@@ -61,7 +61,7 @@ for k in folds_arr: #CHANGE DIS----------------
 
 	
 	# oversamp7
-	ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp7.feather")
+	ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp8.feather")
 	
 	#1c
 	# ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp1c.feather")
