@@ -60,8 +60,11 @@ for k in folds_arr: #CHANGE DIS----------------
 	
 
 	#1c
-	ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp1c.feather")
+	# ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp1c.feather")
 
+
+	#normal fill
+	ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp_norm.feather")
 
 	# pdb.set_trace()
 	# ea_df.drop(ea_df[ea_df['Date'] < gb_date_df['Date'].min()].index,axis=0,inplace=True)
@@ -81,10 +84,10 @@ combined_df['wtemp_predicted-linear_model'] = combined_ea['temp_pred_lm']
 # combined_df['wtemp_actual'] = combined_ea['wtemp_actual']
 combined_df['wtemp_actual'] = combined_ea['wtemp_actual']
 combined_df.reset_index(inplace=True)
-combined_df.to_feather("../../results/all_outputs_and_obs_072921.feather")
-combined_df.to_csv("../../results/all_outputs_and_obs_072921.csv")
+combined_df.to_feather("../../results/all_outputs_and_obs_normFill_080621.feather")
+combined_df.to_csv("../../results/all_outputs_and_obs_normFill_080621.csv")
 
-combined_df = pd.read_feather("../../results/all_outputs_and_obs_072921.feather")
+combined_df = pd.read_feather("../../results/all_outputs_and_obs_normFill_080621.feather")
 print(">32 RMSE")
 print(np.sqrt(((combined_df[combined_df['wtemp_actual']>32]['wtemp_predicted-ealstm'] - combined_df[combined_df['wtemp_actual']>32]['wtemp_actual'])**2).mean()))
 print(">33 RMSE")
@@ -135,6 +138,6 @@ print(per_site_df['rmse_ealstm'].quantile(.25))
 print("Q2 RMSE")
 print(per_site_df['rmse_ealstm'].quantile(.75))
 per_site_df.reset_index(inplace=True)
-per_site_df.to_csv("../../results/err_per_site_072921.csv")
+per_site_df.to_csv("../../results/err_per_site_normfill_080621.csv")
 # per_site_df.to_feather("../../results/err_per_site_wBachmann_071121.feather")
 print("(1c)")
