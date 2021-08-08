@@ -286,3 +286,78 @@ compile_job_path= '../../hpc/sbatch_script_err_est_ea_oversamp_norm2.sh'
 with open(compile_job_path, 'w') as output2:
     output2.write(sbatch)
 print(compile_job_path)
+
+
+sbatch = ""
+ct = 0
+
+for name in folds_arr:
+    ct += 1
+    #for each unique lake
+    print(name)
+    l = name
+
+    header = "#!/bin/bash -l\n#SBATCH --time=23:59:00\n#SBATCH --ntasks=8\n#SBATCH --mem=20g\n#SBATCH --mail-type=ALL\n#SBATCH --mail-user=willa099@umn.edu\n#SBATCH --output=EALSTM_%s_oversamp_norm3.out\n#SBATCH --error=EALSTM_%s_oversamp_norm3.err\n#SBATCH --gres=gpu:v100:1\n#SBATCH -p v100"%(l,l)
+    script = "source /home/kumarv/willa099/takeme_evaluate.sh\n" #cd to directory with training script
+    script2 = "python EALSTM_err_est_oversamp_norm3.py %s"%(l)
+    all= "\n".join([header,script,script2])
+    sbatch = "\n".join(["sbatch job_%s_foldEAoversamp_norm3.sh"%(l),sbatch])
+    with open('../../hpc/job_{}_foldEAoversamp_norm3.sh'.format(l), 'w') as output:
+        output.write(all)
+
+
+
+compile_job_path= '../../hpc/sbatch_script_err_est_ea_oversamp_norm3.sh'
+with open(compile_job_path, 'w') as output2:
+    output2.write(sbatch)
+print(compile_job_path)
+
+
+sbatch = ""
+ct = 0
+
+for name in folds_arr:
+    ct += 1
+    #for each unique lake
+    print(name)
+    l = name
+
+    header = "#!/bin/bash -l\n#SBATCH --time=23:59:00\n#SBATCH --ntasks=8\n#SBATCH --mem=20g\n#SBATCH --mail-type=ALL\n#SBATCH --mail-user=willa099@umn.edu\n#SBATCH --output=EALSTM_%s_oversamp_norm4.out\n#SBATCH --error=EALSTM_%s_oversamp_norm4.err\n#SBATCH --gres=gpu:v100:1\n#SBATCH -p v100"%(l,l)
+    script = "source /home/kumarv/willa099/takeme_evaluate.sh\n" #cd to directory with training script
+    script2 = "python EALSTM_err_est_oversamp_norm4.py %s"%(l)
+    all= "\n".join([header,script,script2])
+    sbatch = "\n".join(["sbatch job_%s_foldEAoversamp_norm4.sh"%(l),sbatch])
+    with open('../../hpc/job_{}_foldEAoversamp_norm4.sh'.format(l), 'w') as output:
+        output.write(all)
+
+
+
+compile_job_path= '../../hpc/sbatch_script_err_est_ea_oversamp_norm4.sh'
+with open(compile_job_path, 'w') as output2:
+    output2.write(sbatch)
+print(compile_job_path)
+
+
+sbatch = ""
+ct = 0
+
+for name in folds_arr:
+    ct += 1
+    #for each unique lake
+    print(name)
+    l = name
+
+    header = "#!/bin/bash -l\n#SBATCH --time=23:59:00\n#SBATCH --ntasks=8\n#SBATCH --mem=20g\n#SBATCH --mail-type=ALL\n#SBATCH --mail-user=willa099@umn.edu\n#SBATCH --output=EALSTM_%s_oversamp_norm5.out\n#SBATCH --error=EALSTM_%s_oversamp_norm5.err\n#SBATCH --gres=gpu:v100:1\n#SBATCH -p v100"%(l,l)
+    script = "source /home/kumarv/willa099/takeme_evaluate.sh\n" #cd to directory with training script
+    script2 = "python EALSTM_err_est_oversamp_norm5.py %s"%(l)
+    all= "\n".join([header,script,script2])
+    sbatch = "\n".join(["sbatch job_%s_foldEAoversamp_norm5.sh"%(l),sbatch])
+    with open('../../hpc/job_{}_foldEAoversamp_norm5.sh'.format(l), 'w') as output:
+        output.write(all)
+
+
+
+compile_job_path= '../../hpc/sbatch_script_err_est_ea_oversamp_norm5.sh'
+with open(compile_job_path, 'w') as output2:
+    output2.write(sbatch)
+print(compile_job_path)
