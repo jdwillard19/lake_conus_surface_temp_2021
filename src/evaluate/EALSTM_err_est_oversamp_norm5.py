@@ -126,7 +126,7 @@ lakenames = metadata[metadata['cluster_id']!=k]['site_id'].values
 test_lakes = metadata[metadata['cluster_id']==k]['site_id'].values
 ep_arr = []   
 
-trn_data = torch.from_numpy(np.load("ealstm_trn_data_oversamp_normal5_k"+str(k)+".npy"))
+trn_data = torch.from_numpy(np.load("ealstm_trn_data_oversamp_normal4_5"+str(k)+".npy"))
 
 
 print("train_data size: ",trn_data.size())
