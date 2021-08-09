@@ -265,10 +265,12 @@ for hid_ct,n_hidden in enumerate(n_hid_arr):
                 print("train data created")
                 np.save("ealstm_trn_data_ofold"+str(og_k)+"_ifold"+str(k)+"_normAug.npy",trn_data)
                 isTrain = False
+                trn_data = torch.from_numpy(trn_data)
             else:
                 print("test data created")
                 tst_data = data 
                 np.save("ealstm_tst_data_ofold"+str(og_k)+"_ifold"+str(k)+"+_norm_Aug.npy",tst_data)
+                tst_data = torch.from_numpy(tst_data)
 
         print("train data size after oversampling: ",trn_data.shape)
         print("test data size after oversampling: ",tst_data.shape)
