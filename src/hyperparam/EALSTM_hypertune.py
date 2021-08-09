@@ -276,7 +276,6 @@ for hid_ct,n_hidden in enumerate(n_hid_arr):
 
 
 
-        pdb.set_trace()
         # sys.exit()
         # trn_data = torch.from_numpy(np.load("conus_trn_data_wStatic.npy"))
         # tst_data = torch.from_numpy(np.load("global_tst_data_wStatic.npy"))
