@@ -69,8 +69,8 @@ lambda1 = 0.000
 #epoch settings
 n_eps = 1000
 first_save_epoch = 0
-targ_ep = 170
-targ_rmse = 1.71
+targ_ep = 200
+targ_rmse = 1.89
 
 #load metadata
 metadata = pd.read_csv("../../metadata/lake_metadata.csv")
