@@ -108,8 +108,7 @@ else:
     y = np.load("bachmannY_"+str(k)+".npy",allow_pickle=True)
 
 
-pdb.set_trace()
-#add oversamping 
+vals = np.concatenate((X,np.expand_dims(y,-1)),axis=1)#add oversamping 
 mu, std = norm.fit(vals) 
 nsize = vals.shape[0]
 # plt.hist(df['wtemp_actual'].values,bins=bins)
@@ -185,8 +184,9 @@ augment[:,:,:-1] = augment[:,:,:-1] + (.0125**.5)*np.random.randn(augment.shape[
 augment[:,:,-1] = augment[:,:,-1] + (.125**.5)*np.random.randn(augment.shape[0],augment.shape[1])
 
 data = np.concatenate((data,augment), axis=0)
-np.save("../evaluate/ealstm_trn_data_oversamp_normal2_k"+str(int(k))+".npy",data)
 
+X = data[:,:-1]
+y = data[:,-1]
 
 
 
