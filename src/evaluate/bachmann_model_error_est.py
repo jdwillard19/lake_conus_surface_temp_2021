@@ -189,7 +189,7 @@ augment[:,-1] = augment[:,-1] + (.125**.5)*np.random.randn(augment.shape[0])
 pdb.set_trace()
 data = np.concatenate((data,augment), axis=0)
 
-X = data[:-1]
+X = data[:,:-1]
 y = data[:,-1]
 
 
