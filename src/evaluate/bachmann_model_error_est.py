@@ -130,6 +130,7 @@ add_40 = (ydata[-1]+ydata[-2])/2 - hist[-2]
 print("40: ",add_40)
 ind40 = np.where((data[:,-1]>39)&(data[:,-1] <= 40))[0]
 if ind40.shape[0] != 0:
+    pdb.set_trace()
     new_data = data[np.append(ind40,np.random.choice(ind40,int(np.round(add_40)))),:]
     augment = new_data
 else:
