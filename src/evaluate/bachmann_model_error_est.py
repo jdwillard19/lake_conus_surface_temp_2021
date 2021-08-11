@@ -183,8 +183,8 @@ ind3 = np.where(augment[:,-1] < 32)
 augment[ind3[0],-1] = np.nan
 
 #add noise optional
-augment[:,:-1] = augment[:,:-1] + (.0125**.5)*np.random.randn(augment.shape[0],augment.shape[1],augment.shape[2]-1)
-augment[:,-1] = augment[:,-1] + (.125**.5)*np.random.randn(augment.shape[0],augment.shape[1])
+augment[:,:-1] = augment[:,:-1] + (.0125**.5)*np.random.randn(augment.shape[0],augment.shape[2]-1)
+augment[:,-1] = augment[:,-1] + (.125**.5)*np.random.randn(augment.shape[0])
 
 data = np.concatenate((data,augment), axis=0)
 
