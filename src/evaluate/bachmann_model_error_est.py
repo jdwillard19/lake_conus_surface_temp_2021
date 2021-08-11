@@ -174,10 +174,12 @@ new_data = data[np.append(ind34,np.random.choice(ind34,int(np.round(add_34)))),:
 augment = np.concatenate((augment,new_data),axis=0)
 
 add_33 = (ydata[-8]+ydata[-9])/2 - hist[-8]
-print("33: ",add_33)
-ind33 = np.where((data[:,-1]>32)&(data[:,-1] <= 33))[0]
-new_data = data[np.append(ind33,np.random.choice(ind33,int(np.round(add_33)))),:]
-augment = np.concatenate((augment,new_data),axis=0)
+if add_33 > 0:
+    print("33: ",add_33)
+    ind33 = np.where((data[:,-1]>32)&(data[:,-1] <= 33))[0]
+    if ind33.shape[0] > 0:
+        new_data = data[np.append(ind33,np.random.choice(ind33,int(np.round(add_33)))),:]
+        augment = np.concatenate((augment,new_data),axis=0)
 
 
 #remove non-hot obs in augment
