@@ -186,7 +186,6 @@ augment[ind3[0],-1] = np.nan
 augment[:,:-1] = augment[:,:-1] + (.0125**.5)*np.random.randn(augment.shape[0],augment.shape[1]-1)
 augment[:,-1] = augment[:,-1] + (.125**.5)*np.random.randn(augment.shape[0])
 
-pdb.set_trace()
 data = np.concatenate((data,augment), axis=0)
 
 X = data[:,:-1]
