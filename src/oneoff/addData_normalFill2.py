@@ -11,7 +11,6 @@ k_arr = np.arange(5)+1
 for k in k_arr:
 	data = np.load("../evaluate/ealstm_trn_data_072621_5fold_k"+str(int(k))+".npy")
 
-
 	vals = data[np.isfinite(data[:,:,-1])][:,-1]
 
 	mu, std = norm.fit(vals) 
@@ -90,5 +89,8 @@ for k in k_arr:
 
 	data = np.concatenate((data,augment), axis=0)
 	np.save("../evaluate/ealstm_trn_data_oversamp_normal2_k"+str(int(k))+".npy",data)
+
+
+
 
 
