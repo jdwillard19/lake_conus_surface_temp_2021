@@ -136,10 +136,12 @@ else:
     augment = np.empty((0,350,10))
 
 add_39 = (ydata[-2]+ydata[-3])/2 - hist[-3]
-print("39: ",add_39)
-ind39 = np.where((data[:,-1]>38)&(data[:,-1] <= 39))[0]
-new_data = data[np.append(ind39,np.random.choice(ind39,int(np.round(add_39)))),:]
-augment = np.concatenate((augment,new_data),axis=0)
+if add_39 > 0:
+    print("39: ",add_39)
+    ind39 = np.where((data[:,-1]>38)&(data[:,-1] <= 39))[0]
+    if ind39.shape[0] > 0:
+        new_data = data[np.append(ind39,np.random.choice(ind39,int(np.round(add_39)))),:]
+        augment = np.concatenate((augment,new_data),axis=0)
 
 add_38 = (ydata[-3]+ydata[-4])/2 - hist[-4]
 print("38: ",add_38)
