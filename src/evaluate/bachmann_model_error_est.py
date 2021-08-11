@@ -180,7 +180,7 @@ augment = np.concatenate((augment,new_data),axis=0)
 
 #remove non-hot obs in augment
 ind3 = np.where(augment[:,-1] < 32)
-augment[ind3[0],ind3[1],-1] = np.nan
+augment[ind3[0],-1] = np.nan
 
 #add noise optional
 augment[:,:-1] = augment[:,:-1] + (.0125**.5)*np.random.randn(augment.shape[0],augment.shape[1],augment.shape[2]-1)
