@@ -133,7 +133,7 @@ if ind40.shape[0] != 0:
     new_data = data[np.append(ind40,np.random.choice(ind40,int(np.round(add_40)))),:]
     augment = new_data
 else:
-    augment = np.empty((0,350,10))
+    augment = np.empty((0,data.shape[1]))
 
 add_39 = (ydata[-2]+ydata[-3])/2 - hist[-3]
 if add_39 > 0:
