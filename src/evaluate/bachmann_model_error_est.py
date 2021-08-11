@@ -111,6 +111,7 @@ print("train set dimensions: ",X.shape)
 
 
 vals = np.concatenate((X,np.expand_dims(y,-1)),axis=1)#add oversamping 
+data = vals
 mu, std = norm.fit(vals) 
 nsize = vals.shape[0]
 # plt.hist(df['wtemp_actual'].values,bins=bins)
