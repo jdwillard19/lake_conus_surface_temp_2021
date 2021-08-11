@@ -107,6 +107,8 @@ else:
     X = np.load("bachmannX_"+str(k)+".npy",allow_pickle=True)
     y = np.load("bachmannY_"+str(k)+".npy",allow_pickle=True)
 
+print("train set dimensions: ",X.shape)
+
 
 vals = np.concatenate((X,np.expand_dims(y,-1)),axis=1)#add oversamping 
 mu, std = norm.fit(vals) 
@@ -114,7 +116,7 @@ nsize = vals.shape[0]
 # plt.hist(df['wtemp_actual'].values,bins=bins)
 # Plot the histogram.
 
-hist, bins, _ = plt.hist(vals, bins=40, color='b', edgecolor='black')
+hist, bins, _ = plt.hist(vals, bins=40)
 xmin, xmax = plt.xlim()
 
 p = norm.pdf(bins, mu, std)           
