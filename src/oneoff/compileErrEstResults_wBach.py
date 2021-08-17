@@ -34,7 +34,6 @@ combined_df['Date'] = combined_ea['Date']
 combined_df['site_id'] = combined_ea['site_id']
 combined_df['wtemp_predicted-ealstm'] = combined_ea['wtemp_predicted']
 combined_df['wtemp_predicted-linear_model'] = combined_ea['temp_pred_lm']
-# combined_df['wtemp_actual'] = combined_ea['wtemp_actual']
 combined_df['wtemp_actual'] = combined_ea['wtemp_actual']
 combined_df.reset_index(inplace=True)
 combined_df.to_feather("../../results/all_outputs_and_obs_wBachmann.feather")
@@ -46,6 +45,7 @@ per_site_df = pd.DataFrame(columns=['site_id','n_obs','rmse_ealstm','rmse_lm'])
 for i,site_id in enumerate(site_ids):
 	print(i)
 	per_site_res = combined_df[combined_df['site_id'] == site_id]
+	pdb.set_trace()
 	site_df = pd.DataFrame(columns=['site_id','n_obs','rmse_ealstm','rmse_lm'])
 	# site_df = pd.DataFrame(columns=['site_id','n_obs','rmse_ealstm','rmse_xgboost'])
 	site_df['rmse_ealstm'] = [np.sqrt(((per_site_res['wtemp_predicted-ealstm'] - per_site_res['wtemp_actual']) ** 2).mean())]
