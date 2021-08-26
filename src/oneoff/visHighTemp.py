@@ -9,7 +9,7 @@ site_ids = ['nhdhr_112699096']
 
 
 #load data
-dates = "../../data/processed/"+site_ids[0]+"/dates"
+dates = np.load("../../data/processed/"+site_ids[0]+"/dates",allow_pickle=True)
 
 for site_id in site_ids:
 	obs = np.load("../../data/processed/"+site_id+"/obs.npy")
