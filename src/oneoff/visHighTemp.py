@@ -41,7 +41,6 @@ for site_id in site_ids:
 		
 		p_x = []
 		for i in range(n_obs):
-			pdb.set_trace()
 			p_x.append(np.where(p_dates==obs_dates[i])[0])
 
 		if np.isnan(p_obs).all():
