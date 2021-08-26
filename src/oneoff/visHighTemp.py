@@ -19,9 +19,10 @@ for site_id in site_ids:
 	# res = pd.read_feather("../../results/SWT_results/outputs_"+site_id+'.feather')
 
 	#get fold
-	fold = meta[meta['site_id']==site_id].group_id.values[0]
+	fold = meta[meta['site_id']==site_id].group_id.values[0]-1
 	res_o = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(fold)+"_oversamp_norm2.feather")
 	res = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(fold)+".feather")
+	pdb.set_trace()
 	# pred = res['temp_pred'].values
 	# obs = res['temp_actual'].values
 	air_temp = feats[:,6] - 273.15
