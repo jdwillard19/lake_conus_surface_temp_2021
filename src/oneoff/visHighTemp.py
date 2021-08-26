@@ -30,7 +30,8 @@ for site_id in site_ids:
 		end_date = pd.Timestamp(str(y)+'-09-01').to_datetime64()
 		start_ind = np.where(dates==start_date)[0][0]
 		end_ind = np.where(dates==end_date)[0][0]
-		p_dates = np.array([str(d)[:10] for d in dates[start_ind:end_ind]])
+		# p_dates = np.array([str(d)[:10] for d in dates[start_ind:end_ind]])
+		p_dates = dates[start_ind:end_ind]
 		p_pred = res[(res['site_id'] == site_id)&(res['Date'] < end_date)&(res['Date'] > start_date)]['wtemp_predicted'].values
 		p_obs = res[(res['site_id'] == site_id)&(res['Date'] < end_date)&(res['Date'] > start_date)]['wtemp_actual'].values
 		obs_dates = res[(res['site_id'] == site_id)&(res['Date'] < end_date)&(res['Date'] > start_date)]['Date'].values
@@ -54,8 +55,8 @@ for site_id in site_ids:
 		plt.scatter(p_x,p_pred,color='green',label='EALSTM prediction')
 		plt.plot(p_at,color='blue',label='Air Temperature')
 		plt.scatter(p_x,p_obs,c='red',marker='+',s=15,label='Observation')
-		plt.xticks(ticks=x, labels=p_dates)
-		plt.locator_params(axis='x', nbins=4)
+		# plt.xticks(ticks=x, labels=p_dates)
+		# plt.locator_params(axis='x', nbins=4)
 		plt.xlabel("Day of Summer")
 		plt.ylabel("Degrees C")
 		plt.title(site_id+" May 1st - Sept 01 : "+str(y))
