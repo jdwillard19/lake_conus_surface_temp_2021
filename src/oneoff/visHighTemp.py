@@ -37,4 +37,5 @@ for site_id in site_ids:
 		plt.scatter(x_p_obs,y_p_obs,c='red',marker='+',s=5)
 		plt.xlabel("Day of Summer")
 		plt.ylabel("Degrees C")
-		plt.saveFig("plot_"+site_id+"_"+str(y))
+		plt.savefig("plot_"+site_id+"_"+str(y))
+		plt.clf()
