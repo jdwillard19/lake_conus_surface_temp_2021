@@ -4,9 +4,9 @@ import pdb
 import matplotlib.pyplot as plt
 
 #
-site_ids = ['nhdhr_112699096','nhdhr_131648650','nhdhr_49239115','nhdhr_141328480','nhdhr_120024294']
+site_ids = ['nhdhr_112699096','nhdhr_131648650','nhdhr_49239115','nhdhr_141328480','nhdhr_115448691']
 # site_ids = ['nhdhr_141328480']
-site_ids = ['nhdhr_120024294']
+site_ids = ['nhdhr_115448691']
 
 
 
@@ -19,7 +19,7 @@ for site_id in site_ids:
 	# res = pd.read_feather("../../results/SWT_results/outputs_"+site_id+'.feather')
 
 	#get fold
-	fold = meta[meta['site_id']==site_id].group_id.values[0]-1
+	fold = int(meta[meta['site_id']==site_id].cluster_id.values[0])
 	res_o = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(fold)+"_oversamp_norm2.feather")
 	res = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(fold)+".feather")
 	# pred = res['temp_pred'].values
@@ -39,8 +39,6 @@ for site_id in site_ids:
 		p_obs = res[(res['site_id'] == site_id)&(res['Date'] < end_date)&(res['Date'] > start_date)]['wtemp_actual'].values
 		obs_dates = res[(res['site_id'] == site_id)&(res['Date'] < end_date)&(res['Date'] > start_date)]['Date'].values
 		n_obs = p_obs.shape[0]
-		if y == 2016:
-			pdb.set_trace()
 		if n_obs == 0:
 			print("no obs")
 			continue
