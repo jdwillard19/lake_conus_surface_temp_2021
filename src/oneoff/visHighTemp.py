@@ -34,13 +34,13 @@ for site_id in site_ids:
 		p_pred = res[(res['site_id'] == site_id)&(res['Date'] < end_date)&(res['Date'] > start_date)]['wtemp_predicted'].values
 		p_obs = res[(res['site_id'] == site_id)&(res['Date'] < end_date)&(res['Date'] > start_date)]['wtemp_actual'].values
 		obs_dates = res[(res['site_id'] == site_id)&(res['Date'] < end_date)&(res['Date'] > start_date)]['Date'].values
-		n_obs = obs.shape[0]
+		n_obs = p_obs.shape[0]
 		if n_obs == 0:
 			continue
 		
 		p_x = []
 		for i in range(n_obs):
-			p_x.append(np.where(p_dates==obs_dates[i])[0][0])
+			p_x.append(np.where(p_dates==obs_dates[i])[0])
 
 		if np.isnan(p_obs).all():
 			continue
