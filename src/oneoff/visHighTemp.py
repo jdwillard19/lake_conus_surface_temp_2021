@@ -1,11 +1,11 @@
 import numpy as np
 import pandas as pd
 import pdb
-
+import matplotlib.pyplot as plt
 
 #
-# site_ids = ['nhdhr_112699096']
-site_ids = ['nhdhr_143249470']
+site_ids = ['nhdhr_112699096']
+# site_ids = ['nhdhr_143249470']
 
 
 
@@ -26,6 +26,15 @@ for site_id in site_ids:
 		end_ind = np.where(dates==end_date)[0][0]
 
 		p_obs = obs[start_ind:end_ind]
+		x = np.arange(end_ind-start_ind)
 		p_at = air_temp[start_ind:end_ind]
-		start_ind = 0
+		p_pred = pred[start_ind:end_ind]
 
+		x_p_obs = x[np.isfinite(p_obs)]
+		y_p_obs = p_obs[np.isfinite(p_obs)]
+		plt.plot(p_pred,color='green')
+		plt.plot(p_at,color='blue')
+		plt.scatter(x_p_obs,y_p_obs,c='red',marker='+',s=5)
+		plt.xlabel("Day of Summer")
+		plt.ylabel("Degrees C")
+		plt.saveFig("plot_"+site_id+"_"+str(y))
