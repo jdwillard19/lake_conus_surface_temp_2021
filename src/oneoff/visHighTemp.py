@@ -34,10 +34,11 @@ for site_id in site_ids:
 
 		x_p_obs = x[np.isfinite(p_obs)]
 		y_p_obs = p_obs[np.isfinite(p_obs)]
-		plt.plot(p_pred,color='green')
-		plt.plot(p_at,color='blue')
-		plt.scatter(x_p_obs,y_p_obs,c='red',marker='+',s=5)
+		plt.plot(p_pred,color='green',label='EALSTM prediction')
+		plt.plot(p_at,color='blue',label='Air Temperature')
+		plt.scatter(x_p_obs,y_p_obs,c='red',marker='+',s=15,label='Observation')
 		plt.xlabel("Day of Summer")
 		plt.ylabel("Degrees C")
+		plt.legend()
 		plt.savefig("plot_"+site_id+"_"+str(y))
 		plt.clf()
