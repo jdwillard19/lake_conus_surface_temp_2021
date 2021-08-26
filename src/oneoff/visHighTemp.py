@@ -26,6 +26,8 @@ for site_id in site_ids:
 		end_ind = np.where(dates==end_date)[0][0]
 
 		p_obs = obs[start_ind:end_ind]
+		if np.isnan(p_obs).all():
+			continue
 		x = np.arange(end_ind-start_ind)
 		p_at = air_temp[start_ind:end_ind]
 		p_pred = pred[start_ind:end_ind]
