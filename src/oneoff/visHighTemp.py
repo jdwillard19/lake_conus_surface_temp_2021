@@ -36,7 +36,7 @@ for site_id in site_ids:
 		y_p_obs = p_obs[np.isfinite(p_obs)]
 		plt.plot(p_pred,color='green',label='EALSTM prediction')
 		plt.plot(p_at,color='blue',label='Air Temperature')
-		plt.scatter(p_dates,y_p_obs,c='red',marker='+',s=15,label='Observation')
+		plt.scatter(x_p_obs,y_p_obs,c='red',marker='+',s=15,label='Observation')
 		plt.xlabel("Day of Summer")
 		plt.ylabel("Degrees C")
 		plt.title(site_id+" May 1st - Sept 01 : "+str(y))
