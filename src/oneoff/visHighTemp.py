@@ -19,7 +19,8 @@ for site_id in site_ids:
 	# res = pd.read_feather("../../results/SWT_results/outputs_"+site_id+'.feather')
 
 	#get fold
-	res = pd.read_feather("err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp_norm2.feather")
+	fold = meta[meta['site_id']==site_id].group_id.values[0]
+	res = pd.read_feather("err_est_outputs_072621_EALSTM_fold"+str(fold)+"_oversamp_norm2.feather")
 	pdb.set_trace()
 	pred = res['temp_pred'].values
 	# obs = res['temp_actual'].values
