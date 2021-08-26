@@ -20,7 +20,7 @@ for site_id in site_ids:
 
 	#get fold
 	fold = meta[meta['site_id']==site_id].group_id.values[0]
-	res = pd.read_feather("err_est_outputs_072621_EALSTM_fold"+str(fold)+"_oversamp_norm2.feather")
+	res = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(fold)+"_oversamp_norm2.feather")
 	pdb.set_trace()
 	pred = res['temp_pred'].values
 	# obs = res['temp_actual'].values
