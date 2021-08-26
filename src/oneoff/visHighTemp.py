@@ -24,7 +24,7 @@ for site_id in site_ids:
 		end_date = pd.Timestamp(str(y)+'-09-01').to_datetime64()
 		start_ind = np.where(dates==start_date)[0][0]
 		end_ind = np.where(dates==end_date)[0][0]
-
+		p_dates = dates[start_ind:end_ind]
 		p_obs = obs[start_ind:end_ind]
 		if np.isnan(p_obs).all():
 			continue
@@ -36,9 +36,10 @@ for site_id in site_ids:
 		y_p_obs = p_obs[np.isfinite(p_obs)]
 		plt.plot(p_pred,color='green',label='EALSTM prediction')
 		plt.plot(p_at,color='blue',label='Air Temperature')
-		plt.scatter(x_p_obs,y_p_obs,c='red',marker='+',s=15,label='Observation')
+		plt.scatter(p_dates,y_p_obs,c='red',marker='+',s=15,label='Observation')
 		plt.xlabel("Day of Summer")
 		plt.ylabel("Degrees C")
+		plt.title(site_id+" May 1st - Sept 01 : "+str(y))
 		plt.legend()
 		plt.savefig("plot_"+site_id+"_"+str(y))
 		plt.clf()
