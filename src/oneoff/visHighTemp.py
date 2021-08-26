@@ -22,7 +22,6 @@ for site_id in site_ids:
 	fold = meta[meta['site_id']==site_id].group_id.values[0]-1
 	res_o = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(fold)+"_oversamp_norm2.feather")
 	res = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(fold)+".feather")
-	pdb.set_trace()
 	# pred = res['temp_pred'].values
 	# obs = res['temp_actual'].values
 	air_temp = feats[:,6] - 273.15
@@ -40,6 +39,8 @@ for site_id in site_ids:
 		p_obs = res[(res['site_id'] == site_id)&(res['Date'] < end_date)&(res['Date'] > start_date)]['wtemp_actual'].values
 		obs_dates = res[(res['site_id'] == site_id)&(res['Date'] < end_date)&(res['Date'] > start_date)]['Date'].values
 		n_obs = p_obs.shape[0]
+		if y == 2016:
+			pdb.set_trace()
 		if n_obs == 0:
 			print("no obs")
 			continue
