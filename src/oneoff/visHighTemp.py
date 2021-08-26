@@ -37,6 +37,7 @@ for site_id in site_ids:
 		plt.plot(p_pred,color='green',label='EALSTM prediction')
 		plt.plot(p_at,color='blue',label='Air Temperature')
 		plt.scatter(x_p_obs,y_p_obs,c='red',marker='+',s=15,label='Observation')
+		pyplot.xticks(ticks=x, labels=p_dates)
 		plt.xlabel("Day of Summer")
 		plt.ylabel("Degrees C")
 		plt.title(site_id+" May 1st - Sept 01 : "+str(y))
