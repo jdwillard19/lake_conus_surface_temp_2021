@@ -40,6 +40,7 @@ for site_id in site_ids:
 		
 		p_x = []
 		for i in range(n_obs):
+			pdb.set_trace()
 			p_x.append(np.where(p_dates==obs_dates[i])[0])
 
 		if np.isnan(p_obs).all():
@@ -50,7 +51,6 @@ for site_id in site_ids:
 
 		# x_p_obs = p_x
 		# y_p_obs = p_obs[np.isfinite(p_obs)]
-		pdb.set_trace()
 		plt.scatter(p_x,p_pred,color='green',label='EALSTM prediction')
 		plt.plot(p_at,color='blue',label='Air Temperature')
 		plt.scatter(p_x,p_obs,c='red',marker='+',s=15,label='Observation')
