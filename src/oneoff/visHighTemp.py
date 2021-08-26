@@ -11,11 +11,14 @@ site_ids = ['nhdhr_112699096']
 
 #load data
 dates = np.load("../../data/processed/"+site_ids[0]+"/dates.npy",allow_pickle=True)
-
+meta = pd.read_csv("lake_metadata.csv")
+pdb.set_trace()
 for site_id in site_ids:
 	feats = np.load("../../data/processed/"+site_id+"/features.npy")
 	obs = np.load("../../data/processed/"+site_id+"/obs.npy")
 	# res = pd.read_feather("../../results/SWT_results/outputs_"+site_id+'.feather')
+
+	#get fold
 	res = pd.read_feather("err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp_norm2.feather")
 	pdb.set_trace()
 	pred = res['temp_pred'].values
