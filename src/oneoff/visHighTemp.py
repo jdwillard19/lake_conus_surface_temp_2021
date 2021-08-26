@@ -14,9 +14,12 @@ dates = np.load("../../data/processed/"+site_ids[0]+"/dates.npy",allow_pickle=Tr
 
 for site_id in site_ids:
 	feats = np.load("../../data/processed/"+site_id+"/features.npy")
-	res = pd.read_feather("../../results/SWT_results/outputs_"+site_id+'.feather')
+	obs = np.load("../../data/processed/"+site_id+"/obs.npy")
+	# res = pd.read_feather("../../results/SWT_results/outputs_"+site_id+'.feather')
+	res = pd.read_feather("err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp_norm2.feather")
+	pdb.set_trace()
 	pred = res['temp_pred'].values
-	obs = res['temp_actual'].values
+	# obs = res['temp_actual'].values
 	air_temp = feats[:,6] - 273.15
 	print("max air temp: ",air_temp.max())
 	for y in range(1980,2021):
