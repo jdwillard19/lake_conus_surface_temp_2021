@@ -38,6 +38,7 @@ for site_id in site_ids:
 		obs_dates = res[(res['site_id'] == site_id)&(res['Date'] < end_date)&(res['Date'] > start_date)]['Date'].values
 		n_obs = p_obs.shape[0]
 		if n_obs == 0:
+			print("no obs")
 			continue
 		
 		p_x = []
@@ -61,5 +62,6 @@ for site_id in site_ids:
 		plt.ylabel("Degrees C")
 		plt.title(site_id+" May 1st - Sept 01 : "+str(y))
 		plt.legend()
+		print("saved ","plot_"+site_id+"_"+str(y))
 		plt.savefig("plot_"+site_id+"_"+str(y))
 		plt.clf()
