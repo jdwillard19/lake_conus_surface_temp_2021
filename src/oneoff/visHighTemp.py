@@ -11,7 +11,7 @@ site_ids = ['nhdhr_112699096']
 
 #load data
 dates = np.load("../../data/processed/"+site_ids[0]+"/dates.npy",allow_pickle=True)
-meta = pd.read_csv("lake_metadata.csv")
+meta = pd.read_csv("../../metadata/lake_metadata.csv")
 pdb.set_trace()
 for site_id in site_ids:
 	feats = np.load("../../data/processed/"+site_id+"/features.npy")
