@@ -50,6 +50,7 @@ for site_id in site_ids:
 
 		# x_p_obs = p_x
 		# y_p_obs = p_obs[np.isfinite(p_obs)]
+		pdb.set_trace()
 		plt.scatter(p_x,p_pred,color='green',label='EALSTM prediction')
 		plt.plot(p_at,color='blue',label='Air Temperature')
 		plt.scatter(p_x,p_obs,c='red',marker='+',s=15,label='Observation')
