@@ -20,7 +20,8 @@ for site_id in site_ids:
 
 	#get fold
 	fold = meta[meta['site_id']==site_id].group_id.values[0]-1
-	res = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(fold)+"_oversamp_norm2.feather")
+	res_o = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(fold)+"_oversamp_norm2.feather")
+	res = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(fold)+".feather")
 	# pred = res['temp_pred'].values
 	# obs = res['temp_actual'].values
 	air_temp = feats[:,6] - 273.15
@@ -33,6 +34,7 @@ for site_id in site_ids:
 		end_ind = np.where(dates==end_date)[0][0]
 		# p_dates = np.array([str(d)[:10] for d in dates[start_ind:end_ind]])
 		p_dates = dates[start_ind:end_ind]
+		p_pred_o = res_o[(res_o['site_id'] == site_id)&(res_o['Date'] < end_date)&(res_o['Date'] > start_date)]['wtemp_predicted'].values
 		p_pred = res[(res['site_id'] == site_id)&(res['Date'] < end_date)&(res['Date'] > start_date)]['wtemp_predicted'].values
 		p_obs = res[(res['site_id'] == site_id)&(res['Date'] < end_date)&(res['Date'] > start_date)]['wtemp_actual'].values
 		obs_dates = res[(res['site_id'] == site_id)&(res['Date'] < end_date)&(res['Date'] > start_date)]['Date'].values
@@ -54,6 +56,7 @@ for site_id in site_ids:
 		# x_p_obs = p_x
 		# y_p_obs = p_obs[np.isfinite(p_obs)]
 		plt.scatter(p_x,p_pred,c='green',s=10,label='EALSTM prediction')
+		plt.scatter(p_x,p_pred_o,c='pink',s=10,label='EALSTM prediction after oversampling')
 		plt.plot(p_at,color='blue',label='Air Temperature')
 		plt.scatter(p_x,p_obs,c='red',marker='+',s=15,label='Observation')
 		# plt.xticks(ticks=x, labels=p_dates)
