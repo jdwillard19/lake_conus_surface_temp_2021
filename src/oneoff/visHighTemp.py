@@ -58,7 +58,7 @@ for site_id in site_ids:
 		plt.scatter(p_x,p_pred,c='green',s=10,label='EALSTM prediction')
 		plt.scatter(p_x,p_pred_o,c='pink',s=10,label='EALSTM prediction after oversampling')
 		plt.plot(p_at,color='blue',label='Air Temperature')
-		plt.scatter(p_x,p_obs,c='red',marker='+',s=15,label='Observation')
+		plt.scatter(p_x,p_obs,c='red',marker='+',s=25,label='Observation')
 		# plt.xticks(ticks=x, labels=p_dates)
 		# plt.locator_params(axis='x', nbins=4)
 		plt.xlabel("Day of Summer")
