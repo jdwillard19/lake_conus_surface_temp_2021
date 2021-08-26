@@ -32,7 +32,7 @@ for site_id in site_ids:
 		p_at = air_temp[start_ind:end_ind]
 		p_pred = pred[start_ind:end_ind]
 
-		x_p_obs = p_dates[np.isfinite(p_obs)]
+		x_p_obs = x[np.isfinite(p_obs)]
 		y_p_obs = p_obs[np.isfinite(p_obs)]
 		plt.plot(p_pred,color='green',label='EALSTM prediction')
 		plt.plot(p_at,color='blue',label='Air Temperature')
