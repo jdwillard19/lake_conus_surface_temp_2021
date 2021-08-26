@@ -24,7 +24,7 @@ for site_id in site_ids:
 		end_date = pd.Timestamp(str(y)+'-09-01').to_datetime64()
 		start_ind = np.where(dates==start_date)[0][0]
 		end_ind = np.where(dates==end_date)[0][0]
-		p_dates = dates[start_ind:end_ind]
+		p_dates = [d[:10] for d in dates[start_ind:end_ind]]
 		p_obs = obs[start_ind:end_ind]
 		if np.isnan(p_obs).all():
 			continue
