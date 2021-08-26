@@ -21,8 +21,7 @@ for site_id in site_ids:
 	#get fold
 	fold = meta[meta['site_id']==site_id].group_id.values[0]
 	res = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(fold)+"_oversamp_norm2.feather")
-	pdb.set_trace()
-	pred = res['temp_pred'].values
+	# pred = res['temp_pred'].values
 	# obs = res['temp_actual'].values
 	air_temp = feats[:,6] - 273.15
 	print("max air temp: ",air_temp.max())
@@ -32,6 +31,7 @@ for site_id in site_ids:
 		start_ind = np.where(dates==start_date)[0][0]
 		end_ind = np.where(dates==end_date)[0][0]
 		p_dates = [str(d)[:10] for d in dates[start_ind:end_ind]]
+		pdb.set_trace()
 		p_obs = obs[start_ind:end_ind]
 		if np.isnan(p_obs).all():
 			continue
