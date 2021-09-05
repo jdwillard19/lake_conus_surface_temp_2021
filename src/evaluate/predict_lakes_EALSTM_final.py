@@ -399,7 +399,7 @@ lstm_net = Model(input_size_dyn=n_features,input_size_stat=n_static_feats,hidden
 if use_gpu:
     lstm_net = lstm_net.cuda()
 
-load_path = "../../models/EALSTM_256hid_1_final_072621"
+load_path = "../../models/EALSTM_256hid_1_final"
 n_hidden = torch.load(load_path)['state_dict']['lstm.weight_hh'].shape[0]
 lstm_net = Model(input_size_dyn=n_features,input_size_stat=n_static_feats,hidden_size=n_hidden)
 if use_gpu:

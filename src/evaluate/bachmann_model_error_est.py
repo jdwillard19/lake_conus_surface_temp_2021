@@ -150,28 +150,33 @@ new_data = data[np.append(ind38,np.random.choice(ind38,int(np.round(add_38)))),:
 augment = np.concatenate((augment,new_data),axis=0)
 
 add_37 = (ydata[-4] + ydata[-5])/2 - hist[-5]
-print("37: ",add_37)
-ind37 = np.where((data[:,-1]>36)&(data[:,-1] <= 37))[0]
-new_data = data[np.append(ind37,np.random.choice(ind37,int(np.round(add_37)))),:]
-augment = np.concatenate((augment,new_data),axis=0)
+if add_37 > 0:
+    print("37: ",add_37)
+    ind37 = np.where((data[:,-1]>36)&(data[:,-1] <= 37))[0]
+    new_data = data[np.append(ind37,np.random.choice(ind37,int(np.round(add_37)))),:]
+    augment = np.concatenate((augment,new_data),axis=0)
 
 add_36 = (ydata[-5]+ydata[-6])/2 - hist[-6]
-print("36: ",add_36)
-ind36 = np.where((data[:,-1]>35)&(data[:,-1] <= 36))[0]
-new_data = data[np.append(ind36,np.random.choice(ind36,int(np.round(add_36)))),:]
-augment = np.concatenate((augment,new_data),axis=0)
+if add_36 > 0:
+    print("36: ",add_36)
+    ind36 = np.where((data[:,-1]>35)&(data[:,-1] <= 36))[0]
+    new_data = data[np.append(ind36,np.random.choice(ind36,int(np.round(add_36)))),:]
+    augment = np.concatenate((augment,new_data),axis=0)
 
 add_35 = (ydata[-6]+ydata[-7])/2 - hist[-6]
-print("35: ",add_35)
-ind35 = np.where((data[:,-1]>34)&(data[:,-1] <= 35))[0]
-new_data = data[np.append(ind35,np.random.choice(ind35,int(np.round(add_35)))),:]
-augment = np.concatenate((augment,new_data),axis=0)
+if add_35 > 0:
+    print("35: ",add_35)
+    ind35 = np.where((data[:,-1]>34)&(data[:,-1] <= 35))[0]
+    new_data = data[np.append(ind35,np.random.choice(ind35,int(np.round(add_35)))),:]
+    augment = np.concatenate((augment,new_data),axis=0)
 
 add_34 = (ydata[-7]+ydata[-8])/2 - hist[-7]
-print("34: ",add_34)
-ind34 = np.where((data[:,-1]>33)&(data[:,-1] <= 34))[0]
-new_data = data[np.append(ind34,np.random.choice(ind34,int(np.round(add_34)))),:]
-augment = np.concatenate((augment,new_data),axis=0)
+if add_34 > 0:
+    print("34: ",add_34)
+    ind34 = np.where((data[:,-1]>33)&(data[:,-1] <= 34))[0]
+    if ind34.shape[0] > 0:
+        new_data = data[np.append(ind34,np.random.choice(ind34,int(np.round(add_34)))),:]
+        augment = np.concatenate((augment,new_data),axis=0)
 
 add_33 = (ydata[-8]+ydata[-9])/2 - hist[-8]
 if add_33 > 0:
@@ -205,6 +210,7 @@ model = LinearRegression()
 print("Training linear model...fold ",k)
 
 model.fit(X, y)
+pdb.set_trace()
 dump(model, save_file_path)
 print("model trained and saved to ", save_file_path)
 
@@ -250,4 +256,4 @@ for ct, lake_id in enumerate(test_lakes):
     result_df = result_df.append(df)
 
 result_df.reset_index(inplace=True)
-result_df.to_feather("../../results/bachmann_071121_fold"+str(k)+".feather")
+result_df.to_feather("../../results/bachmann_fold"+str(k)+".feather")
