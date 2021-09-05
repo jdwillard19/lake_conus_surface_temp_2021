@@ -199,7 +199,7 @@ data = np.concatenate((data,augment), axis=0)
 
 X = data[:,:-1]
 y = data[:,-1]
-
+X[:,3] = X[:,3] - 273.15
 
 
 
