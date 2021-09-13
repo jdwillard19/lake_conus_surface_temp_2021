@@ -3,7 +3,7 @@ lake_conus_surface_temp_2021
 
 ==============================
 
-EA-LSTM neural network for lake surface temperature 
+EA-LSTM neural network for lake surface temperature. All experiments were ran using K40 GPUs on CUDA version 11.4 using Python 3.6.10.
 
 ---------------
 
@@ -102,4 +102,5 @@ Pipeline to run
 `python predict_lakes_EALSTM_final.py 0 185550` (0 and 185550 are the starting and ending indices of the lakes to be processed as listed in ~/metadata/lake_metadata.csv)  
 
 
-
+9. (optional) Create csv table used in Technical Validation section
+`python compileValidationTable.py`
