@@ -26,7 +26,7 @@ for k in folds_arr:
 	print("fold ",k)
 	lm_df = pd.read_feather("../../results/bachmann_fold"+str(k-1)+"_all_season.feather")
 	ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp_norm2.feather")
-	# pdb.
+	pdb.set_trace()
 	ea_df = pd.merge(ea_df,lm_df,left_on=['Date','site_id'],right_on=['date','site_id'],how='left')
 	combined_ea = combined_ea.append(ea_df)
 	combined_ea.reset_index(inplace=True,drop=True)
