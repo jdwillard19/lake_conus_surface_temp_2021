@@ -20,7 +20,7 @@ currentDT = datetime.datetime.now()
 print("script start: ",str(currentDT))
 
 #file to save model  to
-save_file_path = '../../models/lm_surface_temp_all_season.joblib'
+save_file_path = '../../models/lm_surface_temp.joblib'
 
 #load metadata
 metadata = pd.read_csv("../../metadata/lake_metadata.csv")
@@ -65,7 +65,7 @@ def getBachmannFeatures(data,dates):
 
 X = None
 y = None
-if not os.path.exists("bachmannX_"+str(k)+"_all_season.npy"):
+if not os.path.exists("bachmannX_"+str(k)+".npy"):
     for ct, lake_id in enumerate(train_lakes):
         if ct %100 == 0:
           print("fold ",k," assembling training lake ",ct,"/",len(train_lakes),": ",lake_id)
@@ -83,15 +83,13 @@ if not os.path.exists("bachmannX_"+str(k)+"_all_season.npy"):
         dates_str = [str(d) for d in dates]
 
         #summer only ind
-        # inds = np.where(((np.core.defchararray.find(dates_str,'-06-')!=-1)|\
-        #                  (np.core.defchararray.find(dates_str,'-07-')!=-1)|\
-        #                  (np.core.defchararray.find(dates_str,'-08-')!=-1)|\
-        #                  (np.core.defchararray.find(dates_str,'-09-')!=-1))&\
-        #                   (np.isfinite(y)))[0]
+        inds = np.where(((np.core.defchararray.find(dates_str,'-06-')!=-1)|\
+                         (np.core.defchararray.find(dates_str,'-07-')!=-1)|\
+                         (np.core.defchararray.find(dates_str,'-08-')!=-1)|\
+                         (np.core.defchararray.find(dates_str,'-09-')!=-1))&\
+                          (np.isfinite(y)))[0]
 
 
-        #all data ind
-        inds = np.where(np.isfinite(y))[0]
 
         if inds.shape[0] == 0:
             print("empty")
@@ -106,11 +104,11 @@ if not os.path.exists("bachmannX_"+str(k)+"_all_season.npy"):
         train_df = pd.concat([train_df, new_df], ignore_index=True)
     X = train_df[columns[:-1]].values
     y = np.ravel(train_df[columns[-1]].values)
-    np.save("bachmannX_"+str(k)+"_all_season",X)
-    np.save("bachmannY_"+str(k)+"_all_season",y)
+    np.save("bachmannX_"+str(k),X)
+    np.save("bachmannY_"+str(k),y)
 else:
-    X = np.load("bachmannX_"+str(k)+"_all_season.npy",allow_pickle=True)
-    y = np.load("bachmannY_"+str(k)+"_all_season.npy",allow_pickle=True)
+    X = np.load("bachmannX_"+str(k)+".npy",allow_pickle=True)
+    y = np.load("bachmannY_"+str(k)+".npy",allow_pickle=True)
 
 print("train set dimensions: ",X.shape)
 
@@ -215,6 +213,7 @@ model = LinearRegression()
 print("Training linear model...fold ",k)
 
 model.fit(X, y)
+pdb.set_trace()
 dump(model, save_file_path)
 print("model trained and saved to ", save_file_path)
 
@@ -232,17 +231,11 @@ for ct, lake_id in enumerate(test_lakes):
     X = getBachmannFeatures(X,dates)
     
     y = data[:,-1]
-    #summer only ind
-    # inds = np.where(((np.core.defchararray.find(dates_str,'-06-')!=-1)|\
-    #                  (np.core.defchararray.find(dates_str,'-07-')!=-1)|\
-    #                  (np.core.defchararray.find(dates_str,'-08-')!=-1)|\
-    #                  (np.core.defchararray.find(dates_str,'-09-')!=-1))&\
-    #                   (np.isfinite(y)))[0]
-
-
-    #all data ind
-    inds = np.where(np.isfinite(y))[0]
-
+    inds = np.where(((np.core.defchararray.find(dates_str,'-06-')!=-1)|\
+                     (np.core.defchararray.find(dates_str,'-07-')!=-1)|\
+                     (np.core.defchararray.find(dates_str,'-08-')!=-1)|\
+                     (np.core.defchararray.find(dates_str,'-09-')!=-1))&\
+                      (np.isfinite(y)))[0]
 
     if inds.shape[0] == 0:
         continue
@@ -266,4 +259,4 @@ for ct, lake_id in enumerate(test_lakes):
     result_df = result_df.append(df)
 
 result_df.reset_index(inplace=True)
-result_df.to_feather("../../results/bachmann_fold"+str(k)+"_all_season.feather")
+result_df.to_feather("../../results/bachmann_fold"+str(k)+".feather")

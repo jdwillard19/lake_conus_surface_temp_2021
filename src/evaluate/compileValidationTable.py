@@ -52,18 +52,18 @@ sites_t3 = np.unique(t3['site_id'].values)
 t4 = df[(df['wtemp_obs']>=30)]
 sites_t4 = np.unique(t4['site_id'].values)
 
-# print("calc bias per site t1")
-# bias_per_site_ea_t1 = [np.sqrt(((t1[t1['site_id']==i_d]['wtemp_EALSTM']-t1[t1['site_id']==i_d]['wtemp_obs'])**2).mean())for i_d in sites_t1]
-# bias_per_site_lm_t1 = [np.sqrt(np.nanmean((t1[t1['site_id']==i_d]['wtemp_LM']-t1[t1['site_id']==i_d]['wtemp_obs'])**2)) for i_d in sites_t1]
-# bias_per_site_e5_t1 = [np.sqrt(((t1[t1['site_id']==i_d]['wtemp_ERA5']-t1[t1['site_id']==i_d]['wtemp_obs'])**2).mean())for i_d in sites_t1]
-# bias_per_site_e5b_t1 = [np.sqrt(((t1[t1['site_id']==i_d]['wtemp_ERA5b']-t1[t1['site_id']==i_d]['wtemp_obs'])**2).mean())for i_d in sites_t1]
-# bias_per_site_t1 = pd.DataFrame()
-# bias_per_site_t1['site_id'] = sites_t1
-# bias_per_site_t1['EA'] = bias_per_site_ea_t1
-# bias_per_site_t1['E5'] = bias_per_site_e5_t1
-# bias_per_site_t1['E5b'] = bias_per_site_e5b_t1
-# bias_per_site_t1['LM'] = bias_per_site_lm_t1
-# bias_per_site_t1.to_feather("bias_per_site_t1")
+print("calc bias per site t1")
+bias_per_site_ea_t1 = [np.sqrt(((t1[t1['site_id']==i_d]['wtemp_EALSTM']-t1[t1['site_id']==i_d]['wtemp_obs'])**2).mean())for i_d in sites_t1]
+bias_per_site_lm_t1 = [np.sqrt(np.nanmean((t1[t1['site_id']==i_d]['wtemp_LM']-t1[t1['site_id']==i_d]['wtemp_obs'])**2)) for i_d in sites_t1]
+bias_per_site_e5_t1 = [np.sqrt(((t1[t1['site_id']==i_d]['wtemp_ERA5']-t1[t1['site_id']==i_d]['wtemp_obs'])**2).mean())for i_d in sites_t1]
+bias_per_site_e5b_t1 = [np.sqrt(((t1[t1['site_id']==i_d]['wtemp_ERA5b']-t1[t1['site_id']==i_d]['wtemp_obs'])**2).mean())for i_d in sites_t1]
+bias_per_site_t1 = pd.DataFrame()
+bias_per_site_t1['site_id'] = sites_t1
+bias_per_site_t1['EA'] = bias_per_site_ea_t1
+bias_per_site_t1['E5'] = bias_per_site_e5_t1
+bias_per_site_t1['E5b'] = bias_per_site_e5b_t1
+bias_per_site_t1['LM'] = bias_per_site_lm_t1
+bias_per_site_t1.to_feather("bias_per_site_t1")
 
 # print("calc bias per site t2")
 # bias_per_site_ea_t2 = [np.sqrt(((t2[t2['site_id']==i_d]['wtemp_EALSTM']-t2[t2['site_id']==i_d]['wtemp_obs'])**2).mean())for i_d in sites_t2]
