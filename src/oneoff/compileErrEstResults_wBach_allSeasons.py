@@ -19,12 +19,12 @@ combined_df = pd.DataFrame()
 combined_lm = pd.DataFrame()
 combined_gb = pd.DataFrame()
 combined_ea = pd.DataFrame()
-folds_arr = np.arange(n_folds)+1 
+folds_arr = np.arange(n_folds)+1
 
 
 for k in folds_arr:
 	print("fold ",k)
-	lm_df = pd.read_feather("../../results/bachmann_fold"+str(k)+"_all_season.feather")
+	lm_df = pd.read_feather("../../results/bachmann_fold"+str(k-1)+"_all_season.feather")
 	ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp_norm2.feather")
 	# pdb.
 	ea_df = pd.merge(ea_df,lm_df,left_on=['Date','site_id'],right_on=['date','site_id'],how='left')
