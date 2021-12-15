@@ -218,7 +218,6 @@ model.fit(X, y)
 dump(model, save_file_path)
 print("model trained and saved to ", save_file_path)
 
-pdb.set_trace()
 #tes
 for ct, lake_id in enumerate(test_lakes):
     print("fold ",k," testing test lake ",ct,"/",len(test_lakes),": ",lake_id)
