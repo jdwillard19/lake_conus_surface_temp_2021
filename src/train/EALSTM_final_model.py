@@ -92,15 +92,15 @@ lakenames = metadata['site_id'].values
 ep_arr = []   
 
 
-if not os.path.exists("./ealstm_trn_data_072621.npy"):
+if not os.path.exists("./ealstm_trn_data.npy"):
     (trn_data, _) = buildLakeDataForRNN_multilakemodel_conus(lakenames,\
                                                     seq_length, n_total_feats,\
                                                     win_shift = win_shift, begin_loss_ind = begin_loss_ind,\
                                                     static_feats=True,n_static_feats = 4,verbose=True,cold_filter=False) 
 
-    np.save("./ealstm_trn_data_072621.npy",trn_data)
+    np.save("./ealstm_trn_data.npy",trn_data)
 else:
-    trn_data = torch.from_numpy(np.load("./ealstm_trn_data_072621.npy"))
+    trn_data = torch.from_numpy(np.load("./ealstm_trn_data.npy"))
 
 print("train_data size: ",trn_data.size())
 
@@ -119,6 +119,7 @@ xmin, xmax = plt.xlim()
 
 p = norm.pdf(bins, mu, std)           
 new_handler, = plt.plot(bins, p/p.sum() * nsize , 'r', linewidth=2)
+
 # new_handler now contains a Line2D object
 # and the appropriate way to get data from it is therefore:
 xdata, ydata = new_handler.get_data()
@@ -608,7 +609,7 @@ for epoch in range(n_eps):
     if avg_loss < min_train_rmse:
         min_train_rmse = avg_loss
         print("model saved")
-        save_path = "../../models/EALSTM_"+str(n_hidden)+"hid_"+str(num_layers)+"_final_072621"
+        save_path = "../../models/EALSTM_"+str(n_hidden)+"hid_"+str(num_layers)+"_final"
         saveModel(lstm_net.state_dict(), optimizer.state_dict(), save_path)
 
     if avg_loss < targ_rmse and epoch > targ_ep:

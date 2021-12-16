@@ -8,6 +8,7 @@ __pycache__/
 # Distribution / packaging
 .Python
 src/era5/
+src/evaluate/lake_surface_temp_preds.csv
 env/
 build/
 develop-eggs/

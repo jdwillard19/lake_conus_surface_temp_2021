@@ -26,7 +26,6 @@ for k in folds_arr:
 	print("fold ",k)
 	lm_df = pd.read_feather("../../results/bachmann_fold"+str(k-1)+"_all_season.feather")
 	ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp_norm2.feather")
-	pdb.set_trace()
 	ea_df = pd.merge(ea_df,lm_df,left_on=['Date','site_id'],right_on=['date','site_id'],how='left')
 	combined_ea = combined_ea.append(ea_df)
 	combined_ea.reset_index(inplace=True,drop=True)
@@ -46,7 +45,6 @@ per_site_df = pd.DataFrame(columns=['site_id','n_obs','rmse_ealstm','rmse_lm'])
 for i,site_id in enumerate(site_ids):
 	print(i)
 	per_site_res = combined_df[combined_df['site_id'] == site_id]
-	pdb.set_trace()
 	site_df = pd.DataFrame(columns=['site_id','n_obs','rmse_ealstm','rmse_lm'])
 	# site_df = pd.DataFrame(columns=['site_id','n_obs','rmse_ealstm','rmse_xgboost'])
 	site_df['rmse_ealstm'] = [np.sqrt(((per_site_res['wtemp_predicted-ealstm'] - per_site_res['wtemp_actual']) ** 2).mean())]
