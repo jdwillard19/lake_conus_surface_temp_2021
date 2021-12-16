@@ -232,6 +232,7 @@ for ct, lake_id in enumerate(test_lakes):
     X = getBachmannFeatures(X,dates)
     
     y = data[:,-1]
+    pdb.set_trace()
     #summer only ind
     # inds = np.where(((np.core.defchararray.find(dates_str,'-06-')!=-1)|\
     #                  (np.core.defchararray.find(dates_str,'-07-')!=-1)|\
