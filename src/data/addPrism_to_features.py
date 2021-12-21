@@ -26,7 +26,7 @@ for site_ct, site_id in enumerate(site_ids):
     for date in dates:
         print("date ", date)
         date_str = str(date)[:4]+str(date)[5:7]+str(date)[8:10]
-        file_path = 'PRISM_tmax_stable_4kmD2_'+date_str+'_bil.bil'
+        file_path = '../../data/raw/prism/PRISM_tmax_stable_4kmD2_'+date_str+'_bil.bil'
         if os.path.exists(file_path):
             dataset = rasterio.open(file_path)
             pdb.set_trace()
