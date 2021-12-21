@@ -11,11 +11,14 @@ site_ids = metadata['site_id'].values[start:end]
 
 for site_ct, site_id in enumerate(site_ids):
     print(site_ct,"/",len(site_ids)," starting ", site_id)
-	feat_path = "../../data/processed/"+site_id+"/features.npy"
-	feat_old = np.load(feat_path, allow_pickle=True)
+    feat_path = "../../data/processed/"+site_id+"/features.npy"
+    feat_old = np.load(feat_path, allow_pickle=True)
 
     dates_path = "../../data/processed/"+site_id+"/dates"
     dates = np.load(dates_path, allow_pickle=True)
 
-    
+    # new_temps = np.empty()
     pdb.set_trace()
+
+    # for date in dates:
+        # dataset = rasterio.open('PRISM_tmax_stable_4kmD2_19861011_bil.bil')
