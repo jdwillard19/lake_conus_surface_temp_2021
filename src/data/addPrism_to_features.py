@@ -2,6 +2,7 @@ import pandas as pd
 import sys
 import numpy as np
 import pdb
+import rasterio
 
 #get prism data to align with dates
 metadata = pd.read_csv("../../metadata/lake_metadata.csv")
