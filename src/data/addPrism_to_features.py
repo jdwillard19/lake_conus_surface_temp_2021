@@ -14,7 +14,7 @@ for site_ct, site_id in enumerate(site_ids):
     feat_path = "../../data/processed/"+site_id+"/features.npy"
     feat_old = np.load(feat_path, allow_pickle=True)
 
-    dates_path = "../../data/processed/"+site_id+"/dates"
+    dates_path = "../../data/processed/"+site_id+"/dates.npy"
     dates = np.load(dates_path, allow_pickle=True)
 
     # new_temps = np.empty()
