@@ -17,8 +17,11 @@ for site_ct, site_id in enumerate(site_ids):
     dates_path = "../../data/processed/"+site_id+"/dates.npy"
     dates = np.load(dates_path, allow_pickle=True)
 
-    # new_temps = np.empty()
-    pdb.set_trace()
+    new_temps = np.empty(feat_old.shape[0])
+    lat = feat_old[0,1]
+    lon = feat_old[0,2]
 
-    # for date in dates:
-        # dataset = rasterio.open('PRISM_tmax_stable_4kmD2_19861011_bil.bil')
+    for date in dates:
+        date_str = str(date)[:4]+str(date)[5:7]+str(date)[8:10]
+        dataset = rasterio.open('PRISM_tmax_stable_4kmD2_'+date_str+'_bil.bil')
+        pdb.set_trace()
