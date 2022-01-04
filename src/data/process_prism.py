@@ -72,6 +72,7 @@ new_temps = np.empty(feat_old.shape[0])
 
 splits = np.array_split(dates,50)
 dates = splits[int(sys.argv[1])]
+at_arr = np.empty((site_ids.shape[0], dates.shape[0]))
 for date_ct, date in enumerate(dates):
 
     date_str = str(date)[:4]+str(date)[5:7]+str(date)[8:10]
@@ -121,6 +122,7 @@ for date_ct, date in enumerate(dates):
                         break
                 if np.isfinite(at):
                     break
+        at_arr[site_ct, date_ct] = at
         if np.isnan(at):
             no_ct += 1
         else:
@@ -128,4 +130,6 @@ for date_ct, date in enumerate(dates):
     print("yes_ct: ",yes_ct)
     print("no_ct: ",no_ct)
 
-    pdb.set_trace()
+
+np.save("../../data/raw/prism/ats_split"+str(sys.argv[1]),at_arr)
+
