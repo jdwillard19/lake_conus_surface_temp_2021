@@ -96,14 +96,26 @@ for date_ct, date in enumerate(dates):
         lat = metadata[metadata['site_id']==site_id]['lake_lat_deg'].values[0]
         py, px = dataset.index(lon, lat)
         at = band1[py,px]
+       if np.isnan(at):
+            for offset_i in [-1, 0, 1]:
+                for offset_j in [-1, 0, 1]:
+                    new_py = py + offset_i
+                    new_px = px + offset_j
+                    at = band1[new_py,new_px]
+                    if np.isfinite(at):
+                        break
+                if np.isfinite(at):
+                    break
         if np.isnan(at):
-            at = band1[py+1,px]
-        if np.isnan(at):
-            at = band1[py-1,px]
-        if np.isnan(at):
-            at = band1[py,px+1]
-        if np.isnan(at):
-            at = band1[py,px-1]
+            for offset_i in [-2,-1, 0, 1, 2]:
+                for offset_j in [-2, -1, 0, 1, 2]:
+                    new_py = py + offset_i
+                    new_px = px + offset_j
+                    at = band1[new_py,new_px]
+                    if np.isfinite(at):
+                        break
+                if np.isfinite(at):
+                    break
         if np.isnan(at):
             no_ct += 1
             no_lats.append(lat)
