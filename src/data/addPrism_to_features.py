@@ -102,7 +102,7 @@ for date_ct, date in enumerate(dates):
             at = band1[py-1,px]
         if at is nan:
             at = band1[py,px+1]
-        if at is nan
+        if at is nan:
             at = band1[py,px-1]
         if np.isnan(at):
             no_ct += 1
