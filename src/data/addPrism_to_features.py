@@ -77,8 +77,7 @@ new_temps = np.empty(feat_old.shape[0])
 
 dates = np.flip(dates)
 for date_ct, date in enumerate(dates):
-    if date_ct % 1000 == 0:
-        print("date ", date)
+
     date_str = str(date)[:4]+str(date)[5:7]+str(date)[8:10]
     file_path = '../../data/raw/prism/PRISM_tmean_stable_4kmD2_'+date_str+'_bil.bil'
 
@@ -92,14 +91,25 @@ for date_ct, date in enumerate(dates):
         print("date not in PRISM")
         continue
     for site_ct, site_id in enumerate(site_ids):
+        if site_ct % 1000 == 0:
+            print("date ", date)
         print(site_ct,"/",len(site_ids)," starting ", site_id)
         lon = metadata[metadata['site_id']==site_id]['lake_lon_deg'].values[0]
         lat = metadata[metadata['site_id']==site_id]['lake_lat_deg'].values[0]
         py, px = dataset.index(lon, lat)
         at = band1[py,px]
-        if np.isnan(at):
-            for offset_i in [-1, 0, 1]:
-                for offset_j in [-1, 0, 1]:
+
+        offsets_i = [0]
+        offsets_j = [0]
+        offset = 0
+        while np.isnan(at):
+            offset += 1
+            offsets_i.append(offset)
+            offsets_j.append(offset)
+            offsets_i.append(-offset)
+            offsets_j.append(-offset)
+            for offset_i in offsets_i:
+                for offset_j in offsets_j:
                     new_py = py + offset_i
                     new_px = px + offset_j
                     if new_py < 0:
@@ -111,60 +121,6 @@ for date_ct, date in enumerate(dates):
                     if new_px <= band1.shape[1]:
                         new_px = band1.shape[1] -1
                     at = band1[new_py,new_px]
-                    if np.isfinite(at):
-                        break
-                if np.isfinite(at):
-                    break
-        if np.isnan(at):
-            for offset_i in [-2,-1, 0, 1, 2]:
-                for offset_j in [-2, -1, 0, 1, 2]:
-                    new_py = py + offset_i
-                    new_px = px + offset_j
-                    if new_py < 0:
-                        new_py = 0
-                    if new_px < 0:
-                        new_px = 0
-                    if new_py >= band1.shape[0]:
-                        new_py = band1.shape[0]-1
-                    if new_px <= band1.shape[1]:
-                        new_px = band1.shape[1] -1
-                    at = band1[new_py,new_px]
-                    if np.isfinite(at):
-                        break
-                if np.isfinite(at):
-                    break
-        if np.isnan(at):
-            for offset_i in [-3, -2,-1, 0, 1, 2, 3]:
-                for offset_j in [-3, -2, -1, 0, 1, 2, 3]:
-                    new_py = py + offset_i
-                    new_px = px + offset_j
-                    at = band1[new_py,new_px]
-                    if new_py < 0:
-                        new_py = 0
-                    if new_px < 0:
-                        new_px = 0
-                    if new_py >= band1.shape[0]:
-                        new_py = band1.shape[0]-1
-                    if new_px <= band1.shape[1]:
-                        new_px = band1.shape[1] -1
-                    if np.isfinite(at):
-                        break
-                if np.isfinite(at):
-                    break
-        if np.isnan(at):
-            for offset_i in [-4, -3, -2,-1, 0, 1, 2, 3, 4]:
-                for offset_j in [-4, -3, -2, -1, 0, 1, 2, 3, 4]:
-                    new_py = py + offset_i
-                    new_px = px + offset_j
-                    at = band1[new_py,new_px]
-                    if new_py < 0:
-                        new_py = 0
-                    if new_px < 0:
-                        new_px = 0
-                    if new_py >= band1.shape[0]:
-                        new_py = band1.shape[0]-1
-                    if new_px <= band1.shape[1]:
-                        new_px = band1.shape[1] -1
                     if np.isfinite(at):
                         break
                 if np.isfinite(at):
