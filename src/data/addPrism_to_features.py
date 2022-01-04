@@ -77,7 +77,8 @@ new_temps = np.empty(feat_old.shape[0])
 
 dates = np.flip(dates)
 for date_ct, date in enumerate(dates):
-    print("date ", date)
+    if date_ct % 1000 == 0:
+        print("date ", date)
     date_str = str(date)[:4]+str(date)[5:7]+str(date)[8:10]
     file_path = '../../data/raw/prism/PRISM_tmean_stable_4kmD2_'+date_str+'_bil.bil'
 
