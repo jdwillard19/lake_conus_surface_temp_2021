@@ -108,6 +108,7 @@ for date_ct, date in enumerate(dates):
             offsets_j.append(offset)
             offsets_i.append(-offset)
             offsets_j.append(-offset)
+            pdb.set_trace()
             for offset_i in offsets_i:
                 for offset_j in offsets_j:
                     new_py = py + offset_i
