@@ -23,7 +23,7 @@ for site_ct, site_id in enumerate(site_ids):
     new_temps = np.empty(feat_old.shape[0])
     lat = feat_old[0,1]
     lon = feat_old[0,2]
-    print("yes ct: ", yet_ct)
+    print("yes ct: ", yes_ct)
     print("no ct: ", no_ct)
     for date_ct, date in enumerate(dates):
         print("date ", date)
