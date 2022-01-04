@@ -96,13 +96,13 @@ for date_ct, date in enumerate(dates):
         lat = metadata[metadata['site_id']==site_id]['lake_lat_deg'].values[0]
         py, px = dataset.index(lon, lat)
         at = band1[py,px]
-        if at is nan:
+        if np.isnan(at):
             at = band1[py+1,px]
-        if at is nan:
+        if np.isnan(at):
             at = band1[py-1,px]
-        if at is nan:
+        if np.isnan(at):
             at = band1[py,px+1]
-        if at is nan:
+        if np.isnan(at):
             at = band1[py,px-1]
         if np.isnan(at):
             no_ct += 1
