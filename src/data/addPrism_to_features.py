@@ -54,11 +54,17 @@ import os
 
 #get prism data to align with dates
 metadata = pd.read_csv("../../metadata/lake_metadata.csv")
+metadata = metadata[metadata['num_obs'] > 0]
+
 start = int(sys.argv[1])
 end = int(sys.argv[2])
 site_ids = metadata['site_id'].values[start:end]
 no_ct = 0
 yes_ct = 0
+no_lats = []
+no_lons = []
+yes_lats = []
+yes_lons = []
 site_id0 = site_ids[0]
 
 feat_path = "../../data/processed/"+site_id0+"/features.npy"
@@ -92,8 +98,13 @@ for date_ct, date in enumerate(dates):
         at = band1[py,px]
         if np.isnan(at):
             no_ct += 1
+            no_lats.append(lat)
+            no_lons.append(lon)
         else:
             yes_ct += 1
+            yes_lats.append(lat)
+            yes_lon.append(lon)
     print("yes_ct: ",yes_ct)
     print("no_ct: ",no_ct)
 
+    pdb.set_trace()
