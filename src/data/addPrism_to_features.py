@@ -23,10 +23,12 @@ for site_ct, site_id in enumerate(site_ids):
     lat = feat_old[0,1]
     lon = feat_old[0,2]
 
-    for date in dates:
+    for date_ct, date in enumerate(dates):
         print("date ", date)
         date_str = str(date)[:4]+str(date)[5:7]+str(date)[8:10]
         file_path = '../../data/raw/prism/PRISM_tmax_stable_4kmD2_'+date_str+'_bil.bil'
+        if date_ct > 500:
+            pdb.set_trace()
         if os.path.exists(file_path):
             dataset = rasterio.open(file_path)
             pdb.set_trace()
