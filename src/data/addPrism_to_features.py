@@ -122,6 +122,7 @@ for date_ct, date in enumerate(dates):
                     if new_px <= band1.shape[1]:
                         new_px = band1.shape[1] -1
                     at = band1[new_py,new_px]
+                    print("at at ",new_py, ",",new_px,": ",at)
                     if np.isfinite(at):
                         break
                 if np.isfinite(at):
