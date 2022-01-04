@@ -103,7 +103,7 @@ for date_ct, date in enumerate(dates):
         else:
             yes_ct += 1
             yes_lats.append(lat)
-            yes_lon.append(lon)
+            yes_lons.append(lon)
     print("yes_ct: ",yes_ct)
     print("no_ct: ",no_ct)
 
