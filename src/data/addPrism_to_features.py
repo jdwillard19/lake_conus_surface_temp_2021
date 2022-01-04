@@ -157,6 +157,26 @@ for date_ct, date in enumerate(dates):
                 if np.isfinite(at):
                     break
         if np.isnan(at):
+            for offset_i in [-4, -3, -2,-1, 0, 1, 2, 3, 4]:
+                for offset_j in [-4, -3, -2, -1, 0, 1, 2, 3, 4]:
+                    new_py = py + offset_i
+                    new_px = px + offset_j
+                    at = band1[new_py,new_px]
+                    if new_py < 0:
+                        new_py = 0
+                    if new_px < 0:
+                        new_px = 0
+                    if new_py >= band1.shape[0]:
+                        new_py = band1.shape[0]-1
+                    if new_px <= band1.shape[1]:
+                        new_px = band1.shape[1] -1
+                    if np.isfinite(at):
+                        print("found at 4 offset")
+                        pdb.set_trace()
+                        break
+                if np.isfinite(at):
+                    break
+        if np.isnan(at):
             no_ct += 1
             no_lats.append(lat)
             no_lons.append(lon)
