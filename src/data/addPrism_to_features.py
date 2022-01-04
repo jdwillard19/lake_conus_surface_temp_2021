@@ -108,7 +108,7 @@ for date_ct, date in enumerate(dates):
             offsets_j.append(offset)
             offsets_i.append(-offset)
             offsets_j.append(-offset)
-            pdb.set_trace()
+            # pdb.set_trace()
             for offset_i in offsets_i:
                 for offset_j in offsets_j:
                     new_py = py + offset_i
@@ -122,7 +122,7 @@ for date_ct, date in enumerate(dates):
                     if new_px >= band1.shape[1]:
                         new_px = band1.shape[1] -1
                     at = band1[new_py,new_px]
-                    print("at at ",new_py, ",",new_px,": ",at)
+                    # print("at at ",new_py, ",",new_px,": ",at)
                     if np.isfinite(at):
                         break
                 if np.isfinite(at):
