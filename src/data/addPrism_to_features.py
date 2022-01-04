@@ -71,8 +71,7 @@ dates = np.load(dates_path, allow_pickle=True)
 new_temps = np.empty(feat_old.shape[0])
 
 splits = np.array_split(dates,50)
-split = splits[int(sys.argv[1])]
-dates = dates[split]
+dates = splits[int(sys.argv[1])]
 for date_ct, date in enumerate(dates):
 
     date_str = str(date)[:4]+str(date)[5:7]+str(date)[8:10]
