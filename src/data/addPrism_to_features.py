@@ -82,7 +82,9 @@ for date_ct, date in enumerate(dates):
         dataset = rasterio.open(file_path)
         band1 = dataset.read(1)
         band1[band1==-9999] = np.nan #to avoid errors
-
+    else:
+        print("date not in PRISM")
+        continue
     for site_ct, site_id in enumerate(site_ids):
         print(site_ct,"/",len(site_ids)," starting ", site_id)
 
@@ -97,5 +99,4 @@ for date_ct, date in enumerate(dates):
         else:
             pdb.set_trace()
             yes_ct += 1
-        else:
-            print("date not in PRISM")
+
