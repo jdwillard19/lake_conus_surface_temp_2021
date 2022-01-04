@@ -70,7 +70,7 @@ dates = np.load(dates_path, allow_pickle=True)
 
 new_temps = np.empty(feat_old.shape[0])
 
-splits = np.array_split(dates,50)
+splits = np.array_split(dates,300)
 dates = splits[int(sys.argv[1])]
 at_arr = np.empty((site_ids.shape[0], dates.shape[0]))
 for date_ct, date in enumerate(dates):

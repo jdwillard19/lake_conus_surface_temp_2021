@@ -12,7 +12,7 @@ import numpy as np
 sbatch = ""
 ct = 0
 # n_hid_arr = np.arange(25,275,25)
-for i in range(50):
+for i in range(300):
     #for each unique lake
     print(i)
     ct += 1
