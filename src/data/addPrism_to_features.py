@@ -56,15 +56,10 @@ import os
 metadata = pd.read_csv("../../metadata/lake_metadata.csv")
 metadata = metadata[metadata['num_obs'] > 0]
 
-start = int(sys.argv[1])
-end = int(sys.argv[2])
-site_ids = metadata['site_id'].values[start:end]
+
+site_ids = metadata['site_id'].values 
 no_ct = 0
 yes_ct = 0
-no_lats = []
-no_lons = []
-yes_lats = []
-yes_lons = []
 site_id0 = site_ids[0]
 
 feat_path = "../../data/processed/"+site_id0+"/features.npy"
@@ -75,7 +70,9 @@ dates = np.load(dates_path, allow_pickle=True)
 
 new_temps = np.empty(feat_old.shape[0])
 
-dates = np.flip(dates)
+splits = np.array_split(dates,50)
+split = splits(int(sys.argv[1]))
+dates = dates[split]
 for date_ct, date in enumerate(dates):
 
     date_str = str(date)[:4]+str(date)[5:7]+str(date)[8:10]
@@ -91,8 +88,6 @@ for date_ct, date in enumerate(dates):
         print("date not in PRISM")
         continue
     for site_ct, site_id in enumerate(site_ids):
-        if site_ct % 1000 == 0:
-            print("date ", date)
         print(site_ct,"/",len(site_ids)," starting ", site_id)
         lon = metadata[metadata['site_id']==site_id]['lake_lon_deg'].values[0]
         lat = metadata[metadata['site_id']==site_id]['lake_lat_deg'].values[0]
@@ -129,12 +124,8 @@ for date_ct, date in enumerate(dates):
                     break
         if np.isnan(at):
             no_ct += 1
-            no_lats.append(lat)
-            no_lons.append(lon)
         else:
             yes_ct += 1
-            yes_lats.append(lat)
-            yes_lons.append(lon)
     print("yes_ct: ",yes_ct)
     print("no_ct: ",no_ct)
 
