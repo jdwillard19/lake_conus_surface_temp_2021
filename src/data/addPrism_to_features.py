@@ -69,8 +69,7 @@ dates = np.load(dates_path, allow_pickle=True)
 
 new_temps = np.empty(feat_old.shape[0])
 
-print("yes ct: ", yes_ct)
-print("no ct: ", no_ct)
+
 for date_ct, date in enumerate(dates):
     print("date ", date)
     date_str = str(date)[:4]+str(date)[5:7]+str(date)[8:10]
@@ -87,16 +86,14 @@ for date_ct, date in enumerate(dates):
         continue
     for site_ct, site_id in enumerate(site_ids):
         print(site_ct,"/",len(site_ids)," starting ", site_id)
-
-        pdb.set_trace()
-
-        lon = 0
-        lat = 0
+        lon = metadata[metadata['site_id']==site_id]['lake_lon_deg'].values[0]
+        lat = metadata[metadata['site_id']==site_id]['lake_lat_deg'].values[0]
         py, px = dataset.index(lon, lat)
         at = band1[py,px]
         if np.isnan(at):
             no_ct += 1
         else:
-            pdb.set_trace()
             yes_ct += 1
+    print("yes_ct: ",yes_ct)
+    print("no_ct: ",no_ct)
 
