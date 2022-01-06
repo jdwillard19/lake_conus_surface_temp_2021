@@ -24,7 +24,7 @@ folds_arr = np.arange(n_folds)+1
 
 for k in folds_arr:
 	print("fold ",k)
-	lm_df = pd.read_feather("../../results/bachmann_fold"+str(k)+"_wPrism.feather")
+	lm_df = pd.read_feather("../../results/bachmann_fold"+str(k)+"_wPrism..feather")
 	ea_df = pd.read_feather("../../results/err_est_outputs_072621_EALSTM_fold"+str(k)+"_oversamp_norm2.feather")
 	ea_df = pd.merge(ea_df,lm_df,left_on=['Date','site_id'],right_on=['date','site_id'],how='left')
 	combined_ea = combined_ea.append(ea_df)
