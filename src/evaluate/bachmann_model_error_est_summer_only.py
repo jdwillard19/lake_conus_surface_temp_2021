@@ -68,7 +68,7 @@ def getBachmannFeatures(data,dates):
 
 X = None
 y = None
-x_path = "bachmannX_"+str(k)+"_prism.npy"
+x_path = "bachmannX_"+str(k)+".npy"
 if not os.path.exists(x_path):
     for ct, lake_id in enumerate(train_lakes):
         if ct %100 == 0:
@@ -237,7 +237,7 @@ for ct, lake_id in enumerate(test_lakes):
     X = getBachmannFeatures(X,dates)
     
     X[:,3] = X[:,3]-273.15
-    
+
     y = data[:,-1]
     inds = np.where(((np.core.defchararray.find(dates_str,'-06-')!=-1)|\
                      (np.core.defchararray.find(dates_str,'-07-')!=-1)|\
