@@ -11,7 +11,8 @@ from sklearn.model_selection import GridSearchCV, cross_val_score
 import matplotlib.pyplot as plt
 from scipy import stats
 from scipy.stats import norm
-
+from pyPRISMClimate import get_prism_dailys, get_prism_daily_single,
+                    
 ##################################################################3
 # (July 2021 - Jared) - error estimation linear model 
 ####################################################################3
@@ -232,7 +233,6 @@ for ct, lake_id in enumerate(test_lakes):
     X = getBachmannFeatures(X,dates)
     
     y = data[:,-1]
-    pdb.set_trace()
     #summer only ind
     # inds = np.where(((np.core.defchararray.find(dates_str,'-06-')!=-1)|\
     #                  (np.core.defchararray.find(dates_str,'-07-')!=-1)|\
@@ -266,5 +266,6 @@ for ct, lake_id in enumerate(test_lakes):
     df['date'] = dates
     result_df = result_df.append(df)
 
+pdb.set_trace()
 result_df.reset_index(inplace=True)
 result_df.to_feather("../../results/bachmann_fold"+str(k)+"_all_season.feather")

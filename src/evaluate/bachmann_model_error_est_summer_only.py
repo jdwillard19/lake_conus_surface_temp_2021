@@ -37,6 +37,9 @@ train_df = pd.DataFrame(columns=columns)
 param_search = True
 k = int(sys.argv[1])
 
+
+use_prism_data = True
+
 #build training set
 final_output_df = pd.DataFrame()
 result_df = pd.DataFrame(columns=['site_id','temp_pred_lm','temp_actual'])
@@ -65,7 +68,8 @@ def getBachmannFeatures(data,dates):
 
 X = None
 y = None
-if not os.path.exists("bachmannX_"+str(k)+".npy"):
+x_path = "bachmannX_"+str(k)+"_prism.npy"
+if not os.path.exists(x_path):
     for ct, lake_id in enumerate(train_lakes):
         if ct %100 == 0:
           print("fold ",k," assembling training lake ",ct,"/",len(train_lakes),": ",lake_id)
@@ -74,6 +78,11 @@ if not os.path.exists("bachmannX_"+str(k)+".npy"):
         labs = np.load("../../data/processed/"+lake_id+"/obs.npy")
         
         dates = np.load("../../data/processed/"+lake_id+"/dates.npy",allow_pickle=True)
+
+
+        #get prism data to align with dates
+        
+
         data = np.concatenate((feats[:,:],labs.reshape(labs.shape[0],1)),axis=1)
         X = data[:,:-1]
 
