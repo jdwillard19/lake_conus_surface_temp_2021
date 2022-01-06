@@ -11,7 +11,7 @@ from sklearn.model_selection import GridSearchCV, cross_val_score
 import matplotlib.pyplot as plt
 from scipy import stats
 from scipy.stats import norm
-
+                    
 ##################################################################3
 # (July 2021 - Jared) - error estimation linear model 
 ####################################################################3
@@ -20,7 +20,7 @@ currentDT = datetime.datetime.now()
 print("script start: ",str(currentDT))
 
 #file to save model  to
-save_file_path = '../../models/lm_surface_temp.joblib'
+save_file_path = '../../models/lm_surface_temp_all_season.joblib'
 
 #load metadata
 metadata = pd.read_csv("../../metadata/lake_metadata.csv")
@@ -36,7 +36,6 @@ train_df = pd.DataFrame(columns=columns)
 
 param_search = True
 k = int(sys.argv[1])
-
 
 #build training set
 final_output_df = pd.DataFrame()
@@ -66,35 +65,35 @@ def getBachmannFeatures(data,dates):
 
 X = None
 y = None
-x_path = "bachmannX_"+str(k)+".npy"
-if not os.path.exists(x_path):
+if not os.path.exists("bachmannX_"+str(k)+"_all_season_wPrism.npy"):
     for ct, lake_id in enumerate(train_lakes):
         if ct %100 == 0:
           print("fold ",k," assembling training lake ",ct,"/",len(train_lakes),": ",lake_id)
         #load data
-        feats = np.load("../../data/processed/"+lake_id+"/features.npy")
-        labs = np.load("../../data/processed/"+lake_id+"/obs.npy")
+        feats = np.load("../../data/processed/"+lake_id+"/features_wPrism.npy")
+
+        #convert K to C
+        labs = np.load("../../data/processed/"+lake_id+"/obs_wPrism.npy")
         
-        dates = np.load("../../data/processed/"+lake_id+"/dates.npy",allow_pickle=True)
-
-
-
+        dates = np.load("../../data/processed/"+lake_id+"/dates_wPrism.npy",allow_pickle=True)
         data = np.concatenate((feats[:,:],labs.reshape(labs.shape[0],1)),axis=1)
         X = data[:,:-1]
 
         X = getBachmannFeatures(X,dates)
-        X[:,3] = X[:,3]-273.15
+        X[:,3] = X[:,3] - 273.15
         y = data[:,-1]
         dates_str = [str(d) for d in dates]
 
         #summer only ind
-        inds = np.where(((np.core.defchararray.find(dates_str,'-06-')!=-1)|\
-                         (np.core.defchararray.find(dates_str,'-07-')!=-1)|\
-                         (np.core.defchararray.find(dates_str,'-08-')!=-1)|\
-                         (np.core.defchararray.find(dates_str,'-09-')!=-1))&\
-                          (np.isfinite(y)))[0]
+        # inds = np.where(((np.core.defchararray.find(dates_str,'-06-')!=-1)|\
+        #                  (np.core.defchararray.find(dates_str,'-07-')!=-1)|\
+        #                  (np.core.defchararray.find(dates_str,'-08-')!=-1)|\
+        #                  (np.core.defchararray.find(dates_str,'-09-')!=-1))&\
+        #                   (np.isfinite(y)))[0]
 
 
+        #all data ind
+        inds = np.where(np.isfinite(y))[0]
 
         if inds.shape[0] == 0:
             print("empty")
@@ -109,14 +108,14 @@ if not os.path.exists(x_path):
         train_df = pd.concat([train_df, new_df], ignore_index=True)
     X = train_df[columns[:-1]].values
     y = np.ravel(train_df[columns[-1]].values)
-    np.save("bachmannX_"+str(k),X)
-    np.save("bachmannY_"+str(k),y)
+    np.save("bachmannX_"+str(k)+"_all_season",X)
+    np.save("bachmannY_"+str(k)+"_all_season",y)
 else:
-    X = np.load("bachmannX_"+str(k)+".npy",allow_pickle=True)
-    y = np.load("bachmannY_"+str(k)+".npy",allow_pickle=True)
+    X = np.load("bachmannX_"+str(k)+"_all_season_wPrism.npy",allow_pickle=True)
+    y = np.load("bachmannY_"+str(k)+"_all_season_wPrism.npy",allow_pickle=True)
 
+#convert K to C
 print("train set dimensions: ",X.shape)
-
 
 
 data = np.concatenate((X,np.expand_dims(y,-1)),axis=1)#add oversamping 
@@ -208,6 +207,7 @@ data = np.concatenate((data,augment), axis=0)
 
 X = data[:,:-1]
 y = data[:,-1]
+X[:,3] = X[:,3] - 273.15
 
 
 
@@ -225,23 +225,25 @@ print("model trained and saved to ", save_file_path)
 for ct, lake_id in enumerate(test_lakes):
     print("fold ",k," testing test lake ",ct,"/",len(test_lakes),": ",lake_id)
     #load data
-    feats = np.load("../../data/processed/"+lake_id+"/features.npy")
-    labs = np.load("../../data/processed/"+lake_id+"/obs.npy")
-    dates = np.load("../../data/processed/"+lake_id+"/dates.npy")
+    feats = np.load("../../data/processed/"+lake_id+"/features_wPrism.npy")
+    labs = np.load("../../data/processed/"+lake_id+"/obs_wPrism.npy")
+    dates = np.load("../../data/processed/"+lake_id+"/dates_wPrism.npy")
     data = np.concatenate((feats[:,:],labs.reshape(labs.shape[0],1)),axis=1)
     X = data[:,:-1]
     dates_str = [str(d) for d in dates]
 
     X = getBachmannFeatures(X,dates)
     
+    #convert K to C
     X[:,3] = X[:,3]-273.15
 
     y = data[:,-1]
-    inds = np.where(((np.core.defchararray.find(dates_str,'-06-')!=-1)|\
-                     (np.core.defchararray.find(dates_str,'-07-')!=-1)|\
-                     (np.core.defchararray.find(dates_str,'-08-')!=-1)|\
-                     (np.core.defchararray.find(dates_str,'-09-')!=-1))&\
-                      (np.isfinite(y)))[0]
+    #summer only ind
+
+
+    #all data ind
+    inds = np.where(np.isfinite(y))[0]
+
 
     if inds.shape[0] == 0:
         continue
@@ -264,5 +266,6 @@ for ct, lake_id in enumerate(test_lakes):
     df['date'] = dates
     result_df = result_df.append(df)
 
+pdb.set_trace()
 result_df.reset_index(inplace=True)
-result_df.to_feather("../../results/bachmann_fold"+str(k)+".feather")
+result_df.to_feather("../../results/bachmann_fold"+str(k)+"_all_season_wPrism.feather")
