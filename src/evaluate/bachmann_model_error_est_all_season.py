@@ -65,7 +65,7 @@ def getBachmannFeatures(data,dates):
 
 X = None
 y = None
-if not os.path.exists("bachmannX_"+str(k)+"_all_season.npy"):
+if not os.path.exists("bachmannX_"+str(k)+"_all_season2.npy"):
     for ct, lake_id in enumerate(train_lakes):
         if ct %100 == 0:
           print("fold ",k," assembling training lake ",ct,"/",len(train_lakes),": ",lake_id)
@@ -239,12 +239,6 @@ for ct, lake_id in enumerate(test_lakes):
     X[:,3] = X[:,3]-273.15
 
     y = data[:,-1]
-    #summer only ind
-    # inds = np.where(((np.core.defchararray.find(dates_str,'-06-')!=-1)|\
-    #                  (np.core.defchararray.find(dates_str,'-07-')!=-1)|\
-    #                  (np.core.defchararray.find(dates_str,'-08-')!=-1)|\
-    #                  (np.core.defchararray.find(dates_str,'-09-')!=-1))&\
-    #                   (np.isfinite(y)))[0]
 
 
     #all data ind
