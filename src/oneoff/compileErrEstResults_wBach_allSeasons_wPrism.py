@@ -36,8 +36,8 @@ combined_df['wtemp_predicted-ealstm'] = combined_ea['wtemp_predicted']
 combined_df['wtemp_predicted-linear_model'] = combined_ea['temp_pred_lm']
 combined_df['wtemp_actual'] = combined_ea['wtemp_actual']
 combined_df.reset_index(inplace=True)
-combined_df.to_feather("../../results/all_outputs_and_obs_wBachmann_allSeason.feather")
-combined_df.to_csv("../../results/all_outputs_and_obs_wBachmann_allSeason.csv")
+combined_df.to_feather("../../results/all_outputs_and_obs_wBachmann_allSeason_wPrism.feather")
+combined_df.to_csv("../../results/all_outputs_and_obs_wBachmann_allSeason_wPrism.csv")
 
 combined_df = pd.read_feather("../../results/all_outputs_and_obs_wBachmann.feather")
 
@@ -56,4 +56,4 @@ for i,site_id in enumerate(site_ids):
 	per_site_df = per_site_df.append(site_df)
 
 per_site_df.reset_index(inplace=True)
-per_site_df.to_csv("../../results/err_per_site_wBachmann_all_season.csv")
+per_site_df.to_csv("../../results/err_per_site_wBachmann_all_season_wPrism.csv")
