@@ -76,7 +76,6 @@ if not os.path.exists("bachmannX_"+str(k)+"_all_season_wPrism.npy"):
         labs = np.load("../../data/processed/"+lake_id+"/obs_wPrism.npy")
         labs_old = np.load("../../data/processed/"+lake_id+"/obs_wPrism.npy")
         
-        pdb.set_trace()
         dates = np.load("../../data/processed/"+lake_id+"/dates_wPrism.npy",allow_pickle=True)
         data = np.concatenate((feats[:,:],labs.reshape(labs.shape[0],1)),axis=1)
         X = data[:,:-1]
@@ -99,6 +98,7 @@ if not os.path.exists("bachmannX_"+str(k)+"_all_season_wPrism.npy"):
 
         if inds.shape[0] == 0:
             print("empty")
+            pdb.set_trace()
             continue
         X = np.array([X[i,:] for i in inds],dtype = np.float)
         y = y[inds]
