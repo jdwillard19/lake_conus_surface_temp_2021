@@ -22,6 +22,8 @@ dates = np.load(dates_path, allow_pickle=True)
 at_arr = np.empty((site_ids.shape[0], dates.shape[0]))
 at_arr[:] = np.nan
 inds_arr = np.array_split(range(dates.shape[0]),300)
+
+
 #load prism air temps
 for i in range(300):
     load_at = np.load("../../data/raw/prism/ats_split"+str(i)+".npy",allow_pickle=True)
@@ -31,5 +33,7 @@ for site_ct, site_id in enumerate(site_ids):
     print(site_ct,"/",len(site_ids)," starting ", site_id)
     feat_path = "../../data/processed/"+site_id+"/features.npy"
     feat_old = np.load(feat_path, allow_pickle=True)
+
+    new_feat_path = "../../data/processed/"+site_id+"/features_wPrism.npy"
     pdb.set_trace()
 
