@@ -65,7 +65,7 @@ def getBachmannFeatures(data,dates):
 
 X = None
 y = None
-if not os.path.exists("bachmannX_"+str(k)+"_all_season2.npy"):
+if not os.path.exists("bachmannX_"+str(k)+"_all_season.npy"):
     for ct, lake_id in enumerate(train_lakes):
         if ct %100 == 0:
           print("fold ",k," assembling training lake ",ct,"/",len(train_lakes),": ",lake_id)
