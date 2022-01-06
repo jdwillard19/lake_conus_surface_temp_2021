@@ -74,7 +74,7 @@ if not os.path.exists("bachmannX_"+str(k)+"_all_season_wPrism.npy"):
 
         #convert K to C
         labs = np.load("../../data/processed/"+lake_id+"/obs_wPrism.npy")
-        labs_old = np.load("../../data/processed/"+lake_id+"/obs_wPrism.npy")
+        labs_old = np.load("../../data/processed/"+lake_id+"/obs.npy")
         
         dates = np.load("../../data/processed/"+lake_id+"/dates_wPrism.npy",allow_pickle=True)
         data = np.concatenate((feats[:,:],labs.reshape(labs.shape[0],1)),axis=1)
