@@ -98,7 +98,6 @@ if not os.path.exists("bachmannX_"+str(k)+"_all_season_wPrism.npy"):
 
         if inds.shape[0] == 0:
             print("empty")
-            pdb.set_trace()
             continue
         X = np.array([X[i,:] for i in inds],dtype = np.float)
         y = y[inds]
@@ -268,6 +267,5 @@ for ct, lake_id in enumerate(test_lakes):
     df['date'] = dates
     result_df = result_df.append(df)
 
-pdb.set_trace()
 result_df.reset_index(inplace=True)
 result_df.to_feather("../../results/bachmann_fold"+str(k)+"_all_season_wPrism.feather")
