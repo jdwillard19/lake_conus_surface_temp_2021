@@ -72,10 +72,10 @@ if not os.path.exists(x_path):
         if ct %100 == 0:
           print("fold ",k," assembling training lake ",ct,"/",len(train_lakes),": ",lake_id)
         #load data
-        feats = np.load("../../data/processed/"+lake_id+"/features.npy")
-        labs = np.load("../../data/processed/"+lake_id+"/obs.npy")
+        feats = np.load("../../data/processed/"+lake_id+"/features_wPrism.npy")
+        labs = np.load("../../data/processed/"+lake_id+"/obs_wPrism.npy")
         
-        dates = np.load("../../data/processed/"+lake_id+"/dates.npy",allow_pickle=True)
+        dates = np.load("../../data/processed/"+lake_id+"/dates_wPrism.npy",allow_pickle=True)
 
 
 
@@ -109,11 +109,11 @@ if not os.path.exists(x_path):
         train_df = pd.concat([train_df, new_df], ignore_index=True)
     X = train_df[columns[:-1]].values
     y = np.ravel(train_df[columns[-1]].values)
-    np.save("bachmannX_"+str(k),X)
-    np.save("bachmannY_"+str(k),y)
+    np.save("bachmannX_"+str(k)+"_wPrism",X)
+    np.save("bachmannY_"+str(k)+"_wPrism",y)
 else:
-    X = np.load("bachmannX_"+str(k)+".npy",allow_pickle=True)
-    y = np.load("bachmannY_"+str(k)+".npy",allow_pickle=True)
+    X = np.load("bachmannX_"+str(k)+"_wPrism.npy",allow_pickle=True)
+    y = np.load("bachmannY_"+str(k)+"_wPrism.npy",allow_pickle=True)
 
 print("train set dimensions: ",X.shape)
 
@@ -225,9 +225,9 @@ print("model trained and saved to ", save_file_path)
 for ct, lake_id in enumerate(test_lakes):
     print("fold ",k," testing test lake ",ct,"/",len(test_lakes),": ",lake_id)
     #load data
-    feats = np.load("../../data/processed/"+lake_id+"/features.npy")
-    labs = np.load("../../data/processed/"+lake_id+"/obs.npy")
-    dates = np.load("../../data/processed/"+lake_id+"/dates.npy")
+    feats = np.load("../../data/processed/"+lake_id+"/features_wPrism.npy")
+    labs = np.load("../../data/processed/"+lake_id+"/obs_wPrism.npy")
+    dates = np.load("../../data/processed/"+lake_id+"/dates_wPrism.npy")
     data = np.concatenate((feats[:,:],labs.reshape(labs.shape[0],1)),axis=1)
     X = data[:,:-1]
     dates_str = [str(d) for d in dates]
@@ -265,4 +265,4 @@ for ct, lake_id in enumerate(test_lakes):
     result_df = result_df.append(df)
 
 result_df.reset_index(inplace=True)
-result_df.to_feather("../../results/bachmann_fold"+str(k)+".feather")
+result_df.to_feather("../../results/bachmann_fold"+str(k)+"_wPrism..feather")

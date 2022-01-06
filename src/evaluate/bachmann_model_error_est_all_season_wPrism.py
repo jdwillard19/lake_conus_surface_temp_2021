@@ -109,8 +109,8 @@ if not os.path.exists("bachmannX_"+str(k)+"_all_season_wPrism.npy"):
         train_df = pd.concat([train_df, new_df], ignore_index=True)
     X = train_df[columns[:-1]].values
     y = np.ravel(train_df[columns[-1]].values)
-    np.save("bachmannX_"+str(k)+"_all_season",X)
-    np.save("bachmannY_"+str(k)+"_all_season",y)
+    np.save("bachmannX_"+str(k)+"_all_season_wPrism",X)
+    np.save("bachmannY_"+str(k)+"_all_season_wPrism",y)
 else:
     X = np.load("bachmannX_"+str(k)+"_all_season_wPrism.npy",allow_pickle=True)
     y = np.load("bachmannY_"+str(k)+"_all_season_wPrism.npy",allow_pickle=True)
