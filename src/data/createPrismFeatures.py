@@ -24,7 +24,7 @@ at_arr[:] = np.nan
 inds_arr = np.array_split(range(dates.shape[0]),300)
 #load prism air temps
 for i in range(300):
-    load_at = np.load("../../data/raw/prism/ats_split"+str(i),at_arr)
+    load_at = np.load("../../data/raw/prism/ats_split"+str(i)+".npy",at_arr)
     at_arr[:,inds_arr[i]] = load_at
 
 for site_ct, site_id in enumerate(site_ids):
