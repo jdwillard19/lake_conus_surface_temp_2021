@@ -80,14 +80,12 @@ if not os.path.exists(x_path):
         dates = np.load("../../data/processed/"+lake_id+"/dates.npy",allow_pickle=True)
 
 
-        #get prism data to align with dates
-        
 
         data = np.concatenate((feats[:,:],labs.reshape(labs.shape[0],1)),axis=1)
         X = data[:,:-1]
 
         X = getBachmannFeatures(X,dates)
-
+        X[:,3] = X[:,3]-273.15
         y = data[:,-1]
         dates_str = [str(d) for d in dates]
 
@@ -120,6 +118,7 @@ else:
     y = np.load("bachmannY_"+str(k)+".npy",allow_pickle=True)
 
 print("train set dimensions: ",X.shape)
+
 
 
 data = np.concatenate((X,np.expand_dims(y,-1)),axis=1)#add oversamping 
@@ -211,7 +210,6 @@ data = np.concatenate((data,augment), axis=0)
 
 X = data[:,:-1]
 y = data[:,-1]
-X[:,3] = X[:,3] - 273.15
 
 
 
@@ -222,7 +220,6 @@ model = LinearRegression()
 print("Training linear model...fold ",k)
 
 model.fit(X, y)
-pdb.set_trace()
 dump(model, save_file_path)
 print("model trained and saved to ", save_file_path)
 
@@ -238,6 +235,8 @@ for ct, lake_id in enumerate(test_lakes):
     dates_str = [str(d) for d in dates]
 
     X = getBachmannFeatures(X,dates)
+    
+    X[:,3] = X[:,3]-273.15
     
     y = data[:,-1]
     inds = np.where(((np.core.defchararray.find(dates_str,'-06-')!=-1)|\

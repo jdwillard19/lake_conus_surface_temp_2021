@@ -80,6 +80,7 @@ if not os.path.exists("bachmannX_"+str(k)+"_all_season.npy"):
         X = data[:,:-1]
 
         X = getBachmannFeatures(X,dates)
+        X[:,3] = X[:,3]-273.15
 
         y = data[:,-1]
         dates_str = [str(d) for d in dates]
@@ -115,7 +116,6 @@ else:
     y = np.load("bachmannY_"+str(k)+"_all_season.npy",allow_pickle=True)
 
 #convert K to C
-pdb.set_trace()
 print("train set dimensions: ",X.shape)
 
 
@@ -235,6 +235,9 @@ for ct, lake_id in enumerate(test_lakes):
 
     X = getBachmannFeatures(X,dates)
     
+    #convert K to C
+    X[:,3] = X[:,3]-273.15
+
     y = data[:,-1]
     #summer only ind
     # inds = np.where(((np.core.defchararray.find(dates_str,'-06-')!=-1)|\
