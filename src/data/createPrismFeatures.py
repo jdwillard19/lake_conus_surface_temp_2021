@@ -8,7 +8,7 @@ import os
 #load metadata
 metadata = pd.read_csv("../../metadata/lake_metadata.csv")
 metadata = metadata[metadata['num_obs'] > 0]
-site_ids = metadata['site_id'].values[start:end]
+site_ids = metadata['site_id'].values
 
 site_id0 = site_ids[0]
 
