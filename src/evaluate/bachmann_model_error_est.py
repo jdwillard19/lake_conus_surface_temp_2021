@@ -11,7 +11,6 @@ from sklearn.model_selection import GridSearchCV, cross_val_score
 import matplotlib.pyplot as plt
 from scipy import stats
 from scipy.stats import norm
-from pyPRISMClimate import get_prism_dailys, get_prism_daily_single,
                     
 ##################################################################3
 # (July 2021 - Jared) - error estimation linear model 
