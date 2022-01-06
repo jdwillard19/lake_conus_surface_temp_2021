@@ -72,6 +72,8 @@ if not os.path.exists("bachmannX_"+str(k)+"_all_season.npy"):
           print("fold ",k," assembling training lake ",ct,"/",len(train_lakes),": ",lake_id)
         #load data
         feats = np.load("../../data/processed/"+lake_id+"/features.npy")
+
+        #convert K to C
         labs = np.load("../../data/processed/"+lake_id+"/obs.npy")
         
         dates = np.load("../../data/processed/"+lake_id+"/dates.npy",allow_pickle=True)
@@ -113,6 +115,8 @@ else:
     X = np.load("bachmannX_"+str(k)+"_all_season.npy",allow_pickle=True)
     y = np.load("bachmannY_"+str(k)+"_all_season.npy",allow_pickle=True)
 
+#convert K to C
+pdb.set_trace()
 print("train set dimensions: ",X.shape)
 
 
