@@ -121,6 +121,7 @@ md_RMSE_E5 = np.median(err_per_site['RMSE_ERA5'])
 md_RMSE_E5b = np.median(err_per_site['RMSE_ERA5b'])
 md_RMSE_LM = np.nanmedian(err_per_site['RMSE_LM'])
 
+pdb.set_trace()
 #row label
 rows = ['EA-LSTM', 'ERA5*','ERA5', 'LM']
 ha = 10000
