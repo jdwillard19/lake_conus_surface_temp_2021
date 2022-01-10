@@ -50,7 +50,10 @@ Project Organization
     │   ├── compileErrEstResults.py   
     │   ├── final_output_rmse_check.py   
     └── train - (final model training)  
-           └── EALSTM_final_model.py   
+        └── EALSTM_final_model.py   
+    ├── vis - (visualizations)  
+        └── plot_clusters.py  
+
 
 
 --------
@@ -104,3 +107,7 @@ Pipeline to run
 
 9. (optional) Create csv table used in Technical Validation section
 `python compileValidationTable.py`
+
+10. (optional) Create map of clusters to view RMSE-per-cluster
+`cd src/vis`
+`python plot_clusters.py`
